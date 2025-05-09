@@ -6,20 +6,21 @@
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet id="criacao-tabela-usuario" author="murillo.nacfur">
         <sql>
-            CREATE TABLE USERS (
-            ID BIGSERIAL NOT NULL,
-            NAME VARCHAR(255) NOT NULL,
-            EMAIL VARCHAR(255) NOT NULL,
-            PASSWORD VARCHAR(255) NOT NULL,
-            BIRTH_DATE DATE,
-            ROLE VARCHAR(255) NOT NULL CHECK (ROLE IN ('ADMIN', 'CLIENT')),
-            CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY (ID)
+            CREATE TABLE public."USERS" (
+            "ID" BIGSERIAL NOT NULL,
+            "NAME" VARCHAR(255) NOT NULL,
+            "EMAIL" VARCHAR(255) UNIQUE NOT NULL,
+            "LOGIN" VARCHAR(255) UNIQUE NOT NULL,
+            "PASSWORD" VARCHAR(255) NOT NULL,
+            "BIRTH_DATE" DATE,
+            "ROLE" VARCHAR(255) NOT NULL CHECK ("ROLE" IN ('ADMIN', 'CLIENT')),
+            "CREATED_AT" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            "UPDATED_AT" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY ("ID")
             );
         </sql>
         <rollback>
-            DROP TABLE USERS;
+            DROP TABLE public."USERS";
             DELETE FROM DATABASECHANGELOG WHERE ID = 'criacao-tabela-usuario';
         </rollback>
     </changeSet>

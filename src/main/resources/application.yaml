@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: fase1
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/fase1
+    username: application
+    password: 7KTu)$U9W1%7
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+  liquibase:
+    change-log: classpath:liquibase/db/changelog/db.changelog-master.xml
+    enabled: true
+security:
+  token-secret: ${TOKEN_SECRET:ffb5914892f586c72016b717a1906676698124f695ba798a9da3f0ce6882768d}
