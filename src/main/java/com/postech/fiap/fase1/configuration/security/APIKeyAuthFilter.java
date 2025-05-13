@@ -32,7 +32,7 @@ public class APIKeyAuthFilter extends AbstractPreAuthenticatedProcessingFilter {
         return (authentication -> {
             String token = (String) authentication.getPrincipal();
             if (token == null || token.isEmpty() || !authService.checkAndLoadAccess(token)) {
-                return null;
+                return new UsernamePasswordAuthenticationToken(null, null);
             }
 
             String login = ThreadLocalStorage.getUserLogin();

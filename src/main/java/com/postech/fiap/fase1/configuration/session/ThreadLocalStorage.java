@@ -1,6 +1,7 @@
 package com.postech.fiap.fase1.configuration.session;
 
 import com.postech.fiap.fase1.domain.dto.auth.UserTokenDTO;
+import com.postech.fiap.fase1.domain.model.Role;
 
 public class ThreadLocalStorage {
     private static final String NO_USER_DETECTED = "No user Detected";
@@ -8,13 +9,6 @@ public class ThreadLocalStorage {
     private static ThreadLocal<String> tokenThreadLocal = new ThreadLocal<>();
 
     private ThreadLocalStorage() {
-    }
-
-    public static String getUserName() {
-        if (userTokenThreadLocal.get() != null) {
-            return userTokenThreadLocal.get().getName();
-        }
-        return NO_USER_DETECTED;
     }
 
     public static String getUserLogin() {
@@ -30,17 +24,16 @@ public class ThreadLocalStorage {
         }
         return NO_USER_DETECTED;
     }
-
-    public static UserTokenDTO getUserThreadLocal() {
-        return userTokenThreadLocal.get();
+    public static Long getUserId() {
+        if (userTokenThreadLocal.get() != null) {
+            return userTokenThreadLocal.get().getId();
+        }
+        return null;
     }
+
 
     public static void setUserThreadLocal(UserTokenDTO userTokenDTO) {
         ThreadLocalStorage.userTokenThreadLocal.set(userTokenDTO);
-    }
-
-    public static String getTokenThreadLocal() {
-        return tokenThreadLocal.get();
     }
 
     public static void setTokenThreadLocal(String token) {
@@ -51,7 +44,12 @@ public class ThreadLocalStorage {
         setUserThreadLocal(userTokenDTO);
         setTokenThreadLocal(token);
     }
-
+    public static boolean isAdmin() {
+        if (userTokenThreadLocal.get() != null) {
+            return Role.ADMIN.name().equals(userTokenThreadLocal.get().getRole());
+        }
+        return false;
+    }
     public static void clear() {
         userTokenThreadLocal.remove();
         tokenThreadLocal.remove();

@@ -9,6 +9,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class UserTokenDTO {
+    private Long id;
     private String name;
     private String login;
     private String email;

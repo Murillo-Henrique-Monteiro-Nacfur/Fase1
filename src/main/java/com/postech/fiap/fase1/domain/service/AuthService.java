@@ -41,7 +41,7 @@ public class AuthService {
     }
 
     public String getToken(User user) {
-        UserTokenDTO userTokenDTO = new UserTokenDTO(user.getName(),
+        UserTokenDTO userTokenDTO = new UserTokenDTO(user.getId(), user.getName(),
                 user.getLogin(),
                 user.getEmail(),
                 user.getRole().getDescription(),

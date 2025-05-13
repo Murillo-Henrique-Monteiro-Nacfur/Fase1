@@ -1,22 +1,21 @@
 package com.postech.fiap.fase1.domain.dto;
 
-import com.postech.fiap.fase1.domain.model.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter
 @AllArgsConstructor
-public class UserInputDTO {
+public class UserRequestUpdatePasswordDTO {
+    @NotNull
     private Long id;
-    private String name;
-    private String email;
-    private String login;
+    @NotBlank
     private String password;
+    @NotBlank
     private String passwordConfirmation;
-    private LocalDate birthDate;
-    private Role role;
 }

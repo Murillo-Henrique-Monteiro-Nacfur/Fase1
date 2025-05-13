@@ -15,7 +15,7 @@ public class UserDisassembler {
                 .email(user.getEmail())
                 .login(user.getLogin())
                 .role(user.getRole())
-                .birthDate(user.getBirthDate())
+                .birthDate(user.getBirthDate().toString())
                 .build();
     }
 

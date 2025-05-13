@@ -10,8 +10,6 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 
 @Configuration
 public class RoleHierarchyConfig {
-    private RoleHierarchyConfig() {
-    }
 
     @Bean
     static RoleHierarchy roleHierarchy() {
@@ -20,7 +18,6 @@ public class RoleHierarchyConfig {
                 .role(Role.CLIENT.getDescription()).implies(Role.VIEWER.getDescription())
                 .build();
     }
-
 
     @Bean
     static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {

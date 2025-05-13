@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Builder
 @Getter
 @AllArgsConstructor
 public class UserRequestDTO {
+
     @NotBlank
     private String name;
     @NotBlank
@@ -19,4 +21,8 @@ public class UserRequestDTO {
     private String login;
     @NotBlank
     private String password;
+    @NotBlank
+    private String passwordConfirmation;
+    @NotBlank
+    private LocalDate birthDate;
 }

@@ -3,6 +3,8 @@ package com.postech.fiap.fase1.configuration.exception;
 import com.postech.fiap.fase1.configuration.exception.response.ExceptionResponse;
 import jakarta.annotation.Nonnull;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
+import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -49,19 +51,19 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ApplicationException.class)
-    public final ResponseEntity<ExceptionResponse<Object>> handleAllExceptions(ApplicationException realEstateException) {
+    public final ResponseEntity<ExceptionResponse<Object>> handleAllExceptions(ApplicationException applicationException) {
         ExceptionResponse<Object> exceptionResponse = new ExceptionResponse<>(
                 LocalDateTime.now().toString()
-                , "exception Real Estate error"
-                , realEstateException.getMessage()
-                , realEstateException.getHttpStatus().toString()
+                , "application error"
+                , applicationException.getMessage()
+                , applicationException.getHttpStatus().toString()
         );
 
-        return new ResponseEntity<>(exceptionResponse, realEstateException.getHttpStatus());
+        return new ResponseEntity<>(exceptionResponse, applicationException.getHttpStatus());
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public final ResponseEntity<ExceptionResponse<Object>> handleAllExceptions(DataIntegrityViolationException dataIntegrityViolationException) {
+    @ExceptionHandler(value = {InvalidDataAccessResourceUsageException.class, DataIntegrityViolationException.class})
+    public final ResponseEntity<ExceptionResponse<Object>> handleAllExceptions(NonTransientDataAccessException dataIntegrityViolationException) {
         ExceptionResponse<Object> exceptionResponse = new ExceptionResponse<>(
                 LocalDateTime.now().toString()
                 , "DataBase Integrity error"
@@ -71,7 +73,6 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
-
     @ExceptionHandler(HttpServerErrorException.InternalServerError.class)
     public final ResponseEntity<ExceptionResponse<Object>> handleAllExceptions(HttpServerErrorException.InternalServerError dataIntegrityViolationException) {
         ExceptionResponse<Object> exceptionResponse = new ExceptionResponse<>(
