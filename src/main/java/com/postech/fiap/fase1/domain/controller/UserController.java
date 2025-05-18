@@ -1,11 +1,14 @@
 package com.postech.fiap.fase1.domain.controller;
 
 
+import com.postech.fiap.fase1.configuration.exception.ApplicationException;
+import com.postech.fiap.fase1.configuration.session.SessionService;
 import com.postech.fiap.fase1.domain.assembler.UserAssembler;
 import com.postech.fiap.fase1.domain.dto.UserDTO;
 import com.postech.fiap.fase1.domain.dto.UserRequestDTO;
 import com.postech.fiap.fase1.domain.dto.UserRequestUpdateDetailsDTO;
 import com.postech.fiap.fase1.domain.dto.UserRequestUpdatePasswordDTO;
+import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
 import com.postech.fiap.fase1.domain.model.Role;
 import com.postech.fiap.fase1.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +26,15 @@ import static com.postech.fiap.fase1.domain.assembler.UserDisassembler.toDTO;
 @RequiredArgsConstructor
 public class UserController {
 
+    private static final String USER_IS_NOT_THE_SAME_AS_THE_ONE_IN_THE_REQUEST = "User is not the same as the one in the request";
     private final UserService userService;
+    private final SessionService sessionService;
 
     @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(toDTO(userService.getOne(id)));
+        SessionDTO sessionDTO = sessionService.getSessionDTO();
+        return ResponseEntity.ok(toDTO(userService.getOne(sessionDTO, id)));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -52,9 +58,10 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<UserDTO> updateUserDetails(@PathVariable(value = "id") Long idUser, @RequestBody UserRequestUpdateDetailsDTO userRequestUpdateDetailsDTO) {
         if (idUser.equals(userRequestUpdateDetailsDTO.getId())) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(userService.updateDetails(UserAssembler.requestUpdateDetailsToInput(userRequestUpdateDetailsDTO))));
+            SessionDTO sessionDTO = sessionService.getSessionDTO();
+            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(userService.updateDetails(sessionDTO, UserAssembler.requestUpdateDetailsToInput(userRequestUpdateDetailsDTO))));
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        throw new ApplicationException(USER_IS_NOT_THE_SAME_AS_THE_ONE_IN_THE_REQUEST, HttpStatus.BAD_REQUEST);
 
     }
 
@@ -62,15 +69,17 @@ public class UserController {
     @PatchMapping("/change-password/{id}")
     public ResponseEntity<UserDTO> updateUserPassword(@PathVariable("id") Long idUser, @RequestBody UserRequestUpdatePasswordDTO userRequestUpdatePasswordDTO) {
         if (idUser.equals(userRequestUpdatePasswordDTO.getId())) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(userService.updatePassword(UserAssembler.requestUpdatePasswordToInput(userRequestUpdatePasswordDTO))));
+            SessionDTO sessionDTO = sessionService.getSessionDTO();
+            return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(userService.updatePassword(sessionDTO, UserAssembler.requestUpdatePasswordToInput(userRequestUpdatePasswordDTO))));
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        throw new ApplicationException(USER_IS_NOT_THE_SAME_AS_THE_ONE_IN_THE_REQUEST, HttpStatus.BAD_REQUEST);
     }
 
     @PreAuthorize("hasRole('CLIENT')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long idUser) {
-        userService.delete(idUser);
+        SessionDTO sessionDTO = sessionService.getSessionDTO();
+        userService.delete(sessionDTO, idUser);
         return ResponseEntity.ok().build();
     }
 }

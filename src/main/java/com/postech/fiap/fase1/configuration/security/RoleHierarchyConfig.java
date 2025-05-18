@@ -10,12 +10,12 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 
 @Configuration
 public class RoleHierarchyConfig {
-
+    public static final String ROLE_PREFIX = "ROLE_";
     @Bean
     static RoleHierarchy roleHierarchy() {
         return RoleHierarchyImpl.withDefaultRolePrefix()
-                .role(Role.ADMIN.getDescription()).implies(Role.CLIENT.getDescription())
-                .role(Role.CLIENT.getDescription()).implies(Role.VIEWER.getDescription())
+                .role(Role.ADMIN.name()).implies(Role.CLIENT.name())
+                .role(Role.CLIENT.name()).implies(Role.VIEWER.name())
                 .build();
     }
 

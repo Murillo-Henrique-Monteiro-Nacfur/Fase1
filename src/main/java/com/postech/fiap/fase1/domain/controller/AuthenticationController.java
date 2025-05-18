@@ -2,7 +2,7 @@ package com.postech.fiap.fase1.domain.controller;
 
 import com.postech.fiap.fase1.configuration.exception.ApplicationException;
 import com.postech.fiap.fase1.domain.dto.auth.LoginRequestDTO;
-import com.postech.fiap.fase1.domain.service.AuthService;
+import com.postech.fiap.fase1.domain.service.session.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

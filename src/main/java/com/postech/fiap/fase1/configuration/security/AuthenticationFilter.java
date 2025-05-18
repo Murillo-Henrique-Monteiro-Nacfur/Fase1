@@ -1,7 +1,8 @@
 package com.postech.fiap.fase1.configuration.security;
 
 import com.postech.fiap.fase1.configuration.session.ThreadLocalStorage;
-import com.postech.fiap.fase1.domain.service.AuthService;
+import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
+import com.postech.fiap.fase1.domain.service.session.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,14 +17,13 @@ import java.util.List;
 
 
 @Component
-public class APIKeyAuthFilter extends AbstractPreAuthenticatedProcessingFilter {
+public class AuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
     private static final String PRINCIPAL_REQUEST_HEADER = "X-Auth-Token";
-    private static final String ROLE_PREFIX = "ROLE_";
     private final AuthService authService;
 
     @Lazy
-    public APIKeyAuthFilter(AuthService authService) {
+    public AuthenticationFilter(AuthService authService) {
         this.authService = authService;
         setAuthenticationManager(createAuthenticationManager());
     }
@@ -34,11 +34,9 @@ public class APIKeyAuthFilter extends AbstractPreAuthenticatedProcessingFilter {
             if (token == null || token.isEmpty() || !authService.checkAndLoadAccess(token)) {
                 return new UsernamePasswordAuthenticationToken(null, null);
             }
-
-            String login = ThreadLocalStorage.getUserLogin();
-            String role = ThreadLocalStorage.getUserRole();
-            List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(ROLE_PREFIX + role));
-            return new UsernamePasswordAuthenticationToken(login, null, authorities);
+            SessionDTO sessionDTO = ThreadLocalStorage.getSession();
+            List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(RoleHierarchyConfig.ROLE_PREFIX + sessionDTO.getUserRole()));
+            return new UsernamePasswordAuthenticationToken(sessionDTO.getUserLogin(), null, authorities);
         });
     }
 

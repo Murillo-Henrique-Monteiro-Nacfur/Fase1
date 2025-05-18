@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    private final APIKeyAuthFilter apiKeyAuthFilter;
+    private final AuthenticationFilter authenticationFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -36,17 +36,14 @@ public class SecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(apiKeyAuthFilter, AbstractPreAuthenticatedProcessingFilter.class)
+                .addFilterBefore(authenticationFilter, AbstractPreAuthenticatedProcessingFilter.class)
                 .authorizeHttpRequests(auth -> auth
-//            our public endpoints
-                        .requestMatchers(HttpMethod.POST, "/api/v1/authentication/signup/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/authentication/login/**").permitAll()
-//            our private endpoints
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .authenticationManager(authenticationManager)
-
                 .build();
     }
 
