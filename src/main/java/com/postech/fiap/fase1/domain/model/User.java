@@ -17,24 +17,34 @@ public class User extends BaseEntity {
     @SequenceGenerator(name = "sequenceGenerator", sequenceName = "USERS_ID_seq", allocationSize = 1)
     @Column(name = "ID")
     private Long id;
+
     @Setter
     @Column(name = "NAME")
     private String name;
+
     @Setter
     @Column(name = "EMAIL")
     private String email;
+
     @Setter
     @Column(name = "LOGIN")
     private String login;
+
     @Setter
     @Column(name = "PASSWORD")
     private String password;
+
     @Setter
     @Column(name = "BIRTH_DATE")
     private LocalDate birthDate;
+
     @Setter
     @Column(name = "ROLE")
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Setter
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Adress adress;
 
 }

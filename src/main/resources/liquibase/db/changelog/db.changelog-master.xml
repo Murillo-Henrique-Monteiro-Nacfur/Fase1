@@ -24,4 +24,25 @@
             DELETE FROM DATABASECHANGELOG WHERE ID = 'criacao-tabela-usuario';
         </rollback>
     </changeSet>
+
+    <changeSet id="criacao-tabela-endereco" author="willian.visicati">
+        <sql>
+            CREATE TABLE PUBLIC."ADDRESS" (
+            "ID" BIGSERIAL PRIMARY KEY,
+            "STREET" VARCHAR(255) NOT NULL,
+            "NUMBER" VARCHAR(20) NOT NULL,
+            "CITY" VARCHAR(255) NOT NULL,
+            "STATE" VARCHAR(2) NOT NULL,
+            "COUNTRY" VARCHAR(255) NOT NULL,
+            "NEIGHBORHOOD" VARCHAR(255) NOT NULL,
+            "ZIP_CODE" VARCHAR(255) NOT NULL,
+            "USER_ID" BIGINT NOT NULL,
+            FOREIGN KEY ("USER_ID") REFERENCES PUBLIC."USERS"("ID")
+            );
+        </sql>
+        <rollback>
+            DROP TABLE public."ADDRESS";
+            DELETE FROM DATABASECHANGELOG WHERE ID = 'criacao-tabela-endereco';
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

@@ -16,6 +16,7 @@ public class UserDisassembler {
                 .login(user.getLogin())
                 .role(user.getRole())
                 .birthDate(user.getBirthDate().toString())
+                .adress(AdressAssembler.toDTO(user.getAdress()))
                 .build();
     }
 
