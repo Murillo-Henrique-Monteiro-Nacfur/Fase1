@@ -1,8 +1,8 @@
 package com.postech.fiap.fase1.domain.controller;
 
-import com.postech.fiap.fase1.configuration.exception.ApplicationException;
 import com.postech.fiap.fase1.domain.dto.auth.LoginRequestDTO;
 import com.postech.fiap.fase1.domain.service.session.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,13 +19,8 @@ public class AuthenticationController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequestDTO request) {
-        try {
-            var retono = authService.login(request);
-            return ResponseEntity.ok(retono);
-        } catch (Exception e) {
-            throw new ApplicationException("Error during login");
-        }
+    public ResponseEntity<Map<String, String>> login(@RequestBody @Valid LoginRequestDTO request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 
 }

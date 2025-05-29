@@ -1,5 +1,6 @@
 package com.postech.fiap.fase1.domain.dto.auth;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginRequestDTO {
 
+    @NotBlank
     private String login;
+    @NotBlank
     private String password;
 
 }

@@ -45,4 +45,15 @@
             DELETE FROM DATABASECHANGELOG WHERE ID = 'criacao-tabela-endereco';
         </rollback>
     </changeSet>
+
+    <changeSet id="criacao-usuario-padrao" author="murillo.nacfur">
+        <sql>
+            INSERT INTO public."USERS"("NAME", "EMAIL", "LOGIN", "PASSWORD", "BIRTH_DATE", "ROLE")
+            VALUES ('admin', 'admin@gmail.com', 'admin', '$2a$10$KkUrgvp0fZ8VURE6zz3gRur47uwgdCeirCdOA0xvt8oS2rPJmFXom', '2000-01-01', 'ADMIN');
+        </sql>
+        <rollback>
+            DELETE FROM public."USERS" WHERE "LOGIN" = 'admin';
+            DELETE FROM DATABASECHANGELOG WHERE ID = 'criacao-usuario-padrao';
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

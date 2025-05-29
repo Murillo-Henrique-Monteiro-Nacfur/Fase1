@@ -56,11 +56,15 @@ public class AuthService {
     }
 
     public Map<String, String> login(LoginRequestDTO loginDTO) {
-        User user = userService.getUserByLogin(loginDTO.getLogin());
-        if (passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            return Map.of(KEY_TOKEN, getToken(user));
+        try {
+            User user = userService.getUserByLogin(loginDTO.getLogin());
+            if (passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+                return Map.of(KEY_TOKEN, getToken(user));
+            }
+        } catch (Exception e) {
+            log.error("Error during login: {}", e.getMessage());
         }
-        throw new ApplicationException("Error validating login", HttpStatus.UNAUTHORIZED);
+        throw new ApplicationException("Error during login");
     }
 
     public boolean checkAndLoadAccess(String token) {

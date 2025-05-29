@@ -42,9 +42,7 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
         ExceptionResponse<ExceptionResponse.Fields> exceptionResponse = new ExceptionResponse<>(
                 LocalDateTime.now().toString()
                 , "Validation failed for one or more argument"
-                , request.getDescription(false)
-                , status.toString()
-        );
+                , request.getDescription(false));
 
         exceptionResponse.setFields(fieldsList);
         return super.handleExceptionInternal(ex, exceptionResponse, headers, status, request);
@@ -56,7 +54,6 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
                 LocalDateTime.now().toString()
                 , "application error"
                 , applicationException.getMessage()
-                , applicationException.getHttpStatus().toString()
         );
 
         return new ResponseEntity<>(exceptionResponse, applicationException.getHttpStatus());
@@ -68,18 +65,17 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
                 LocalDateTime.now().toString()
                 , "DataBase Integrity error"
                 , dataIntegrityViolationException.getCause().getCause().getMessage()
-                , HttpStatus.BAD_REQUEST.toString()
         );
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(HttpServerErrorException.InternalServerError.class)
     public final ResponseEntity<ExceptionResponse<Object>> handleAllExceptions(HttpServerErrorException.InternalServerError dataIntegrityViolationException) {
         ExceptionResponse<Object> exceptionResponse = new ExceptionResponse<>(
                 LocalDateTime.now().toString()
                 , "exception error"
                 , dataIntegrityViolationException.getCause().getCause().getMessage()
-                , HttpStatus.INTERNAL_SERVER_ERROR.toString()
         );
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);

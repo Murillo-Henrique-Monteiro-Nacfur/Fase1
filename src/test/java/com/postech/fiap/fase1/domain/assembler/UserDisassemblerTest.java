@@ -1,5 +1,6 @@
 package com.postech.fiap.fase1.domain.assembler;
 
+import com.postech.fiap.fase1.domain.disassembler.UserDisassembler;
 import com.postech.fiap.fase1.domain.dto.UserDTO;
 import com.postech.fiap.fase1.domain.model.User;
 import com.postech.fiap.fase1.environment.EnvUser;
@@ -55,14 +56,5 @@ class UserDisassemblerTest {
             assertThat(userDTO.getRole()).isEqualTo(user.getRole());
             assertThat(userDTO.getBirthDate()).isEqualTo(user.getBirthDate().toString());
         }
-
-//        User user2 = userPage.toList().get(1);
-//        UserDTO userDTO2 = result.getContent().get(1);
-//        assertThat(userDTO2.getId()).isEqualTo(user2.getId());
-//        assertThat(userDTO2.getName()).isEqualTo(user2.getName());
-//        assertThat(userDTO2.getEmail()).isEqualTo(user2.getEmail());
-//        assertThat(userDTO2.getLogin()).isEqualTo(user2.getLogin());
-//        assertThat(userDTO2.getRole()).isEqualTo(user2.getRole());
-//        assertThat(userDTO2.getBirthDate()).isEqualTo(user2.getBirthDate().toString());
     }
 }

@@ -1,6 +1,5 @@
 package com.postech.fiap.fase1.domain.controller;
 
-
 import com.postech.fiap.fase1.configuration.exception.ApplicationException;
 import com.postech.fiap.fase1.configuration.session.SessionService;
 import com.postech.fiap.fase1.domain.assembler.UserAssembler;
@@ -11,6 +10,7 @@ import com.postech.fiap.fase1.domain.dto.UserRequestUpdatePasswordDTO;
 import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
 import com.postech.fiap.fase1.domain.model.Role;
 import com.postech.fiap.fase1.domain.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import static com.postech.fiap.fase1.domain.assembler.UserDisassembler.toDTO;
+import static com.postech.fiap.fase1.domain.disassembler.UserDisassembler.toDTO;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -44,19 +44,19 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createClient(@RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<UserDTO> createClient(@Valid @RequestBody UserRequestDTO userRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(userService.create(UserAssembler.requestToInput(userRequestDTO, Role.CLIENT))));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin")
-    public ResponseEntity<UserDTO> createAdmin(@RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<UserDTO> createAdmin(@Valid @RequestBody UserRequestDTO userRequestDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(userService.create(UserAssembler.requestToInput(userRequestDTO, Role.ADMIN))));
     }
 
     @PreAuthorize("hasRole('CLIENT')")
     @PatchMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUserDetails(@PathVariable(value = "id") Long idUser, @RequestBody UserRequestUpdateDetailsDTO userRequestUpdateDetailsDTO) {
+    public ResponseEntity<UserDTO> updateUserDetails(@PathVariable(value = "id") Long idUser, @Valid @RequestBody UserRequestUpdateDetailsDTO userRequestUpdateDetailsDTO) {
         if (idUser.equals(userRequestUpdateDetailsDTO.getId())) {
             SessionDTO sessionDTO = sessionService.getSessionDTO();
             return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(userService.updateDetails(sessionDTO, UserAssembler.requestUpdateDetailsToInput(userRequestUpdateDetailsDTO))));
@@ -67,7 +67,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('CLIENT')")
     @PatchMapping("/change-password/{id}")
-    public ResponseEntity<UserDTO> updateUserPassword(@PathVariable("id") Long idUser, @RequestBody UserRequestUpdatePasswordDTO userRequestUpdatePasswordDTO) {
+    public ResponseEntity<UserDTO> updateUserPassword(@PathVariable("id") Long idUser, @Valid @RequestBody UserRequestUpdatePasswordDTO userRequestUpdatePasswordDTO) {
         if (idUser.equals(userRequestUpdatePasswordDTO.getId())) {
             SessionDTO sessionDTO = sessionService.getSessionDTO();
             return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(userService.updatePassword(sessionDTO, UserAssembler.requestUpdatePasswordToInput(userRequestUpdatePasswordDTO))));

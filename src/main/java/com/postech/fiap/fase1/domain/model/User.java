@@ -45,6 +45,6 @@ public class User extends BaseEntity {
 
     @Setter
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Adress adress;
+    private Address address;
 
 }

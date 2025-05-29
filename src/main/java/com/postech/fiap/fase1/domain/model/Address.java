@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Table(name = "ADDRESS")
-public class Adress {
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

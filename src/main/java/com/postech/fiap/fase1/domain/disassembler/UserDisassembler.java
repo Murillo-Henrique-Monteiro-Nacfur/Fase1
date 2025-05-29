@@ -1,9 +1,12 @@
-package com.postech.fiap.fase1.domain.assembler;
+package com.postech.fiap.fase1.domain.disassembler;
 
+import com.postech.fiap.fase1.domain.assembler.AddressAssembler;
 import com.postech.fiap.fase1.domain.dto.UserDTO;
 import com.postech.fiap.fase1.domain.model.User;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.domain.Page;
+
+import static java.util.Objects.isNull;
 
 @UtilityClass
 public class UserDisassembler {
@@ -16,7 +19,7 @@ public class UserDisassembler {
                 .login(user.getLogin())
                 .role(user.getRole())
                 .birthDate(user.getBirthDate().toString())
-                .adress(AdressAssembler.toDTO(user.getAdress()))
+                .address(isNull(user.getAddress()) ? null : AddressAssembler.toDTO(user.getAddress()))
                 .build();
     }
 
