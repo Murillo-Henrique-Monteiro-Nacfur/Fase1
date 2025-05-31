@@ -3,7 +3,8 @@ package com.postech.fiap.fase1.domain.service;
 import com.postech.fiap.fase1.configuration.exception.ApplicationException;
 import com.postech.fiap.fase1.domain.assembler.AddressAssembler;
 import com.postech.fiap.fase1.domain.dto.AddressDTO;
-import com.postech.fiap.fase1.domain.dto.AdressInputDTO;
+import com.postech.fiap.fase1.domain.dto.AddressInputDTO;
+import com.postech.fiap.fase1.domain.dto.AddressInputUpdateDTO;
 import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
 import com.postech.fiap.fase1.domain.model.Address;
 import com.postech.fiap.fase1.domain.model.User;
@@ -27,15 +28,15 @@ public class AddressService {
     private final UserValidator userValidator;
 
     @Transactional
-    public AddressDTO createAdress(AdressInputDTO adressInputDTO, SessionDTO sessionDTO) {
-        User user = userService.getOne(sessionDTO, adressInputDTO.getUserId());
+    public AddressDTO createAdress(AddressInputDTO addressInputDTO, SessionDTO sessionDTO) {
+        User user = userService.getOne(sessionDTO, addressInputDTO.getUserId());
         userValidator.verifyUserLoggedIsAdminOrOwner(sessionDTO, user.getId());
 
         if (existsAdressByUserId(user)) {
             throw new ApplicationException("User already has an address");
         }
 
-        Address address = toEntity(adressInputDTO, user);
+        Address address = toEntity(addressInputDTO, user);
         return toDTO(addressRepository.save(address));
     }
 
@@ -52,9 +53,9 @@ public class AddressService {
         return addressRepository.existsByUserId(user.getId());
     }
 
-    public Address updateAdress(Long id, AdressInputDTO adressInputDTO) {
+    public Address updateAdress(Long id, AddressInputUpdateDTO addressInputUpdateDTO) {
         Address address = this.findById(id);
-        BeanUtils.copyProperties(adressInputDTO, address, "id", "userId");
+        BeanUtils.copyProperties(addressInputUpdateDTO, address, "id", "userId");
         return addressRepository.save(address);
     }
 

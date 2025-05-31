@@ -1,6 +1,7 @@
 package com.postech.fiap.fase1.domain.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
-public class AdressRequestDTO {
+public class AddressRequestUpdateDTO {
     @NotBlank
     private String street;
     @NotBlank
@@ -20,11 +21,10 @@ public class AdressRequestDTO {
     @NotBlank
     private String city;
     @NotBlank
+    @Size(min = 2, max = 2, message = "State must be 2 characters long")
     private String state;
     @NotBlank
     private String country;
     @NotBlank
     private String postalCode;
-    @NotBlank
-    private Long userId;
 }

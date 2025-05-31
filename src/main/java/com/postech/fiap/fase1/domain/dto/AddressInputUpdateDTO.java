@@ -7,15 +7,12 @@ import lombok.Getter;
 @Builder
 @Getter
 @AllArgsConstructor
-public class AdressInputDTO {
+public class AddressInputUpdateDTO {
     private String street;
     private String number;
-    private String complement;
     private String neighborhood;
     private String city;
     private String state;
     private String country;
     private String postalCode;
-    private Long userId;
-
 }
