@@ -8,16 +8,16 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class AddressAssembler {
 
-    public static AddressInputDTO requestToInput(AdressRequestDTO adressRequestDTO) {
+    public static AddressInputDTO requestToInput(AddressRequestDTO addressRequestDTO) {
         return AddressInputDTO.builder()
-                .street(adressRequestDTO.getStreet())
-                .number(adressRequestDTO.getNumber())
-                .neighborhood(adressRequestDTO.getNeighborhood())
-                .city(adressRequestDTO.getCity())
-                .state(adressRequestDTO.getState())
-                .country(adressRequestDTO.getCountry())
-                .postalCode(adressRequestDTO.getPostalCode())
-                .userId(adressRequestDTO.getUserId())
+                .street(addressRequestDTO.getStreet())
+                .number(addressRequestDTO.getNumber())
+                .neighborhood(addressRequestDTO.getNeighborhood())
+                .city(addressRequestDTO.getCity())
+                .state(addressRequestDTO.getState())
+                .country(addressRequestDTO.getCountry())
+                .postalCode(addressRequestDTO.getPostalCode())
+                .userId(addressRequestDTO.getUserId())
                 .build();
     }
 

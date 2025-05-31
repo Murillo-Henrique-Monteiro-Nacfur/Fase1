@@ -2,8 +2,8 @@ package com.postech.fiap.fase1.domain.controller;
 
 import com.postech.fiap.fase1.configuration.session.SessionService;
 import com.postech.fiap.fase1.domain.dto.AddressDTO;
+import com.postech.fiap.fase1.domain.dto.AddressRequestDTO;
 import com.postech.fiap.fase1.domain.dto.AddressRequestUpdateDTO;
-import com.postech.fiap.fase1.domain.dto.AdressRequestDTO;
 import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
 import com.postech.fiap.fase1.domain.service.AddressService;
 import jakarta.validation.Valid;
@@ -39,9 +39,9 @@ public class AddressController {
 
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<AddressDTO> create(@RequestBody AdressRequestDTO adressRequestDTO) {
+    public ResponseEntity<AddressDTO> create(@RequestBody AddressRequestDTO addressRequestDTO) {
         SessionDTO sessionDTO = sessionService.getSessionDTO();
-        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.createAdress(requestToInput(adressRequestDTO), sessionDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.createAdress(requestToInput(addressRequestDTO), sessionDTO));
     }
 
     @PreAuthorize("hasRole('CLIENT')")

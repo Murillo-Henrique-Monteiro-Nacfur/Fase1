@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
-public class AdressRequestDTO {
+public class AddressRequestDTO {
     @NotBlank
     private String street;
     @NotBlank

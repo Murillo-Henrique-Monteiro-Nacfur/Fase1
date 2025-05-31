@@ -53,6 +53,7 @@ public class AddressService {
         return addressRepository.existsByUserId(user.getId());
     }
 
+    @Transactional
     public Address updateAdress(Long id, AddressInputUpdateDTO addressInputUpdateDTO) {
         Address address = this.findById(id);
         BeanUtils.copyProperties(addressInputUpdateDTO, address, "id", "userId");
