@@ -1,4 +1,4 @@
-package com.postech.fiap.fase1.domain.controller;
+package com.postech.fiap.fase1.controller;
 
 import com.postech.fiap.fase1.domain.dto.auth.LoginRequestDTO;
 import com.postech.fiap.fase1.domain.service.session.AuthService;

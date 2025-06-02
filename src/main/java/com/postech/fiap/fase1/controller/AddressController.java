@@ -1,4 +1,4 @@
-package com.postech.fiap.fase1.domain.controller;
+package com.postech.fiap.fase1.controller;
 
 import com.postech.fiap.fase1.configuration.session.SessionService;
 import com.postech.fiap.fase1.domain.dto.AddressDTO;
