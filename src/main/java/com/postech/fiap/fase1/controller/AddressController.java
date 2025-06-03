@@ -2,9 +2,11 @@ package com.postech.fiap.fase1.controller;
 
 import com.postech.fiap.fase1.configuration.session.SessionService;
 import com.postech.fiap.fase1.domain.dto.AddressDTO;
-import com.postech.fiap.fase1.domain.dto.AdressRequestDTO;
+import com.postech.fiap.fase1.domain.dto.AddressRequestDTO;
+import com.postech.fiap.fase1.domain.dto.AddressRequestUpdateDTO;
 import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
 import com.postech.fiap.fase1.domain.service.AddressService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.postech.fiap.fase1.domain.assembler.AddressAssembler.requestToInput;
-import static com.postech.fiap.fase1.domain.assembler.AddressAssembler.toDTO;
+import static com.postech.fiap.fase1.domain.assembler.AddressAssembler.*;
 
 @RestController
-@RequestMapping("/api/v1/adress")
+@RequestMapping("/api/v1/address")
 @RequiredArgsConstructor
 public class AddressController {
     private final AddressService addressService;
@@ -38,15 +39,15 @@ public class AddressController {
 
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<AddressDTO> create(@RequestBody AdressRequestDTO adressRequestDTO) {
+    public ResponseEntity<AddressDTO> create(@RequestBody AddressRequestDTO addressRequestDTO) {
         SessionDTO sessionDTO = sessionService.getSessionDTO();
-        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.createAdress(requestToInput(adressRequestDTO), sessionDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.createAdress(requestToInput(addressRequestDTO), sessionDTO));
     }
 
     @PreAuthorize("hasRole('CLIENT')")
-    @PatchMapping("/{id}")
-    public ResponseEntity<AddressDTO> update(@PathVariable(value = "id") Long id, @RequestBody AdressRequestDTO adressRequestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(addressService.updateAdress(id, requestToInput(adressRequestDTO))));
+    @PutMapping("/{id}")
+    public ResponseEntity<AddressDTO> update(@PathVariable(value = "id") Long id, @RequestBody @Valid AddressRequestUpdateDTO addressRequestUpdateDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(addressService.updateAdress(id, requestUpdateToInput(addressRequestUpdateDTO))));
     }
 
     @PreAuthorize("hasRole('CLIENT')")

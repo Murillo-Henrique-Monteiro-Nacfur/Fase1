@@ -1,8 +1,6 @@
 package com.postech.fiap.fase1.domain.assembler;
 
-import com.postech.fiap.fase1.domain.dto.AddressDTO;
-import com.postech.fiap.fase1.domain.dto.AdressInputDTO;
-import com.postech.fiap.fase1.domain.dto.AdressRequestDTO;
+import com.postech.fiap.fase1.domain.dto.*;
 import com.postech.fiap.fase1.domain.model.Address;
 import com.postech.fiap.fase1.domain.model.User;
 import lombok.experimental.UtilityClass;
@@ -10,17 +8,28 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class AddressAssembler {
 
-    public static AdressInputDTO requestToInput(AdressRequestDTO adressRequestDTO) {
-        return AdressInputDTO.builder()
-                .street(adressRequestDTO.getStreet())
-                .number(adressRequestDTO.getNumber())
-                .complement(adressRequestDTO.getComplement())
-                .neighborhood(adressRequestDTO.getNeighborhood())
-                .city(adressRequestDTO.getCity())
-                .state(adressRequestDTO.getState())
-                .country(adressRequestDTO.getCountry())
-                .postalCode(adressRequestDTO.getPostalCode())
-                .userId(adressRequestDTO.getUserId())
+    public static AddressInputDTO requestToInput(AddressRequestDTO addressRequestDTO) {
+        return AddressInputDTO.builder()
+                .street(addressRequestDTO.getStreet())
+                .number(addressRequestDTO.getNumber())
+                .neighborhood(addressRequestDTO.getNeighborhood())
+                .city(addressRequestDTO.getCity())
+                .state(addressRequestDTO.getState())
+                .country(addressRequestDTO.getCountry())
+                .postalCode(addressRequestDTO.getPostalCode())
+                .userId(addressRequestDTO.getUserId())
+                .build();
+    }
+
+    public static AddressInputUpdateDTO requestUpdateToInput(AddressRequestUpdateDTO addressRequestUpdateDTO) {
+        return AddressInputUpdateDTO.builder()
+                .street(addressRequestUpdateDTO.getStreet())
+                .number(addressRequestUpdateDTO.getNumber())
+                .neighborhood(addressRequestUpdateDTO.getNeighborhood())
+                .city(addressRequestUpdateDTO.getCity())
+                .state(addressRequestUpdateDTO.getState())
+                .country(addressRequestUpdateDTO.getCountry())
+                .postalCode(addressRequestUpdateDTO.getPostalCode())
                 .build();
     }
 
@@ -38,15 +47,15 @@ public class AddressAssembler {
                 .build();
     }
 
-    public static Address toEntity(AdressInputDTO adressInputDTO, User user) {
+    public static Address toEntity(AddressInputDTO addressInputDTO, User user) {
         return Address.builder()
-                .street(adressInputDTO.getStreet())
-                .number(adressInputDTO.getNumber())
-                .neighborhood(adressInputDTO.getNeighborhood())
-                .city(adressInputDTO.getCity())
-                .state(adressInputDTO.getState())
-                .country(adressInputDTO.getCountry())
-                .zipCode(adressInputDTO.getPostalCode())
+                .street(addressInputDTO.getStreet())
+                .number(addressInputDTO.getNumber())
+                .neighborhood(addressInputDTO.getNeighborhood())
+                .city(addressInputDTO.getCity())
+                .state(addressInputDTO.getState())
+                .country(addressInputDTO.getCountry())
+                .zipCode(addressInputDTO.getPostalCode())
                 .user(user)
                 .build();
     }

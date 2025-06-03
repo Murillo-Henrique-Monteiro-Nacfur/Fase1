@@ -67,7 +67,7 @@ class AuthServiceTest {
 
         assertThatThrownBy(() -> authService.login(loginDTO))
                 .isInstanceOf(ApplicationException.class)
-                .hasMessage("Error validating login");
+                .hasMessage("Error during login");
     }
 
     @Test

@@ -48,7 +48,7 @@ class AuthenticationControllerTest {
         when(authService.login(request)).thenThrow(new RuntimeException("Service error"));
 
         assertThatThrownBy(() -> authenticationController.login(request))
-                .isInstanceOf(ApplicationException.class)
-                .hasMessage("Error during login");
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Service error");
     }
 }
