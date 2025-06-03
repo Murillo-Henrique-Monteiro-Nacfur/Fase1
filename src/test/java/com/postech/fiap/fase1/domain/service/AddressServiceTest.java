@@ -46,7 +46,7 @@ class AddressServiceTest {
         when(addressRepository.existsByUserId(user.getId())).thenReturn(false);
         when(addressRepository.save(any(Address.class))).thenReturn(address);
 
-        AddressDTO result = addressService.createAdress(addressInputDTO, sessionDTO);
+        AddressDTO result = addressService.createAddress(addressInputDTO, sessionDTO);
 
         assertEquals("Street A", result.getStreet());
         assertEquals("123", result.getNumber());
@@ -67,7 +67,7 @@ class AddressServiceTest {
         doNothing().when(userValidator).verifyUserLoggedIsAdminOrOwner(sessionDTO, user.getId());
         when(addressRepository.existsByUserId(user.getId())).thenReturn(true);
 
-        ApplicationException exception = assertThrows(ApplicationException.class, () -> addressService.createAdress(addressInputDTO, sessionDTO));
+        ApplicationException exception = assertThrows(ApplicationException.class, () -> addressService.createAddress(addressInputDTO, sessionDTO));
 
         assertEquals("User already has an address", exception.getMessage());
     }
@@ -117,9 +117,9 @@ class AddressServiceTest {
 
         when(addressRepository.findById(addressId)).thenReturn(Optional.empty());
 
-        ApplicationException exception = assertThrows(ApplicationException.class, () -> addressService.updateAdress(addressId, updateDTO));
+        ApplicationException exception = assertThrows(ApplicationException.class, () -> addressService.updateAddress(addressId, updateDTO));
 
-        assertEquals("Adress not found", exception.getMessage());
+        assertEquals("Address not found", exception.getMessage());
     }
 
     @DisplayName("Should update address when it exists")
@@ -133,7 +133,7 @@ class AddressServiceTest {
         when(addressRepository.findById(addressId)).thenReturn(Optional.of(existingAddress));
         when(addressRepository.save(existingAddress)).thenReturn(updatedAddress);
 
-        Address result = addressService.updateAdress(addressId, updateDTO);
+        Address result = addressService.updateAddress(addressId, updateDTO);
 
         assertEquals("Street C", result.getStreet());
         assertEquals("789", result.getNumber());
