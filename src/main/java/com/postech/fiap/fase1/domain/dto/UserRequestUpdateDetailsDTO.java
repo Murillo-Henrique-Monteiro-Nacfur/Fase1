@@ -23,6 +23,6 @@ public class UserRequestUpdateDetailsDTO {
     private String email;
     @NotBlank
     private String login;
-    @NotBlank
+    @NotNull
     private LocalDate birthDate;
 }

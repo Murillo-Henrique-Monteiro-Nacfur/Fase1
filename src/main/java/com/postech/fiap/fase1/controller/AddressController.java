@@ -1,4 +1,4 @@
-package com.postech.fiap.fase1.domain.controller;
+package com.postech.fiap.fase1.controller;
 
 import com.postech.fiap.fase1.configuration.session.SessionService;
 import com.postech.fiap.fase1.domain.dto.AddressDTO;
@@ -41,13 +41,13 @@ public class AddressController {
     @PostMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<AddressDTO> create(@RequestBody AddressRequestDTO addressRequestDTO) {
         SessionDTO sessionDTO = sessionService.getSessionDTO();
-        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.createAdress(requestToInput(addressRequestDTO), sessionDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.createAddress(requestToInput(addressRequestDTO), sessionDTO));
     }
 
     @PreAuthorize("hasRole('CLIENT')")
     @PutMapping("/{id}")
     public ResponseEntity<AddressDTO> update(@PathVariable(value = "id") Long id, @RequestBody @Valid AddressRequestUpdateDTO addressRequestUpdateDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(addressService.updateAdress(id, requestUpdateToInput(addressRequestUpdateDTO))));
+        return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(addressService.updateAddress(id, requestUpdateToInput(addressRequestUpdateDTO))));
     }
 
     @PreAuthorize("hasRole('CLIENT')")

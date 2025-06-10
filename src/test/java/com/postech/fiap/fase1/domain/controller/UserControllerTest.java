@@ -2,6 +2,7 @@ package com.postech.fiap.fase1.domain.controller;
 
 import com.postech.fiap.fase1.configuration.exception.ApplicationException;
 import com.postech.fiap.fase1.configuration.session.SessionService;
+import com.postech.fiap.fase1.controller.UserController;
 import com.postech.fiap.fase1.domain.dto.UserDTO;
 import com.postech.fiap.fase1.domain.dto.UserRequestDTO;
 import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;

@@ -1,6 +1,7 @@
 package com.postech.fiap.fase1.domain.controller;
 
 import com.postech.fiap.fase1.configuration.exception.ApplicationException;
+import com.postech.fiap.fase1.controller.AuthenticationController;
 import com.postech.fiap.fase1.domain.dto.auth.LoginRequestDTO;
 import com.postech.fiap.fase1.domain.service.session.AuthService;
 import org.junit.jupiter.api.Test;

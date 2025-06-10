@@ -28,11 +28,11 @@ public class AddressService {
     private final UserValidator userValidator;
 
     @Transactional
-    public AddressDTO createAdress(AddressInputDTO addressInputDTO, SessionDTO sessionDTO) {
+    public AddressDTO createAddress(AddressInputDTO addressInputDTO, SessionDTO sessionDTO) {
         User user = userService.getOne(sessionDTO, addressInputDTO.getUserId());
         userValidator.verifyUserLoggedIsAdminOrOwner(sessionDTO, user.getId());
 
-        if (existsAdressByUserId(user)) {
+        if (existsAddressByUserId(user)) {
             throw new ApplicationException("User already has an address");
         }
 
@@ -49,12 +49,12 @@ public class AddressService {
     }
 
     @Transactional(readOnly = true)
-    public boolean existsAdressByUserId(User user) {
+    public boolean existsAddressByUserId(User user) {
         return addressRepository.existsByUserId(user.getId());
     }
 
     @Transactional
-    public Address updateAdress(Long id, AddressInputUpdateDTO addressInputUpdateDTO) {
+    public Address updateAddress(Long id, AddressInputUpdateDTO addressInputUpdateDTO) {
         Address address = this.findById(id);
         BeanUtils.copyProperties(addressInputUpdateDTO, address, "id", "userId");
         return addressRepository.save(address);
@@ -62,7 +62,7 @@ public class AddressService {
 
     @Transactional(readOnly = true)
     public Address findById(Long id) {
-        return addressRepository.findById(id).orElseThrow(() -> new ApplicationException("Adress not found"));
+        return addressRepository.findById(id).orElseThrow(() -> new ApplicationException("Address not found"));
     }
 
     @Transactional(readOnly = true)

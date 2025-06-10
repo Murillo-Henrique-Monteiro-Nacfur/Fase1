@@ -1,6 +1,7 @@
 package com.postech.fiap.fase1.domain.controller;
 
 import com.postech.fiap.fase1.configuration.session.SessionService;
+import com.postech.fiap.fase1.controller.AddressController;
 import com.postech.fiap.fase1.domain.dto.AddressDTO;
 import com.postech.fiap.fase1.domain.dto.AddressRequestDTO;
 import com.postech.fiap.fase1.domain.dto.AddressRequestUpdateDTO;
@@ -42,7 +43,7 @@ class AddressControllerTest {
         AddressDTO expectedAddressDTO = new AddressDTO(2L, "Street B", "456", "Neighborhood B", "City B", "State B", "Country B", "67890", 1L);
 
         when(sessionService.getSessionDTO()).thenReturn(sessionDTO);
-        when(addressService.createAdress(any(), eq(sessionDTO))).thenReturn(expectedAddressDTO);
+        when(addressService.createAddress(any(), eq(sessionDTO))).thenReturn(expectedAddressDTO);
 
         ResponseEntity<AddressDTO> response = addressController.create(requestDTO);
 
@@ -56,7 +57,7 @@ class AddressControllerTest {
         Long addressId = 1L;
         AddressRequestUpdateDTO updateDTO = new AddressRequestUpdateDTO("Street C", "789", "Neighborhood C", "City C", "State C", "Country C", "54321");
         Address address = new Address(1L, "Street C", "789", "Neighborhood C", "City C", "State C", "Country C", "54321", User.builder().id(1L).build());
-        when(addressService.updateAdress(eq(addressId), any())).thenReturn(address);
+        when(addressService.updateAddress(eq(addressId), any())).thenReturn(address);
 
         ResponseEntity<AddressDTO> response = addressController.update(addressId, updateDTO);
 
