@@ -1,8 +1,13 @@
 package com.postech.fiap.fase1.domain.assembler;
 
-import com.postech.fiap.fase1.domain.dto.*;
-import com.postech.fiap.fase1.domain.model.Address;
-import com.postech.fiap.fase1.domain.model.User;
+import com.postech.fiap.fase1.application.assembler.AddressAssembler;
+import com.postech.fiap.fase1.application.dto.AddressDTO;
+import com.postech.fiap.fase1.application.dto.AddressInputUpdateDTO;
+import com.postech.fiap.fase1.application.dto.AddressRequestDTO;
+import com.postech.fiap.fase1.application.dto.AddressRequestUpdateDTO;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.Address;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
+import com.postech.fiap.fase1.domain.model.AddressDomain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +22,7 @@ class AddressAssemblerTest {
     void mapAddressRequestDTOToAddressInputDTO() {
         AddressRequestDTO requestDTO = new AddressRequestDTO("Street A", "123", "Neighborhood A", "City A", "State A", "Country A", "12345", 1L);
 
-        AddressInputDTO inputDTO = AddressAssembler.requestToInput(requestDTO);
+        AddressDomain inputDTO = AddressAssembler.requestToModel(requestDTO);
 
         assertEquals("Street A", inputDTO.getStreet());
         assertEquals("123", inputDTO.getNumber());
@@ -67,7 +72,7 @@ class AddressAssemblerTest {
     @DisplayName("Should map AddressInputDTO and User to Address correctly")
     @Test
     void mapAddressInputDTOAndUserToAddress() {
-        AddressInputDTO inputDTO = new AddressInputDTO("Street D", "101", "Neighborhood D", "City D", "State D", "Country D", "98765", 2L);
+        AddressDomain inputDTO = new AddressDomain("Street D", "101", "Neighborhood D", "City D", "State D", "Country D", "98765", 2L);
         User user = User.builder().id(2L).build();
 
         Address address = AddressAssembler.toEntity(inputDTO, user);

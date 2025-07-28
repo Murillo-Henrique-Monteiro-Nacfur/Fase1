@@ -1,0 +1,23 @@
+package com.postech.fiap.fase1.application.validation.user.implementation;
+
+import com.postech.fiap.fase1.application.validation.user.UserCreateAdminValidation;
+import com.postech.fiap.fase1.application.validation.user.UserCreateValidation;
+import com.postech.fiap.fase1.application.validation.user.UserUpdatePasswordValidation;
+import com.postech.fiap.fase1.domain.model.UserDomain;
+import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class UserPasswordValidator implements UserCreateValidation, UserCreateAdminValidation, UserUpdatePasswordValidation {
+    private static final String PASSWORD_AND_CONFIRMATION_DO_NOT_MATCH = "Password and confirmation do not match";
+    public void validate(UserDomain userDomain) {
+        if (userDomain.isPasswordDifferentFromConfirmation()) {
+            log.warn(PASSWORD_AND_CONFIRMATION_DO_NOT_MATCH);
+            throw new ApplicationException(PASSWORD_AND_CONFIRMATION_DO_NOT_MATCH);
+        }
+    }
+}

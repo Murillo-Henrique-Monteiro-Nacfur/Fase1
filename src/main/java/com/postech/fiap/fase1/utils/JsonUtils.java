@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.postech.fiap.fase1.configuration.exception.ApplicationException;
+import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

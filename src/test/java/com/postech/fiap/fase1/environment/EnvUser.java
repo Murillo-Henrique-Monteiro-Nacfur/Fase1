@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.environment;
 
-import com.postech.fiap.fase1.domain.model.Role;
-import com.postech.fiap.fase1.domain.model.User;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.Role;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
 
 import java.time.LocalDate;
 import java.util.List;

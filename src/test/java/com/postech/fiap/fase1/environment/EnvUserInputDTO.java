@@ -1,22 +1,22 @@
 package com.postech.fiap.fase1.environment;
 
-import com.postech.fiap.fase1.domain.dto.UserInputDTO;
-import com.postech.fiap.fase1.domain.model.Role;
+import com.postech.fiap.fase1.domain.model.UserDomain;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.Role;
 
 public class EnvUserInputDTO {
-    public static UserInputDTO getUserInputDTO(){
+    public static UserDomain getUserInputDTO(){
         return getUserInputDTO("password", "password");
     }
 
-    public static UserInputDTO getUserInputDTO(String password, String passwordConfirmation){
+    public static UserDomain getUserInputDTO(String password, String passwordConfirmation){
         return getUserInputDTO(1L, password, passwordConfirmation);
     }
 
-    public static UserInputDTO getUserInputDTOEWithNoID(){
+    public static UserDomain getUserInputDTOEWithNoID(){
         return getUserInputDTO(null, "password", "password");
     }
-    private static UserInputDTO getUserInputDTO(Long id, String password, String passwordConfirmation){
-        return UserInputDTO
+    private static UserDomain getUserInputDTO(Long id, String password, String passwordConfirmation){
+        return UserDomain
                 .builder()
                 .id(id)
                 .login("login")

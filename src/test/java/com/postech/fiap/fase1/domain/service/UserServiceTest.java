@@ -1,10 +1,10 @@
 package com.postech.fiap.fase1.domain.service;
 
-import com.postech.fiap.fase1.configuration.exception.ApplicationException;
-import com.postech.fiap.fase1.domain.dto.UserInputDTO;
-import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
-import com.postech.fiap.fase1.domain.model.User;
-import com.postech.fiap.fase1.domain.repository.UserRepository;
+import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.domain.model.UserDomain;
+import com.postech.fiap.fase1.application.dto.auth.SessionDTO;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
+import com.postech.fiap.fase1.infrastructure.persistence.repository.UserRepository;
 import com.postech.fiap.fase1.domain.validator.UserValidator;
 import com.postech.fiap.fase1.environment.EnvSessionDTO;
 import com.postech.fiap.fase1.environment.EnvUser;
@@ -110,16 +110,16 @@ class UserServiceTest {
 
     @Test
     void shouldCreateUserSuccessfully() {
-        UserInputDTO userInputDTO = EnvUserInputDTO.getUserInputDTO();
+        UserDomain userDomain = EnvUserInputDTO.getUserInputDTO();
         User user = EnvUser.getUserClient();
 
         when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        User result = userService.create(userInputDTO);
+        User result = userService.create(userDomain);
 
         assertThat(result).isNotNull();
-        verify(userValidator).validateUserCreation(userInputDTO);
+        verify(userValidator).validateUserCreation(userDomain);
         verify(userRepository).save(any(User.class));
     }
 
@@ -156,19 +156,19 @@ class UserServiceTest {
     void shouldUpdateUserDetailsSuccessfully() {
         // Arrange
         SessionDTO sessionDTO = EnvSessionDTO.getSessionDTOClient();
-        UserInputDTO userInputDTO = EnvUserInputDTO.getUserInputDTO();
+        UserDomain userDomain = EnvUserInputDTO.getUserInputDTO();
         User user = EnvUser.getUserClient();
 
-        when(userRepository.findById(userInputDTO.getId())).thenReturn(java.util.Optional.of(user));
+        when(userRepository.findById(userDomain.getId())).thenReturn(java.util.Optional.of(user));
         when(userRepository.save(user)).thenReturn(user);
 
         // Act
-        User result = userService.updateDetails(sessionDTO, userInputDTO);
+        User result = userService.updateDetails(sessionDTO, userDomain);
 
         // Assert
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(user.getId());
-        verify(userValidator).validateUserUpdateDetails(sessionDTO, userInputDTO);
+        verify(userValidator).validateUserUpdateDetails(sessionDTO, userDomain);
         verify(userRepository).save(user);
     }
 
@@ -176,16 +176,16 @@ class UserServiceTest {
     void shouldThrowExceptionWhenUpdatingDetails() {
         // Arrange
         SessionDTO sessionDTO = EnvSessionDTO.getSessionDTOClient();
-        UserInputDTO userInputDTO = EnvUserInputDTO.getUserInputDTO();
+        UserDomain userDomain = EnvUserInputDTO.getUserInputDTO();
 
-        when(userRepository.findById(userInputDTO.getId())).thenReturn(java.util.Optional.empty());
+        when(userRepository.findById(userDomain.getId())).thenReturn(java.util.Optional.empty());
 
         // Act & Assert
-        assertThatThrownBy(() -> userService.updateDetails(sessionDTO, userInputDTO))
+        assertThatThrownBy(() -> userService.updateDetails(sessionDTO, userDomain))
                 .isInstanceOf(ApplicationException.class)
                 .hasMessage("User not found");
 
-        verify(userRepository).findById(userInputDTO.getId());
+        verify(userRepository).findById(userDomain.getId());
         verifyNoMoreInteractions(userRepository);
     }
 
@@ -193,20 +193,20 @@ class UserServiceTest {
     void shouldUpdateUserPasswordSuccessfully() {
         // Arrange
         SessionDTO sessionDTO = EnvSessionDTO.getSessionDTOClient();
-        UserInputDTO userInputDTO = EnvUserInputDTO.getUserInputDTO();
+        UserDomain userDomain = EnvUserInputDTO.getUserInputDTO();
         User user = EnvUser.getUserClient();
 
-        when(userRepository.findById(userInputDTO.getId())).thenReturn(java.util.Optional.of(user));
-        when(passwordEncoder.encode(userInputDTO.getPassword())).thenReturn("encodedPassword");
+        when(userRepository.findById(userDomain.getId())).thenReturn(java.util.Optional.of(user));
+        when(passwordEncoder.encode(userDomain.getPassword())).thenReturn("encodedPassword");
         when(userRepository.save(user)).thenReturn(user);
 
         // Act
-        User result = userService.updatePassword(sessionDTO, userInputDTO);
+        User result = userService.updatePassword(sessionDTO, userDomain);
 
         // Assert
         assertThat(result).isNotNull();
         assertThat(result.getPassword()).isEqualTo("encodedPassword");
-        verify(userValidator).validateUserUpdatePassword(sessionDTO, userInputDTO);
+        verify(userValidator).validateUserUpdatePassword(sessionDTO, userDomain);
         verify(userRepository).save(user);
     }
 
@@ -214,16 +214,16 @@ class UserServiceTest {
     void shouldThrowExceptionWhenUpdatingPassword() {
         // Arrange
         SessionDTO sessionDTO = EnvSessionDTO.getSessionDTOClient();
-        UserInputDTO userInputDTO = EnvUserInputDTO.getUserInputDTO();
+        UserDomain userDomain = EnvUserInputDTO.getUserInputDTO();
 
-        when(userRepository.findById(userInputDTO.getId())).thenReturn(java.util.Optional.empty());
+        when(userRepository.findById(userDomain.getId())).thenReturn(java.util.Optional.empty());
 
         // Act & Assert
-        assertThatThrownBy(() -> userService.updatePassword(sessionDTO, userInputDTO))
+        assertThatThrownBy(() -> userService.updatePassword(sessionDTO, userDomain))
                 .isInstanceOf(ApplicationException.class)
                 .hasMessage("User not found");
 
-        verify(userRepository).findById(userInputDTO.getId());
+        verify(userRepository).findById(userDomain.getId());
         verifyNoMoreInteractions(userRepository);
     }
 }

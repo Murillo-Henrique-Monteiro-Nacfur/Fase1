@@ -1,14 +1,14 @@
 package com.postech.fiap.fase1.domain.service;
 
-import com.postech.fiap.fase1.configuration.exception.ApplicationException;
-import com.postech.fiap.fase1.domain.assembler.AddressAssembler;
-import com.postech.fiap.fase1.domain.dto.AddressDTO;
-import com.postech.fiap.fase1.domain.dto.AddressInputDTO;
-import com.postech.fiap.fase1.domain.dto.AddressInputUpdateDTO;
-import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
-import com.postech.fiap.fase1.domain.model.Address;
-import com.postech.fiap.fase1.domain.model.User;
-import com.postech.fiap.fase1.domain.repository.AddressRepository;
+import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.application.assembler.AddressAssembler;
+import com.postech.fiap.fase1.application.dto.AddressDTO;
+import com.postech.fiap.fase1.domain.model.AddressDomain;
+import com.postech.fiap.fase1.application.dto.AddressInputUpdateDTO;
+import com.postech.fiap.fase1.application.dto.auth.SessionDTO;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.Address;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
+import com.postech.fiap.fase1.infrastructure.persistence.repository.AddressRepository;
 import com.postech.fiap.fase1.domain.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.postech.fiap.fase1.domain.assembler.AddressAssembler.toDTO;
-import static com.postech.fiap.fase1.domain.assembler.AddressAssembler.toEntity;
+import static com.postech.fiap.fase1.application.assembler.AddressAssembler.toDTO;
+import static com.postech.fiap.fase1.application.assembler.AddressAssembler.toEntity;
 
 @Service
 @RequiredArgsConstructor
@@ -28,23 +28,23 @@ public class AddressService {
     private final UserValidator userValidator;
 
     @Transactional
-    public AddressDTO createAddress(AddressInputDTO addressInputDTO, SessionDTO sessionDTO) {
-        User user = userService.getOne(sessionDTO, addressInputDTO.getUserId());
+    public AddressDTO createAddress(AddressDomain addressDomain, SessionDTO sessionDTO) {
+        User user = userService.getOne(sessionDTO, addressDomain.getAddressable().getId());
         userValidator.verifyUserLoggedIsAdminOrOwner(sessionDTO, user.getId());
 
         if (existsAddressByUserId(user)) {
             throw new ApplicationException("User already has an address");
         }
 
-        Address address = toEntity(addressInputDTO, user);
+        Address address = toEntity(addressDomain, user);
         return toDTO(addressRepository.save(address));
     }
 
     @Transactional
     public void delete(Long id, SessionDTO sessionDTO) {
         Address address = this.findById(id);
-        User user = address.getUser();
-        userValidator.verifyUserLoggedIsAdminOrOwner(sessionDTO, user.getId());
+        Long idUser = address.getAddressable().getId();
+        userValidator.verifyUserLoggedIsAdminOrOwner(sessionDTO, idUser);
         addressRepository.delete(address);
     }
 
@@ -68,7 +68,7 @@ public class AddressService {
     @Transactional(readOnly = true)
     public Address getOneById(Long id, SessionDTO sessionDTO) {
         Address address = this.findById(id);
-        userValidator.verifyUserLoggedIsAdminOrOwner(sessionDTO, address.getUser().getId());
+        userValidator.verifyUserLoggedIsAdminOrOwner(sessionDTO, address.getAddressable().getId());
         return address;
     }
 

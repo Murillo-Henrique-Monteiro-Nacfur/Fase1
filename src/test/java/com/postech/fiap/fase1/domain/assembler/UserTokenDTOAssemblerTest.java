@@ -1,7 +1,8 @@
 package com.postech.fiap.fase1.domain.assembler;
 
-import com.postech.fiap.fase1.domain.dto.auth.UserTokenDTO;
-import com.postech.fiap.fase1.domain.model.User;
+import com.postech.fiap.fase1.application.assembler.UserTokenDTOAssembler;
+import com.postech.fiap.fase1.application.dto.auth.UserTokenDTO;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
 import com.postech.fiap.fase1.environment.EnvUser;
 import org.junit.jupiter.api.Test;
 

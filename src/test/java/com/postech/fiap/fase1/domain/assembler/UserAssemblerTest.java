@@ -1,11 +1,12 @@
 package com.postech.fiap.fase1.domain.assembler;
 
-import com.postech.fiap.fase1.domain.dto.UserInputDTO;
-import com.postech.fiap.fase1.domain.dto.UserRequestDTO;
-import com.postech.fiap.fase1.domain.dto.UserRequestUpdateDetailsDTO;
-import com.postech.fiap.fase1.domain.dto.UserRequestUpdatePasswordDTO;
-import com.postech.fiap.fase1.domain.model.Role;
-import com.postech.fiap.fase1.domain.model.User;
+import com.postech.fiap.fase1.application.assembler.UserAssembler;
+import com.postech.fiap.fase1.domain.model.UserDomain;
+import com.postech.fiap.fase1.application.dto.UserRequestDTO;
+import com.postech.fiap.fase1.application.dto.UserRequestUpdateDetailsDTO;
+import com.postech.fiap.fase1.application.dto.UserRequestUpdatePasswordDTO;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.Role;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
 import com.postech.fiap.fase1.environment.*;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class UserAssemblerTest {
     void convertsRequestToInputSuccessfully() {
         UserRequestDTO requestDTO = EnvUserRequestDTO.getUserRequestDTO();
 
-        UserInputDTO result = UserAssembler.requestToInput(requestDTO, Role.CLIENT);
+        UserDomain result = UserAssembler.requestToInput(requestDTO, Role.CLIENT);
 
         assertThat(result).isNotNull();
         assertThat(result.getName()).isEqualTo(requestDTO.getName());
@@ -33,7 +34,7 @@ class UserAssemblerTest {
     void convertsRequestUpdateDetailsToInputSuccessfully() {
         UserRequestUpdateDetailsDTO updateDetailsDTO = EnvUserRequestUpdateDetailsDTO.getUserRequestUpdateDetailsDTO();
 
-        UserInputDTO result = UserAssembler.requestUpdateDetailsToInput(updateDetailsDTO);
+        UserDomain result = UserAssembler.requestUpdateDetailsToInput(updateDetailsDTO);
 
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(updateDetailsDTO.getId());
@@ -47,7 +48,7 @@ class UserAssemblerTest {
     void convertsRequestUpdatePasswordToInputSuccessfully() {
         UserRequestUpdatePasswordDTO updatePasswordDTO = EnvUserRequestUpdatePasswordDTO.getUserRequestUpdatePasswordDTO();
 
-        UserInputDTO result = UserAssembler.requestUpdatePasswordToInput(updatePasswordDTO);
+        UserDomain result = UserAssembler.requestUpdatePasswordToInput(updatePasswordDTO);
 
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(updatePasswordDTO.getId());
@@ -57,7 +58,7 @@ class UserAssemblerTest {
 
     @Test
     void convertsInputToModelSuccessfully() {
-        UserInputDTO inputDTO = EnvUserInputDTO.getUserInputDTO();
+        UserDomain inputDTO = EnvUserInputDTO.getUserInputDTO();
 
 
         User result = UserAssembler.inputToModel(inputDTO, "encodedPassword");
@@ -75,7 +76,7 @@ class UserAssemblerTest {
     void updatesUserDetailsSuccessfully() {
         User user = EnvUser.getUserClient();
 
-        UserInputDTO inputDTO = EnvUserInputDTO.getUserInputDTO();
+        UserDomain inputDTO = EnvUserInputDTO.getUserInputDTO();
 
         UserAssembler.updateUserDetails(user, inputDTO);
 

@@ -56,4 +56,54 @@
             DELETE FROM DATABASECHANGELOG WHERE ID = 'criacao-usuario-padrao';
         </rollback>
     </changeSet>
+
+    <changeSet id="remover-coluna-de-usuario-do-endereco" author="murillo.nacfur">
+        <sql>
+            ALTER TABLE PUBLIC."ADDRESS" DROP COLUMN "USER_ID";
+        </sql>
+        <rollback>
+            ALTER TABLE public."ADDRESS" ADD "USER_ID" BIGINT;
+            ALTER TABLE public."ADDRESS" ADD FOREIGN KEY ("USER_ID") REFERENCES PUBLIC."USERS"("ID");
+            ALTER TABLE public."ADDRESS" ALTER COLUMN "USER_ID" SET NOT NULL;
+            DELETE FROM DATABASECHANGELOG WHERE ID = 'remover-coluna-de-usuario-do-endereco';
+        </rollback>
+    </changeSet>
+
+    <changeSet id="relacao-endereco-usuario-e-restaurants" author="murillo.nacfur">
+        <sql>
+            ALTER TABLE PUBLIC."ADDRESS" ADD COLUMN "ADDRESSABLE_ID" BIGINT NOT NULL;
+            ALTER TABLE PUBLIC."ADDRESS" ADD COLUMN "ADDRESSABLE_TYPE" VARCHAR(255) NOT NULL;
+            ALTER TABLE PUBLIC."ADDRESS" ADD COLUMN "CREATED_AT" TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+            ALTER TABLE PUBLIC."ADDRESS" ADD COLUMN "UPDATED_AT" TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+        </sql>
+        <rollback>
+            ALTER TABLE public."ADDRESS" DROP COLUMN "ADDRESSABLE_ID";
+            ALTER TABLE public."ADDRESS" DROP COLUMN "ADDRESSABLE_TYPE";
+            ALTER TABLE PUBLIC."ADDRESS" DROP COLUMN "CREATED_AT";
+            ALTER TABLE PUBLIC."ADDRESS" DROP COLUMN "UPDATED_AT";
+            DELETE FROM DATABASECHANGELOG WHERE ID = 'relacao-endereco-usuario-e-restaurants';
+        </rollback>
+    </changeSet>
+
+    <changeSet id="criacao-tabela-de-restaurante" author="murillo.nacfur">
+        <sql>
+            CREATE TABLE PUBLIC."RESTAURANT" (
+            "ID" BIGSERIAL PRIMARY KEY,
+            "NAME" VARCHAR(255) NOT NULL,
+            "CNPJ" VARCHAR(14) NOT NULL,
+            "DESCRIPTION" VARCHAR(255) NOT NULL,
+            "CUISINE_TYPE" VARCHAR(255) NOT NULL,
+            "OPEN_TIME" TIME NOT NULL,
+            "CLOSE_TIME" TIME NOT NULL,
+            "USER_ID" BIGINT NOT NULL,
+            "CREATED_AT" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            "UPDATED_AT" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY ("USER_ID") REFERENCES PUBLIC."USERS"("ID")
+            );
+        </sql>
+        <rollback>
+            DROP TABLE public."RESTAURANT";
+            DELETE FROM DATABASECHANGELOG WHERE ID = 'criacao-tabela-de-restaurante';
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

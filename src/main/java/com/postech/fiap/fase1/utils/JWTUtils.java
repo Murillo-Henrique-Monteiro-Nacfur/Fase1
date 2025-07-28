@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.postech.fiap.fase1.configuration.exception.ApplicationException;
+import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

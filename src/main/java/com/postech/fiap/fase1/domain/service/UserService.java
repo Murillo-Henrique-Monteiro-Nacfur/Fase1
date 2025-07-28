@@ -1,11 +1,11 @@
 package com.postech.fiap.fase1.domain.service;
 
-import com.postech.fiap.fase1.configuration.exception.ApplicationException;
-import com.postech.fiap.fase1.domain.assembler.UserAssembler;
-import com.postech.fiap.fase1.domain.dto.UserInputDTO;
-import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
-import com.postech.fiap.fase1.domain.model.User;
-import com.postech.fiap.fase1.domain.repository.UserRepository;
+import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.application.assembler.UserAssembler;
+import com.postech.fiap.fase1.domain.model.UserDomain;
+import com.postech.fiap.fase1.application.dto.auth.SessionDTO;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
+import com.postech.fiap.fase1.infrastructure.persistence.repository.UserRepository;
 import com.postech.fiap.fase1.domain.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -44,23 +44,23 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    public User create(UserInputDTO userInputDTO) {
-        userValidator.validateUserCreation(userInputDTO);
-        User user = UserAssembler.inputToModel(userInputDTO, passwordEncoder.encode(userInputDTO.getPassword()));
+    public User create(UserDomain userDomain) {
+        userValidator.validateUserCreation(userDomain);
+        User user = UserAssembler.inputToModel(userDomain, passwordEncoder.encode(userDomain.getPassword()));
         return userRepository.save(user);
     }
 
-    public User updateDetails(SessionDTO sessionDTO, UserInputDTO userInputDTO) {
-        User user = findById(userInputDTO.getId());
-        userValidator.validateUserUpdateDetails(sessionDTO, userInputDTO);
-        UserAssembler.updateUserDetails(user, userInputDTO);
+    public User updateDetails(SessionDTO sessionDTO, UserDomain userDomain) {
+        User user = findById(userDomain.getId());
+        userValidator.validateUserUpdateDetails(sessionDTO, userDomain);
+        UserAssembler.updateUserDetails(user, userDomain);
         return userRepository.save(user);
     }
 
-    public User updatePassword(SessionDTO sessionDTO, UserInputDTO userInputDTO) {
-        User user = findById(userInputDTO.getId());
-        userValidator.validateUserUpdatePassword(sessionDTO, userInputDTO);
-        user.setPassword(passwordEncoder.encode(userInputDTO.getPassword()));
+    public User updatePassword(SessionDTO sessionDTO, UserDomain userDomain) {
+        User user = findById(userDomain.getId());
+        userValidator.validateUserUpdatePassword(sessionDTO, userDomain);
+        user.setPassword(passwordEncoder.encode(userDomain.getPassword()));
         return userRepository.save(user);
     }
 

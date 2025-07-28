@@ -1,13 +1,13 @@
 package com.postech.fiap.fase1.domain.service;
 
-import com.postech.fiap.fase1.configuration.exception.ApplicationException;
-import com.postech.fiap.fase1.domain.dto.AddressDTO;
-import com.postech.fiap.fase1.domain.dto.AddressInputDTO;
-import com.postech.fiap.fase1.domain.dto.AddressInputUpdateDTO;
-import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
-import com.postech.fiap.fase1.domain.model.Address;
-import com.postech.fiap.fase1.domain.model.User;
-import com.postech.fiap.fase1.domain.repository.AddressRepository;
+import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.application.dto.AddressDTO;
+import com.postech.fiap.fase1.domain.model.AddressDomain;
+import com.postech.fiap.fase1.application.dto.AddressInputUpdateDTO;
+import com.postech.fiap.fase1.application.dto.auth.SessionDTO;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.Address;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
+import com.postech.fiap.fase1.infrastructure.persistence.repository.AddressRepository;
 import com.postech.fiap.fase1.domain.validator.UserValidator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,17 +36,17 @@ class AddressServiceTest {
     @DisplayName("Should create address when user does not already have one")
     @Test
     void createAddressWhenUserDoesNotAlreadyHaveOne() {
-        AddressInputDTO addressInputDTO = new AddressInputDTO("Street A", "123", "Neighborhood A", "City A", "State A", "Country A", "12345", 1L);
+        AddressDomain addressDomain = new AddressDomain("Street A", "123", "Neighborhood A", "City A", "State A", "Country A", "12345", 1L);
         SessionDTO sessionDTO = SessionDTO.builder().userId(1L).build();
         User user = User.builder().id(1L).build();
         Address address = new Address(1L, "Street A", "123", "City A", "State A", "12345", "Country A", "Neighborhood A", user);
 
-        when(userService.getOne(sessionDTO, addressInputDTO.getUserId())).thenReturn(user);
+        when(userService.getOne(sessionDTO, addressDomain.getUserId())).thenReturn(user);
         doNothing().when(userValidator).verifyUserLoggedIsAdminOrOwner(sessionDTO, user.getId());
         when(addressRepository.existsByUserId(user.getId())).thenReturn(false);
         when(addressRepository.save(any(Address.class))).thenReturn(address);
 
-        AddressDTO result = addressService.createAddress(addressInputDTO, sessionDTO);
+        AddressDTO result = addressService.createAddress(addressDomain, sessionDTO);
 
         assertEquals("Street A", result.getStreet());
         assertEquals("123", result.getNumber());
@@ -59,15 +59,15 @@ class AddressServiceTest {
     @DisplayName("Should throw exception when user already has an address")
     @Test
     void throwExceptionWhenUserAlreadyHasAnAddress() {
-        AddressInputDTO addressInputDTO = new AddressInputDTO("Street A", "123", "Neighborhood A", "City A", "State A", "Country A", "12345", 1L);
+        AddressDomain addressDomain = new AddressDomain("Street A", "123", "Neighborhood A", "City A", "State A", "Country A", "12345", 1L);
         SessionDTO sessionDTO = SessionDTO.builder().userId(1L).build();
         User user = User.builder().id(1L).build();
 
-        when(userService.getOne(sessionDTO, addressInputDTO.getUserId())).thenReturn(user);
+        when(userService.getOne(sessionDTO, addressDomain.getUserId())).thenReturn(user);
         doNothing().when(userValidator).verifyUserLoggedIsAdminOrOwner(sessionDTO, user.getId());
         when(addressRepository.existsByUserId(user.getId())).thenReturn(true);
 
-        ApplicationException exception = assertThrows(ApplicationException.class, () -> addressService.createAddress(addressInputDTO, sessionDTO));
+        ApplicationException exception = assertThrows(ApplicationException.class, () -> addressService.createAddress(addressDomain, sessionDTO));
 
         assertEquals("User already has an address", exception.getMessage());
     }

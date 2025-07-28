@@ -2,10 +2,10 @@ package com.postech.fiap.fase1.domain.service.session;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.postech.fiap.fase1.configuration.exception.ApplicationException;
-import com.postech.fiap.fase1.domain.dto.auth.LoginRequestDTO;
-import com.postech.fiap.fase1.domain.dto.auth.UserTokenDTO;
-import com.postech.fiap.fase1.domain.model.User;
+import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.application.dto.auth.LoginRequestDTO;
+import com.postech.fiap.fase1.application.dto.auth.UserTokenDTO;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
 import com.postech.fiap.fase1.domain.service.UserService;
 import com.postech.fiap.fase1.environment.EnvUser;
 import com.postech.fiap.fase1.utils.JWTUtils;

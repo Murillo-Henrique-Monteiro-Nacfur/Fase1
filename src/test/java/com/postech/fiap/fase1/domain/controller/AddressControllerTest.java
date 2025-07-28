@@ -1,14 +1,14 @@
 package com.postech.fiap.fase1.domain.controller;
 
-import com.postech.fiap.fase1.configuration.session.SessionService;
-import com.postech.fiap.fase1.controller.AddressController;
-import com.postech.fiap.fase1.domain.dto.AddressDTO;
-import com.postech.fiap.fase1.domain.dto.AddressRequestDTO;
-import com.postech.fiap.fase1.domain.dto.AddressRequestUpdateDTO;
-import com.postech.fiap.fase1.domain.dto.auth.SessionDTO;
-import com.postech.fiap.fase1.domain.dto.auth.UserTokenDTO;
-import com.postech.fiap.fase1.domain.model.Address;
-import com.postech.fiap.fase1.domain.model.User;
+import com.postech.fiap.fase1.infrastructure.session.SessionService;
+import com.postech.fiap.fase1.application.controller.AddressController;
+import com.postech.fiap.fase1.application.dto.AddressDTO;
+import com.postech.fiap.fase1.application.dto.AddressRequestDTO;
+import com.postech.fiap.fase1.application.dto.AddressRequestUpdateDTO;
+import com.postech.fiap.fase1.application.dto.auth.SessionDTO;
+import com.postech.fiap.fase1.application.dto.auth.UserTokenDTO;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.Address;
+import com.postech.fiap.fase1.infrastructure.persistence.entity.User;
 import com.postech.fiap.fase1.domain.service.AddressService;
 import com.postech.fiap.fase1.environment.EnvSessionDTO;
 import com.postech.fiap.fase1.environment.EnvUser;
