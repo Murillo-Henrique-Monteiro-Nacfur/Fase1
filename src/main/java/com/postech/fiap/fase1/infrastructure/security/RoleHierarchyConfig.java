@@ -1,6 +1,6 @@
 package com.postech.fiap.fase1.infrastructure.security;
 
-import com.postech.fiap.fase1.infrastructure.persistence.entity.Role;
+import com.postech.fiap.fase1.infrastructure.data.entity.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;

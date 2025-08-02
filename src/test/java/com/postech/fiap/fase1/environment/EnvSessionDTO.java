@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.environment;
 
-import com.postech.fiap.fase1.application.dto.auth.SessionDTO;
-import com.postech.fiap.fase1.infrastructure.persistence.entity.Role;
+import com.postech.fiap.fase1.core.dto.auth.SessionDTO;
+import com.postech.fiap.fase1.infrastructure.data.entity.Role;
 
 public class EnvSessionDTO {
     public static SessionDTO getSessionDTOAdmin(){

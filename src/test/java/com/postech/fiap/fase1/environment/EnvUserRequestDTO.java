@@ -1,6 +1,6 @@
 package com.postech.fiap.fase1.environment;
 
-import com.postech.fiap.fase1.application.dto.UserRequestDTO;
+import com.postech.fiap.fase1.core.dto.user.UserRequestDTO;
 
 import java.time.LocalDate;
 

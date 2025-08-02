@@ -2,6 +2,7 @@ package com.postech.fiap.fase1.infrastructure.exception;
 
 import com.postech.fiap.fase1.infrastructure.exception.response.ExceptionResponse;
 import jakarta.annotation.Nonnull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.dao.NonTransientDataAccessException;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 @ControllerAdvice
 public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
@@ -61,13 +63,14 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {InvalidDataAccessResourceUsageException.class, DataIntegrityViolationException.class})
     public final ResponseEntity<ExceptionResponse<Object>> handleAllExceptions(NonTransientDataAccessException dataIntegrityViolationException) {
+        log.error("DataBase Integrity error: {}", dataIntegrityViolationException.getCause().getCause().getMessage());
         ExceptionResponse<Object> exceptionResponse = new ExceptionResponse<>(
                 LocalDateTime.now().toString()
-                , "DataBase Integrity error"
-                , dataIntegrityViolationException.getCause().getCause().getMessage()
+                , "Internal error"
+                , "DataBase error"
         );
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(HttpServerErrorException.InternalServerError.class)

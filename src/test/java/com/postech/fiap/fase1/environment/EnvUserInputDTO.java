@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.environment;
 
-import com.postech.fiap.fase1.domain.model.UserDomain;
-import com.postech.fiap.fase1.infrastructure.persistence.entity.Role;
+import com.postech.fiap.fase1.core.domain.model.UserDomain;
+import com.postech.fiap.fase1.infrastructure.data.entity.Role;
 
 public class EnvUserInputDTO {
     public static UserDomain getUserInputDTO(){

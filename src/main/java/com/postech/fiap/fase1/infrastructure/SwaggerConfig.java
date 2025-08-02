@@ -1,6 +1,5 @@
 package com.postech.fiap.fase1.infrastructure;
 
-
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -19,7 +18,7 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("Api de Restaurantes")
                         .version("1.0.0")                   // Versão da sua API
-                        .description("API RESTful desenvolvida em Spring Boot com autenticação JWT via cabeçalho " + X_AUTH_TOKEN_HEADER + "."))
+                        .description("API desenvolvida como backend do restaurante."))
                 .addSecurityItem(new SecurityRequirement().addList(X_AUTH_TOKEN_HEADER)) // Aplica o esquema de segurança globalmente
                 .components(new Components()
                         .addSecuritySchemes(X_AUTH_TOKEN_HEADER, // O nome do esquema de segurança
