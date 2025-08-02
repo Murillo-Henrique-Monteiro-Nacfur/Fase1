@@ -1,7 +1,6 @@
 package com.postech.fiap.fase1.core.gateway.user;
 
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
-import com.postech.fiap.fase1.infrastructure.data.entity.User;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,23 +9,21 @@ import java.util.Optional;
 
 public interface UserGateway {
 
-    User getOne(Long idUser);
-
     boolean hasUserWithSameEmail(Long idUser, String email);
 
     boolean hasUserWithSameLogin(Long idUser, String email);
 
-    Optional<UserDomain> getById(Long idRestaurent);
+    UserDomain getUserById(Long idUser);
 
-    Page<UserDomain> getAllPaged(Pageable pageable);
+    Page<UserDomain> getAllUserPaged(Pageable pageable);
 
-    UserDomain create(UserDomain userDomain);
+    UserDomain createUser(UserDomain userDomain);
 
-    UserDomain update(UserDomain userDomain);
+    UserDomain updateUser(UserDomain userDomain);
 
-    UserDomain updatePassoword(UserDomain userDomain);
+    UserDomain updateUserPassoword(UserDomain userDomain);
 
-    void delete(UserDomain userDomain);
+    void deleteUser(UserDomain userDomain);
 
-    UserDomain getUserByLogin(@NotBlank String login);
+    Optional<UserDomain> getUserByLogin(@NotBlank String login);
 }

@@ -10,9 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class UserEmailAlreadyUsedValidator implements UserCreateAdminValidation, UserUpdateValidation, UserCreateValidation {
     private static final String USER_WITH_THIS_EMAIL_ALREADY_EXISTS = "User with this email already exists";
     private final UserGateway userGateway;

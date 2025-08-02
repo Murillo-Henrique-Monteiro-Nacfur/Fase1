@@ -1,10 +1,11 @@
 package com.postech.fiap.fase1.infrastructure.session;
 
 import com.postech.fiap.fase1.core.dto.auth.SessionDTO;
-import org.springframework.stereotype.Component;
+import com.postech.fiap.fase1.core.gateway.SessionSource;
+import org.springframework.stereotype.Repository;
 
-@Component
-public class SessionDTOCreateUseCase {
+@Repository
+public class SessionRepository implements SessionSource {
 
     public SessionDTO getSessionDTO() {
         return ThreadLocalStorage.getSession();

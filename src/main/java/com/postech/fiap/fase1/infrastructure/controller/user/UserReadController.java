@@ -1,8 +1,9 @@
 package com.postech.fiap.fase1.infrastructure.controller.user;
 
-import com.postech.fiap.fase1.core.presenter.UserPresenter;
-import com.postech.fiap.fase1.core.dto.user.UserDTO;
-import com.postech.fiap.fase1.core.domain.usecase.user.UserReadUseCase;
+import com.postech.fiap.fase1.core.controllers.user.UserReadCoreController;
+import com.postech.fiap.fase1.core.dto.user.UserResponseDTO;
+import com.postech.fiap.fase1.infrastructure.data.DataRepository;
+import com.postech.fiap.fase1.infrastructure.session.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,19 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserReadController implements UserControllerInterface {
-    private final UserReadUseCase userReadUseCase;
-    private final UserPresenter userPresenter;
+
+    private final DataRepository dataRepository;
+    private final SessionRepository sessionRepository;
 
     @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(userPresenter.toDTO(userReadUseCase.getById(id)));
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable("id") Long id) {
+        UserReadCoreController userReadCoreController = new UserReadCoreController(dataRepository, sessionRepository);
+        return ResponseEntity.ok((userReadCoreController.findById(id)));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
-        return ResponseEntity.ok(userPresenter.toDTO(userReadUseCase.getAllPaged(pageable)));
+    public ResponseEntity<Page<UserResponseDTO>> findAll(Pageable pageable) {
+        UserReadCoreController userReadCoreController = new UserReadCoreController(dataRepository, sessionRepository);
+        return ResponseEntity.ok(userReadCoreController.findAll(pageable));
     }
 
 }

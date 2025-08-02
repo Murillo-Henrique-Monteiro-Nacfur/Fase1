@@ -22,14 +22,14 @@ public class AddressJpaGateway implements AddressGateway {
 
     @Override
     public AddressDomain create(AddressDomain addressDomain) {
-        final Address address = addressMapper.toEntity(addressDomain);
+        final Address address = null;//addressMapper.toEntity(addressDomain);
         return addressMapper.toDomain(addressRepository.save(address));
     }
 
     @Override
     public AddressDomain update(AddressDomain addressDomain) {
         var oldAddress = findById(addressDomain.getId());
-        final Address address = addressMapper.updateToEntity(addressDomain, oldAddress);
+        final Address address = null;//addressMapper.updateToEntity(addressDomain, oldAddress);
         return addressMapper.toDomain(addressRepository.save(address));
     }
 

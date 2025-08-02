@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 public class AddressUserCreateUseCase {
 
     private final AddressGateway addressGateway;
-    private final UserReadUseCase userReadUseCase;
-    private final SessionValidation sessionValidation;
+    //private final UserReadUseCase userReadUseCase;
+    //private final SessionValidation sessionValidation;
 
     public AddressDomain execute(AddressDomain addressDomain) {
-        sessionValidation.validate(addressDomain.getAddressable().getId());
+       // sessionValidation.validate(addressDomain.getAddressable().getId());
         addressDomain.setId(null);
-        UserDomain userDomain = userReadUseCase.getById(addressDomain.getAddressable().getId());
-        addressDomain.setAddressable(userDomain);
+      // UserDomain userDomain = userReadUseCase.getById(addressDomain.getAddressable().getId());
+       // addressDomain.setAddressable(userDomain);
         return addressGateway.create(addressDomain);
     }
 }

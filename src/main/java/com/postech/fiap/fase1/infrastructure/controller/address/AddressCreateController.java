@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.infrastructure.controller.address;
 
 import com.postech.fiap.fase1.core.presenter.AddressPresenter;
-import com.postech.fiap.fase1.core.dto.address.AddressDTO;
+import com.postech.fiap.fase1.core.dto.address.AddressResponseDTO;
 import com.postech.fiap.fase1.core.dto.address.AddressRequestDTO;
 import com.postech.fiap.fase1.core.domain.usecase.address.AddressUserCreateUseCase;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +21,13 @@ public class AddressCreateController implements AddressControllerInterface {
 
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping(path = "/user/{idUser}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<AddressDTO> createUserAddress(@RequestBody AddressRequestDTO addressRequestDTO, @PathVariable("idUser") Long idUser) {
+    public ResponseEntity<AddressResponseDTO> createUserAddress(@RequestBody AddressRequestDTO addressRequestDTO, @PathVariable("idUser") Long idUser) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressPresenter.toDTO(addressUserCreateUseCase.execute(addressPresenter.requestToAddressUserDomain(addressRequestDTO, idUser))));
     }
 
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping(path = "/restaurant/{idRestaurant}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<AddressDTO> createRestaurantAddress(@RequestBody AddressRequestDTO addressRequestDTO, @PathVariable("idRestaurant") Long idRestaurant) {
+    public ResponseEntity<AddressResponseDTO> createRestaurantAddress(@RequestBody AddressRequestDTO addressRequestDTO, @PathVariable("idRestaurant") Long idRestaurant) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressPresenter.toDTO(addressRestaurantCreateUseCase.execute(addressPresenter.requestToAddressRestaurantDomain(addressRequestDTO, idRestaurant))));
     }
 }

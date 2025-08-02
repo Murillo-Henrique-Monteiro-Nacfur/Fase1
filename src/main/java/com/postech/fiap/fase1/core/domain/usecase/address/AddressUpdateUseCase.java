@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 public class AddressUpdateUseCase {
 
     private final AddressGateway addressGateway;
-    private final SessionValidation sessionValidation;
+    //private final SessionValidation sessionValidation;
     private final AddressReadUseCase addressReadUseCase;
 
     public AddressDomain execute(AddressDomain addressDomain) {
         var addressDomainOld = addressReadUseCase.getById(addressDomain.getId());
         long userOwnerId = addressDomainOld.getAddressable().getIdUserOwner();
-        sessionValidation.validate(userOwnerId);
+        //sessionValidation.validate(userOwnerId);
         return addressGateway.update(addressDomain);
     }
 }

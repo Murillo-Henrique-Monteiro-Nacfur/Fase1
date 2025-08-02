@@ -14,13 +14,13 @@ public class AddressRestaurantCreateUseCase {
 
     private final AddressGateway addressGateway;
     private final RestaurantReadUseCase restaurantReadUseCase;
-    private final SessionValidation sessionValidation;
+    //private final SessionValidation sessionValidation;
 
     public AddressDomain execute(AddressDomain addressDomain) {
         addressDomain.setId(null);
         RestaurantDomain restaurantDomain = restaurantReadUseCase.getById(addressDomain.getAddressable().getId());
         addressDomain.setAddressable(restaurantDomain);
-        sessionValidation.validate(restaurantDomain.getUser().getId());
+        //sessionValidation.validate(restaurantDomain.getUser().getId());
         return addressGateway.create(addressDomain);
     }
 }

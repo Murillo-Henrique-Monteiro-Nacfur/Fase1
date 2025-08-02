@@ -1,10 +1,10 @@
 package com.postech.fiap.fase1.infrastructure.controller.user;
 
 
-import com.postech.fiap.fase1.core.presenter.UserPresenter;
-import com.postech.fiap.fase1.core.dto.user.UserDTO;
+import com.postech.fiap.fase1.core.controllers.user.UserCreateCoreController;
+import com.postech.fiap.fase1.core.dto.user.UserResponseDTO;
 import com.postech.fiap.fase1.core.dto.user.UserRequestDTO;
-import com.postech.fiap.fase1.core.domain.usecase.user.UserCreateUseCase;
+import com.postech.fiap.fase1.infrastructure.data.DataRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserCreateController implements UserControllerInterface {
-    private final UserCreateUseCase userCreateUseCase;
-    private final UserPresenter userPresenter;
+
+    private final DataRepository dataRepository;
 
     @PostMapping
-    public ResponseEntity<UserDTO> createClient(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userPresenter.toDTO(userCreateUseCase.execute(userPresenter.requestToDomain(userRequestDTO))));
+    public ResponseEntity<UserResponseDTO> createClient(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        UserCreateCoreController userCreateCoreController = new UserCreateCoreController(dataRepository);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userCreateCoreController.createClient(userRequestDTO));
     }
 }

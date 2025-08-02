@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class AddressCreateToUserAllowedValidator implements AddressCreateValidation {
-    private final SessionValidation sessionValidation;
+    //private final SessionValidation sessionValidation;
 
     public void validate(AddressDomain addressDomain) {
-        sessionValidation.validate(addressDomain.getAddressable().getId());
+       // sessionValidation.validate(addressDomain.getAddressable().getId());
     }
 }

@@ -10,9 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class UserLoginAlreadyUsedValidator implements UserCreateAdminValidation, UserUpdateValidation, UserCreateValidation {
     private static final String USER_WITH_THIS_LOGIN_ALREADY_EXISTS = "User with this login already exists";
     private final UserGateway userGateway;

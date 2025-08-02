@@ -23,13 +23,13 @@ public class RestaurantJpaGateway implements RestaurantGateway {
 
     private final RestaurantRepository restaurantRepository;
     private final RestaurantMapper restaurantMapper;
-    private final UserGateway userGateway;
+   // private final UserGateway userGateway;
 
     @Override
     public RestaurantDomain create(RestaurantDomain restaurantDomain) {
         final Restaurant restaurant = restaurantMapper.toEntity(restaurantDomain);
 
-        restaurant.setUser(userGateway.getOne(restaurant.getUser().getId()));
+        //.setUser(userGateway.getOneUser(restaurant.getUser().getId()));
         return restaurantMapper.toDomain(restaurantRepository.save(restaurant));
     }
 
@@ -39,7 +39,7 @@ public class RestaurantJpaGateway implements RestaurantGateway {
         var oldRestaurant = findById(restaurantDomain.getId());
         final Restaurant restaurant = restaurantMapper.updateToEntity(restaurantDomain, oldRestaurant);
 
-        restaurant.setUser(userGateway.getOne(restaurant.getUser().getId()));
+        //restaurant.setUser(userGateway.getOneUser(restaurant.getUser().getId()));
         return restaurantMapper.toDomain(restaurantRepository.save(restaurant));
     }
 

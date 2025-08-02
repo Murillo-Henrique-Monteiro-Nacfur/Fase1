@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.infrastructure.controller.address;
 
 import com.postech.fiap.fase1.core.presenter.AddressPresenter;
-import com.postech.fiap.fase1.core.dto.address.AddressDTO;
+import com.postech.fiap.fase1.core.dto.address.AddressResponseDTO;
 import com.postech.fiap.fase1.core.dto.address.AddressRequestDTO;
 import com.postech.fiap.fase1.core.domain.usecase.address.AddressUpdateUseCase;
 import jakarta.validation.Valid;
@@ -23,7 +23,7 @@ public class AddressUpdateController implements AddressControllerInterface {
 
     @PreAuthorize("hasRole('CLIENT')")
     @PutMapping
-    public ResponseEntity<AddressDTO> update(@RequestBody @Valid AddressRequestDTO addressRequestUpdateDTO) {
+    public ResponseEntity<AddressResponseDTO> update(@RequestBody @Valid AddressRequestDTO addressRequestUpdateDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressPresenter.toDTO(addressUpdateUseCase.execute(addressPresenter.requestUpdateToInput(addressRequestUpdateDTO))));
     }
 

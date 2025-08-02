@@ -1,6 +1,6 @@
 package com.postech.fiap.fase1.core.dto.restaurant;
 
-import com.postech.fiap.fase1.core.dto.address.AddressDTO;
+import com.postech.fiap.fase1.core.dto.address.AddressResponseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,5 +43,5 @@ public class RestaurantDTO {
     private LocalTime closeTime;
 
     @Schema(description = "Endereço do restaurante.")
-    private List<AddressDTO> address;
+    private List<AddressResponseDTO> address;
 }

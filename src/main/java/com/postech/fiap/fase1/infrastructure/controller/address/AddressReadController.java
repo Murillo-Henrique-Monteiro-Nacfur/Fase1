@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.infrastructure.controller.address;
 
 import com.postech.fiap.fase1.core.presenter.AddressPresenter;
-import com.postech.fiap.fase1.core.dto.address.AddressDTO;
+import com.postech.fiap.fase1.core.dto.address.AddressResponseDTO;
 import com.postech.fiap.fase1.core.domain.usecase.address.AddressReadUseCase;
 import com.postech.fiap.fase1.core.domain.usecase.address.AddressUserCreateUseCase;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +24,13 @@ public class AddressReadController implements AddressControllerInterface {
 
     @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/{id}")
-    public ResponseEntity<AddressDTO> findById(@PathVariable("id") Long id) {
+    public ResponseEntity<AddressResponseDTO> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(addressPresenter.toDTO(addressReadUseCase.getById(id)));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public ResponseEntity<Page<AddressDTO>> findAllPaged(Pageable pageable) {
+    public ResponseEntity<Page<AddressResponseDTO>> findAllPaged(Pageable pageable) {
         return ResponseEntity.ok(addressPresenter.toDTO(addressReadUseCase.getAllPaged(pageable)));
     }
 

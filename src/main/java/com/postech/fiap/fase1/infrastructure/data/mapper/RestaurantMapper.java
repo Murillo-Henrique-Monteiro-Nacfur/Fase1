@@ -13,6 +13,11 @@ public class RestaurantMapper {
     private final UserMapper userMapper;
     private final AddressMapper addressMapper;
 
+    public RestaurantMapper() {
+        addressMapper = new AddressMapper();
+        userMapper = new UserMapper(addressMapper);
+    }
+
     public Restaurant toEntity(RestaurantDomain restaurantDomain) {
         return Restaurant.builder()
                 .id(restaurantDomain.getId())
@@ -22,8 +27,8 @@ public class RestaurantMapper {
                 .cnpj(restaurantDomain.getCnpj())
                 .openTime(restaurantDomain.getOpenTime())
                 .closeTime(restaurantDomain.getCloseTime())
-                .user(isNull(restaurantDomain.getUser()) ? null : userMapper.toEntity(restaurantDomain.getUser()))
-                .addresses(isNull(restaurantDomain.getAddresses()) ? null : addressMapper.toEntity(restaurantDomain.getAddresses()))
+//                .user(isNull(restaurantDomain.getUser()) ? null : userMapper.toEntity(restaurantDomain.getUser()))
+//                .addresses(isNull(restaurantDomain.getAddresses()) ? null : addressMapper.toEntity(restaurantDomain.getAddresses()))
                 .build();
     }
 
@@ -36,8 +41,8 @@ public class RestaurantMapper {
                 .cnpj(restaurant.getCnpj())
                 .openTime(restaurant.getOpenTime())
                 .closeTime(restaurant.getCloseTime())
-                .user(isNull(restaurant.getUser()) ? null : userMapper.toDomain(restaurant.getUser()))
-                .addresses(isNull(restaurant.getAddresses()) ? null :  addressMapper.toDomain(restaurant.getAddresses()))
+//                .user(isNull(restaurant.getUser()) ? null : userMapper.toDomain(restaurant.getUser()))
+//                .addresses(isNull(restaurant.getAddresses()) ? null :  addressMapper.toDomain(restaurant.getAddresses()))
                 .build();
     }
 

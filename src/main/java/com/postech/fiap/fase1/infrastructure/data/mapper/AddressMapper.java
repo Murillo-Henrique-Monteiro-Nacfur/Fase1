@@ -1,6 +1,7 @@
 package com.postech.fiap.fase1.infrastructure.data.mapper;
 
 import com.postech.fiap.fase1.core.domain.model.AddressDomain;
+import com.postech.fiap.fase1.core.dto.address.AddressDTO;
 import com.postech.fiap.fase1.infrastructure.data.entity.Address;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,21 +12,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AddressMapper {
 
-    public Address toEntity(AddressDomain addressDomain) {
+    public Address toEntity(AddressDTO addressDTO) {
         return Address.builder()
-                .id(addressDomain.getId())
-                .street(addressDomain.getStreet())
-                .number(addressDomain.getNumber())
-                .city(addressDomain.getCity())
-                .state(addressDomain.getState())
-                .zipCode(addressDomain.getZipCode())
-                .country(addressDomain.getCountry())
-                .neighborhood(addressDomain.getNeighborhood())
+                .id(addressDTO.getId())
+                .street(addressDTO.getStreet())
+                .number(addressDTO.getNumber())
+                .city(addressDTO.getCity())
+                .state(addressDTO.getState())
+                .zipCode(addressDTO.getZipCode())
+                .country(addressDTO.getCountry())
+                .neighborhood(addressDTO.getNeighborhood())
                 .build();
     }
 
-    public List<Address> toEntity(List<AddressDomain> addressDomains) {
-        return addressDomains.stream().map(this::toEntity).toList();
+    public List<Address> toEntity(List<AddressDTO> addressDTOs) {
+        return addressDTOs.stream().map(this::toEntity).toList();
+    }
+
+    public AddressDTO toDTO(Address address) {
+        return AddressDTO.builder()
+                .id(address.getId())
+                .street(address.getStreet())
+                .number(address.getNumber())
+                .city(address.getCity())
+                .state(address.getState())
+                .zipCode(address.getZipCode())
+                .country(address.getCountry())
+                .neighborhood(address.getNeighborhood())
+                .build();
     }
 
     public AddressDomain toDomain(Address address) {
@@ -40,17 +54,17 @@ public class AddressMapper {
                 .neighborhood(address.getNeighborhood())
                 .build();
     }
-    public Address updateToEntity(AddressDomain addressDomain, Address address) {
-        address.setStreet(addressDomain.getStreet());
-        address.setNumber(addressDomain.getNumber());
-        address.setCity(addressDomain.getCity());
-        address.setState(addressDomain.getState());
-        address.setZipCode(addressDomain.getZipCode());
-        address.setCountry(addressDomain.getCountry());
-        address.setNeighborhood(addressDomain.getNeighborhood());
+    public Address updateToEntity(AddressDTO addressDTO, Address address) {
+        address.setStreet(addressDTO.getStreet());
+        address.setNumber(addressDTO.getNumber());
+        address.setCity(addressDTO.getCity());
+        address.setState(addressDTO.getState());
+        address.setZipCode(addressDTO.getZipCode());
+        address.setCountry(addressDTO.getCountry());
+        address.setNeighborhood(addressDTO.getNeighborhood());
         return address;
     }
-    public List<AddressDomain> toDomain(List<Address> addressDomains) {
-        return addressDomains.stream().map(this::toDomain).toList();
+    public List<AddressDTO> toDTO(List<Address> addresses) {
+        return addresses.stream().map(this::toDTO).toList();
     }
 }

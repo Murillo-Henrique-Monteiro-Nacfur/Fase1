@@ -1,8 +1,10 @@
 package com.postech.fiap.fase1.infrastructure.data.mapper;
 
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
+import com.postech.fiap.fase1.core.dto.user.UserDTO;
 import com.postech.fiap.fase1.infrastructure.data.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
@@ -12,29 +14,29 @@ import static java.util.Objects.isNull;
 public class UserMapper {
     private final AddressMapper addressMapper;
 
-    public User toEntity(UserDomain userDomain) {
+    public User toEntity(UserDTO userDTO) {
         return User.builder()
-                .id(userDomain.getId())
-                .name(userDomain.getName())
-                .login(userDomain.getLogin())
-                .email(userDomain.getEmail())
-                .password(userDomain.getPassword())
-                .birthDate(userDomain.getBirthDate())
-                .role(userDomain.getRole())
-                .addresses(isNull(userDomain.getAddresses()) ? null : addressMapper.toEntity(userDomain.getAddresses()))
+                .id(userDTO.getId())
+                .name(userDTO.getName())
+                .login(userDTO.getLogin())
+                .email(userDTO.getEmail())
+                .password(userDTO.getPassword())
+                .birthDate(userDTO.getBirthDate())
+                .role(userDTO.getRole())
+                .addresses(isNull(userDTO.getAddresses()) ? null : addressMapper.toEntity(userDTO.getAddresses()))
                 .build();
     }
 
-    public User updateToEntity(UserDomain userDomain, User user) {
-        user.setName(userDomain.getName());
-        user.setEmail(userDomain.getEmail());
-        user.setLogin(userDomain.getLogin());
-        user.setBirthDate(userDomain.getBirthDate());
+    public User updateToEntity(UserDTO userDTO, User user) {
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        user.setLogin(userDTO.getLogin());
+        user.setBirthDate(userDTO.getBirthDate());
         return user;
     }
 
-    public UserDomain toDomain(User user) {
-        return UserDomain.builder()
+    public UserDTO toDTO(User user) {
+        return UserDTO.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .login(user.getLogin())
@@ -42,8 +44,12 @@ public class UserMapper {
                 .password(user.getPassword())
                 .birthDate(user.getBirthDate())
                 .role(user.getRole())
-                .addresses(isNull(user.getAddresses()) ? null : addressMapper.toDomain(user.getAddresses()))
+                .addresses(isNull(user.getAddresses()) ? null : addressMapper.toDTO(user.getAddresses()))
                 .build();
+    }
+
+    public Page<UserDTO> toDTO(Page<User> users) {
+        return users.map(this::toDTO);
     }
 
 }

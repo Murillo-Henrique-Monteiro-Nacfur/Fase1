@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 public class AddressDeleteUseCase {
 
     private final AddressGateway addressGateway;
-    private final SessionValidation sessionValidation;
+    //todo private final SessionValidation sessionValidation;
     private final AddressReadUseCase addressReadUseCase;
 
     public void execute(Long idAddress) {
         var addressDomainOld = addressReadUseCase.getById(idAddress);
         long userOwnerId = addressDomainOld.getAddressable().getIdUserOwner();
-        sessionValidation.validate(userOwnerId);
+        //todo sessionValidation.validate(userOwnerId);
         addressGateway.deleteById(idAddress);
     }
 }

@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 public class AddressReadUseCase {
 
     private final AddressGateway addressGateway;
-    private final SessionValidation sessionValidation;
+    //todo private final SessionValidation sessionValidation;
 
     public AddressDomain getById(Long idAddress) {
         AddressDomain addressDomain = addressGateway.getById(idAddress)
                 .orElseThrow(() -> new ApplicationException("Address not found"));
-        sessionValidation.validate(addressDomain.getAddressable().getIdUserOwner());
+        //todo sessionValidation.validate(addressDomain.getAddressable().getIdUserOwner());
         return addressDomain;
     }
 

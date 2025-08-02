@@ -1,7 +1,8 @@
 package com.postech.fiap.fase1.infrastructure.controller.user;
 
-import com.postech.fiap.fase1.core.domain.usecase.user.UserDeleteUseCase;
-import com.postech.fiap.fase1.infrastructure.session.SessionDTOCreateUseCase;
+import com.postech.fiap.fase1.core.controllers.user.UserDeleteCoreController;
+import com.postech.fiap.fase1.infrastructure.data.DataRepository;
+import com.postech.fiap.fase1.infrastructure.session.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,13 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserDeleteController implements UserControllerInterface {
 
-    private final UserDeleteUseCase userDeleteUseCase;
-    private final SessionDTOCreateUseCase sessionDTOCreateUseCase;
+    private final DataRepository dataRepository;
+    private final SessionRepository sessionRepository;
 
     @PreAuthorize("hasRole('CLIENT')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long idUser) {
-        userDeleteUseCase.execute(idUser);
+        var userDeleteCoreController = new UserDeleteCoreController(dataRepository, sessionRepository);
+        userDeleteCoreController.delete(idUser);
         return ResponseEntity.ok().build();
     }
 

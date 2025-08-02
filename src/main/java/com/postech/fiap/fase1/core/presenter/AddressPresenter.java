@@ -1,6 +1,6 @@
 package com.postech.fiap.fase1.core.presenter;
 
-import com.postech.fiap.fase1.core.dto.address.AddressDTO;
+import com.postech.fiap.fase1.core.dto.address.AddressResponseDTO;
 import com.postech.fiap.fase1.core.dto.address.AddressRequestDTO;
 import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
@@ -54,8 +54,8 @@ public class AddressPresenter {
                 .build();
     }
 
-    public AddressDTO toDTO(AddressDomain addressDomain) {
-        return AddressDTO.builder()
+    public AddressResponseDTO toDTO(AddressDomain addressDomain) {
+        return AddressResponseDTO.builder()
                 .id(addressDomain.getId())
                 .street(addressDomain.getStreet())
                 .number(addressDomain.getNumber())
@@ -67,10 +67,10 @@ public class AddressPresenter {
                 .build();
     }
 
-    public Page<AddressDTO> toDTO(Page<AddressDomain> addressDomains) {
+    public Page<AddressResponseDTO> toDTO(Page<AddressDomain> addressDomains) {
         return addressDomains.map(this::toDTO);
     }
-    public List<AddressDTO> toDTO(List<AddressDomain> addressDomains) {
+    public List<AddressResponseDTO> toDTO(List<AddressDomain> addressDomains) {
         return addressDomains.stream().map(this::toDTO).toList();
     }
 
