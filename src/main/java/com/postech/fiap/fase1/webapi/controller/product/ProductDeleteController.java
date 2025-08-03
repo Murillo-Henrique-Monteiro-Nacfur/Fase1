@@ -1,9 +1,10 @@
-package com.postech.fiap.fase1.infrastructure.controller.product;
+package com.postech.fiap.fase1.webapi.controller.product;
 
 import com.postech.fiap.fase1.core.controllers.product.ProductDeleteCoreController;
 import com.postech.fiap.fase1.core.presenter.ProductPresenter;
-import com.postech.fiap.fase1.infrastructure.data.DataRepository;
-import com.postech.fiap.fase1.infrastructure.session.SessionRepository;
+
+import com.postech.fiap.fase1.webapi.data.DataRepository;
+import com.postech.fiap.fase1.webapi.infrastructure.session.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;

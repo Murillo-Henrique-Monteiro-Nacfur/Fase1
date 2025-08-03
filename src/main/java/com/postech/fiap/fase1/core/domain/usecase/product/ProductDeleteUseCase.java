@@ -1,11 +1,11 @@
 package com.postech.fiap.fase1.core.domain.usecase.product;
 
 import com.postech.fiap.fase1.core.domain.model.ProductDomain;
+import com.postech.fiap.fase1.core.domain.validation.product.ProductCreateValidation;
+import com.postech.fiap.fase1.core.domain.validation.product.implementation.RestaurantOwnerVerification;
 import com.postech.fiap.fase1.core.gateway.product.ProductGateway;
 import com.postech.fiap.fase1.core.gateway.restaurant.IRestaurantGateway;
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
-import com.postech.fiap.fase1.core.validation.product.ProductCreateValidation;
-import com.postech.fiap.fase1.core.validation.product.implementation.RestaurantOwnerVerification;
 
 public class ProductDeleteUseCase {
     private final ProductGateway productGateway;
