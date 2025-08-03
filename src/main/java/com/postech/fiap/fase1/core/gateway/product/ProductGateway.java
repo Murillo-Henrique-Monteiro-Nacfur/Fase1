@@ -8,4 +8,5 @@ public interface ProductGateway {
     ProductDomain getProductById(Long idUser);
     List<ProductDomain> getProductByIdRestaurant(Long idRestaurant);
     ProductDomain create(ProductDomain productDomain);
+    void delete(ProductDomain productDomain);
 }

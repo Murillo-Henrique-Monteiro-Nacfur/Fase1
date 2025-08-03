@@ -62,4 +62,5 @@ public interface DataSource {
     ProductDTO getById(Long idProduct);
 
     List<ProductDTO> getProductByIdRestaurant(Long idRestaurant);
+    void deleteProductById(Long idProduct);
 }

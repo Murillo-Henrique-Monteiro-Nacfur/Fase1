@@ -18,9 +18,8 @@ public class ProductReadCoreController {
 
     public ProductReadCoreController(DataSource dataSource) {
         var productJpaGateway = ProductJpaGateway.build(dataSource);
-        var restaurantGateway = RestaurantGateway.build(dataSource);
 
-        this.productReadUseCase = new ProductReadUseCase(productJpaGateway, restaurantGateway);
+        this.productReadUseCase = new ProductReadUseCase(productJpaGateway);
     }
 
     public ProductDomain getById(Long idProduct) {

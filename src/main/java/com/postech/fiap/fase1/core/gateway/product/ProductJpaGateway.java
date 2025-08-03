@@ -35,4 +35,9 @@ public class ProductJpaGateway implements ProductGateway {
         return productPresenter.toDomain(dataSource.createProduct(productPresenter.toDTO(productDomain)));
     }
 
+    @Override
+    public void delete(ProductDomain productDomain) {
+        dataSource.deleteProductById(productDomain.getId());
+    }
+
 }

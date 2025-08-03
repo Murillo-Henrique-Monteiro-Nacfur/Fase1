@@ -27,6 +27,7 @@ public class ProductMapper {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .photoUrl(product.getPhotoUrl())
+                .restaurantId(product.getRestaurant().getId())
                 .build();
     }
 

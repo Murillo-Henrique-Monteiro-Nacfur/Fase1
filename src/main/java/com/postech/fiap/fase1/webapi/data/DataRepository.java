@@ -130,13 +130,18 @@ public class DataRepository implements DataSource {
 
     @Override
     public ProductDTO getById(Long idProduct) {
-        return productMapper.toDTO(productRepository.findById(idProduct).orElseThrow(
+        return productMapper.toDTO(productRepository.findProductById(idProduct).orElseThrow(
                 () -> new ApplicationException(PRODUCT_NOT_FOUND)));
     }
 
     @Override
     public List<ProductDTO> getProductByIdRestaurant(Long idRestaurant) {
         return productRepository.findProductByRestaurantId(idRestaurant).stream().map(productMapper::toDTO).toList();
+    }
+
+    @Override
+    public void deleteProductById(Long idProduct) {
+        productRepository.deleteById(idProduct);
     }
 
     @Override
