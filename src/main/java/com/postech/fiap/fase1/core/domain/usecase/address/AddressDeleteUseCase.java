@@ -1,22 +1,23 @@
 package com.postech.fiap.fase1.core.domain.usecase.address;
 
-import com.postech.fiap.fase1.core.validation.session.SessionValidation;
-import com.postech.fiap.fase1.core.gateway.address.AddressGateway;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.postech.fiap.fase1.core.gateway.address.IAddressGateway;
+import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
+import com.postech.fiap.fase1.core.validation.session.SessionUserAllowedValidator;
+import com.postech.fiap.fase1.core.validation.session.ISessionValidation;
 
-@Service
-@RequiredArgsConstructor
 public class AddressDeleteUseCase {
 
-    private final AddressGateway addressGateway;
-    //todo private final SessionValidation sessionValidation;
-    private final AddressReadUseCase addressReadUseCase;
+    private final IAddressGateway iAddressGateway;
+    private final ISessionValidation sessionValidation;
 
+    public AddressDeleteUseCase(IAddressGateway addressGateway, ISessionGateway sessionGateway) {
+        this.iAddressGateway = addressGateway;
+        sessionValidation = new SessionUserAllowedValidator(sessionGateway);
+    }
     public void execute(Long idAddress) {
-        var addressDomainOld = addressReadUseCase.getById(idAddress);
+        var addressDomainOld = iAddressGateway.getOneByid(idAddress);
         long userOwnerId = addressDomainOld.getAddressable().getIdUserOwner();
-        //todo sessionValidation.validate(userOwnerId);
-        addressGateway.deleteById(idAddress);
+        sessionValidation.validate(userOwnerId);
+        iAddressGateway.deleteById(idAddress);
     }
 }

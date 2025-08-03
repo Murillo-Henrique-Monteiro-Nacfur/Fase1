@@ -1,26 +1,30 @@
 package com.postech.fiap.fase1.core.domain.usecase.restaurant;
 
-import com.postech.fiap.fase1.core.validation.restaurant.RestaurantUpdateValidation;
 import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
-import com.postech.fiap.fase1.core.gateway.restaurant.RestaurantGateway;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.postech.fiap.fase1.core.gateway.restaurant.IRestaurantGateway;
+import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
+import com.postech.fiap.fase1.core.validation.restaurant.RestaurantUpdateValidation;
+import com.postech.fiap.fase1.core.validation.restaurant.implementation.RestaurantCNPJUsedValidation;
+import com.postech.fiap.fase1.core.validation.restaurant.implementation.RestaurantOpenCloseTimeValidation;
+import com.postech.fiap.fase1.core.validation.restaurant.implementation.RestaurantUserAllowedValidation;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
 public class RestaurantUpdateUseCase {
 
-    private final RestaurantGateway restaurantGateway;
+    private final IRestaurantGateway iRestaurantGateway;
     private final List<RestaurantUpdateValidation> restaurantUpdateValidations;
-    private final RestaurantReadUseCase restaurantReadUseCase;
+
+    public RestaurantUpdateUseCase(IRestaurantGateway restaurantGateway, ISessionGateway sessionGateway) {
+        iRestaurantGateway = restaurantGateway;
+        restaurantUpdateValidations = List.of(new RestaurantCNPJUsedValidation(restaurantGateway), new RestaurantOpenCloseTimeValidation(), new RestaurantUserAllowedValidation(sessionGateway));
+    }
 
     public RestaurantDomain execute(RestaurantDomain restaurantDomain) {
-        var restaurantDomainOld = restaurantReadUseCase.getById(restaurantDomain.getId());
+        var restaurantDomainOld = iRestaurantGateway.getOneById(restaurantDomain.getId());
         restaurantDomain.setUser(restaurantDomainOld.getUser());
         validate(restaurantDomain);
-        return restaurantGateway.update(restaurantDomain);
+        return iRestaurantGateway.update(restaurantDomain);
     }
 
     private void validate(RestaurantDomain restaurantDomain) {

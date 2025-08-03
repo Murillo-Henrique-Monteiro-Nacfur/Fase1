@@ -1,24 +1,23 @@
 package com.postech.fiap.fase1.infrastructure.data.mapper;
 
 import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
+import com.postech.fiap.fase1.core.dto.restaurant.RestaurantDTO;
 import com.postech.fiap.fase1.infrastructure.data.entity.Restaurant;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.isNull;
 
 @Component
-@RequiredArgsConstructor
 public class RestaurantMapper {
     private final UserMapper userMapper;
-    private final AddressMapper addressMapper;
 
-    public RestaurantMapper() {
-        addressMapper = new AddressMapper();
-        userMapper = new UserMapper(addressMapper);
+    @Lazy
+    public RestaurantMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
     }
 
-    public Restaurant toEntity(RestaurantDomain restaurantDomain) {
+    public Restaurant toEntity(RestaurantDTO restaurantDomain) {
         return Restaurant.builder()
                 .id(restaurantDomain.getId())
                 .name(restaurantDomain.getName())
@@ -27,8 +26,7 @@ public class RestaurantMapper {
                 .cnpj(restaurantDomain.getCnpj())
                 .openTime(restaurantDomain.getOpenTime())
                 .closeTime(restaurantDomain.getCloseTime())
-//                .user(isNull(restaurantDomain.getUser()) ? null : userMapper.toEntity(restaurantDomain.getUser()))
-//                .addresses(isNull(restaurantDomain.getAddresses()) ? null : addressMapper.toEntity(restaurantDomain.getAddresses()))
+                .user(isNull(restaurantDomain.getUser()) ? null : userMapper.toEntity(restaurantDomain.getUser()))
                 .build();
     }
 
@@ -41,18 +39,41 @@ public class RestaurantMapper {
                 .cnpj(restaurant.getCnpj())
                 .openTime(restaurant.getOpenTime())
                 .closeTime(restaurant.getCloseTime())
-//                .user(isNull(restaurant.getUser()) ? null : userMapper.toDomain(restaurant.getUser()))
-//                .addresses(isNull(restaurant.getAddresses()) ? null :  addressMapper.toDomain(restaurant.getAddresses()))
                 .build();
     }
 
-    public Restaurant updateToEntity(RestaurantDomain restaurantDomain, Restaurant restaurant) {
-        restaurant.setName(restaurantDomain.getName());
-        restaurant.setDescription(restaurantDomain.getDescription());
-        restaurant.setCuisineType(restaurantDomain.getCuisineType());
-        restaurant.setCnpj(restaurantDomain.getCnpj());
-        restaurant.setOpenTime(restaurantDomain.getOpenTime());
-        restaurant.setCloseTime(restaurantDomain.getCloseTime());
+    public Restaurant updateToEntity(RestaurantDTO restaurantDTO, Restaurant restaurant) {
+        restaurant.setName(restaurantDTO.getName());
+        restaurant.setDescription(restaurantDTO.getDescription());
+        restaurant.setCuisineType(restaurantDTO.getCuisineType());
+        restaurant.setCnpj(restaurantDTO.getCnpj());
+        restaurant.setOpenTime(restaurantDTO.getOpenTime());
+        restaurant.setCloseTime(restaurantDTO.getCloseTime());
         return restaurant;
+    }
+
+    public RestaurantDTO toDTO(Restaurant restaurant) {
+        return RestaurantDTO.builder()
+                .id(restaurant.getId())
+                .name(restaurant.getName())
+                .cuisineType(restaurant.getCuisineType())
+                .description(restaurant.getDescription())
+                .cnpj(restaurant.getCnpj())
+                .openTime(restaurant.getOpenTime())
+                .closeTime(restaurant.getCloseTime())
+                .user(isNull(restaurant.getUser()) ? null : userMapper.toDTO(restaurant.getUser()))
+                .build();
+    }
+
+    public RestaurantDTO toDTO(RestaurantDTO restaurant) {
+        return RestaurantDTO.builder()
+                .id(restaurant.getId())
+                .name(restaurant.getName())
+                .cuisineType(restaurant.getCuisineType())
+                .description(restaurant.getDescription())
+                .cnpj(restaurant.getCnpj())
+                .openTime(restaurant.getOpenTime())
+                .closeTime(restaurant.getCloseTime())
+                .build();
     }
 }

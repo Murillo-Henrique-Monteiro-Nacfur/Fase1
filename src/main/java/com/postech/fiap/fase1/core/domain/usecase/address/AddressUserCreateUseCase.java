@@ -1,26 +1,24 @@
 package com.postech.fiap.fase1.core.domain.usecase.address;
 
-import com.postech.fiap.fase1.core.domain.usecase.user.UserReadUseCase;
-import com.postech.fiap.fase1.core.validation.session.SessionValidation;
 import com.postech.fiap.fase1.core.domain.model.AddressDomain;
-import com.postech.fiap.fase1.core.domain.model.UserDomain;
-import com.postech.fiap.fase1.core.gateway.address.AddressGateway;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.postech.fiap.fase1.core.gateway.address.IAddressGateway;
+import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
+import com.postech.fiap.fase1.core.validation.address.AddressCreateValidation;
+import com.postech.fiap.fase1.core.validation.address.implementation.AddressCreateToUserAllowedValidator;
 
-@Service
-@RequiredArgsConstructor
 public class AddressUserCreateUseCase {
 
-    private final AddressGateway addressGateway;
-    //private final UserReadUseCase userReadUseCase;
-    //private final SessionValidation sessionValidation;
+    private final IAddressGateway iAddressGateway;
+    private final AddressCreateValidation addressCreateValidation;
+
+    public AddressUserCreateUseCase(IAddressGateway addressGateway, ISessionGateway sessionGateway) {
+        iAddressGateway = addressGateway;
+        addressCreateValidation = new AddressCreateToUserAllowedValidator(sessionGateway);
+    }
 
     public AddressDomain execute(AddressDomain addressDomain) {
-       // sessionValidation.validate(addressDomain.getAddressable().getId());
+        addressCreateValidation.validate(addressDomain);
         addressDomain.setId(null);
-      // UserDomain userDomain = userReadUseCase.getById(addressDomain.getAddressable().getId());
-       // addressDomain.setAddressable(userDomain);
-        return addressGateway.create(addressDomain);
+        return iAddressGateway.createUserAddress(addressDomain);
     }
 }

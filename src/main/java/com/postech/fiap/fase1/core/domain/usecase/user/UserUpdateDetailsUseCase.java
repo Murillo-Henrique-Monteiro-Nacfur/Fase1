@@ -2,7 +2,7 @@ package com.postech.fiap.fase1.core.domain.usecase.user;
 
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
-import com.postech.fiap.fase1.core.gateway.user.UserGateway;
+import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
 import com.postech.fiap.fase1.core.validation.user.UserUpdateValidation;
 import com.postech.fiap.fase1.core.validation.user.implementation.UserAllowedValidator;
 import com.postech.fiap.fase1.core.validation.user.implementation.UserEmailAlreadyUsedValidator;
@@ -11,18 +11,18 @@ import com.postech.fiap.fase1.core.validation.user.implementation.UserLoginAlrea
 import java.util.List;
 
 public class UserUpdateDetailsUseCase {
-    private final UserGateway userGateway;
+    private final IUserGateway iUserGateway;
     private final List<UserUpdateValidation> userUpdateValidations;
 
-    public UserUpdateDetailsUseCase(UserGateway userGateway, SessionGateway sessionGateway) {
-        this.userGateway = userGateway;
-        this.userUpdateValidations = List.of(new UserAllowedValidator(sessionGateway), new UserEmailAlreadyUsedValidator(userGateway), new UserLoginAlreadyUsedValidator(userGateway));
+    public UserUpdateDetailsUseCase(IUserGateway iUserGateway, SessionGateway sessionGateway) {
+        this.iUserGateway = iUserGateway;
+        this.userUpdateValidations = List.of(new UserAllowedValidator(sessionGateway), new UserEmailAlreadyUsedValidator(iUserGateway), new UserLoginAlreadyUsedValidator(iUserGateway));
     }
 
     public UserDomain execute(UserDomain userDomain) {
-        userGateway.getUserById(userDomain.getId());
+        iUserGateway.getUserById(userDomain.getId());
         validate(userDomain);
-        return userGateway.updateUser(userDomain);
+        return iUserGateway.updateUser(userDomain);
     }
 
     private void validate(UserDomain userDomain) {

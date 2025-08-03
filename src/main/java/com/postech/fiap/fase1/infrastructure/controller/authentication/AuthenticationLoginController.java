@@ -1,6 +1,6 @@
 package com.postech.fiap.fase1.infrastructure.controller.authentication;
 
-import com.postech.fiap.fase1.core.controllers.AuthenticationLoginCoreController;
+import com.postech.fiap.fase1.core.controllers.authentication.AuthenticationLoginCoreController;
 import com.postech.fiap.fase1.core.dto.auth.LoginRequestDTO;
 import com.postech.fiap.fase1.core.dto.auth.LoginResponseDTO;
 import com.postech.fiap.fase1.infrastructure.SecurityValues;

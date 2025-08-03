@@ -1,18 +1,14 @@
 package com.postech.fiap.fase1.infrastructure.data.mapper;
 
-import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.dto.user.UserDTO;
 import com.postech.fiap.fase1.infrastructure.data.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import static java.util.Objects.isNull;
-
 @Component
 @RequiredArgsConstructor
 public class UserMapper {
-    private final AddressMapper addressMapper;
 
     public User toEntity(UserDTO userDTO) {
         return User.builder()
@@ -23,7 +19,6 @@ public class UserMapper {
                 .password(userDTO.getPassword())
                 .birthDate(userDTO.getBirthDate())
                 .role(userDTO.getRole())
-                .addresses(isNull(userDTO.getAddresses()) ? null : addressMapper.toEntity(userDTO.getAddresses()))
                 .build();
     }
 
@@ -44,7 +39,7 @@ public class UserMapper {
                 .password(user.getPassword())
                 .birthDate(user.getBirthDate())
                 .role(user.getRole())
-                .addresses(isNull(user.getAddresses()) ? null : addressMapper.toDTO(user.getAddresses()))
+                // .addresses(isNull(user.getAddresses()) ? null : addressMapper.toDTO(user.getAddresses()))
                 .build();
     }
 

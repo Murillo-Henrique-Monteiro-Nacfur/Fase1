@@ -1,6 +1,8 @@
 package com.postech.fiap.fase1.infrastructure.controller.address;
 
-import com.postech.fiap.fase1.core.domain.usecase.address.AddressDeleteUseCase;
+import com.postech.fiap.fase1.core.controllers.address.AddressDeleteCoreController;
+import com.postech.fiap.fase1.infrastructure.data.DataRepository;
+import com.postech.fiap.fase1.infrastructure.session.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,12 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/address")
 @RequiredArgsConstructor
 public class AddressDeleteController implements AddressControllerInterface {
-    private final AddressDeleteUseCase addressDeleteUseCase;
+
+    private final DataRepository dataRepository;
+    private final SessionRepository sessionRepository;
 
     @PreAuthorize("hasRole('CLIENT')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Long id) {
-        addressDeleteUseCase.execute(id);
+        AddressDeleteCoreController addressDeleteCoreController = new AddressDeleteCoreController(dataRepository, sessionRepository);
+        addressDeleteCoreController.delete(id);
         return ResponseEntity.ok().build();
     }
 }

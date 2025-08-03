@@ -1,14 +1,15 @@
 package com.postech.fiap.fase1.infrastructure.controller.restaurant;
 
-
-import com.postech.fiap.fase1.core.presenter.RestaurantPresenter;
-import com.postech.fiap.fase1.core.dto.restaurant.RestaurantDTO;
-import com.postech.fiap.fase1.core.dto.restaurant.RestaurantRequestDTO;
-import com.postech.fiap.fase1.core.domain.usecase.restaurant.RestaurantUpdateUseCase;
-import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
+import com.postech.fiap.fase1.core.controllers.restaurant.RestaurantUpdateCoreController;
+import com.postech.fiap.fase1.core.dto.restaurant.RestaurantRequestUpdateDTO;
+import com.postech.fiap.fase1.core.dto.restaurant.RestaurantResponseDTO;
+import com.postech.fiap.fase1.infrastructure.data.DataRepository;
+import com.postech.fiap.fase1.infrastructure.session.SessionRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,14 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RestaurantUpdateController implements RestaurantControllerInterface {
 
-    private final RestaurantPresenter restaurantPresenter;
-    private final RestaurantUpdateUseCase restaurantUpdateUseCase;
+    private final DataRepository dataRepository;
+    private final SessionRepository sessionRepository;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<RestaurantDTO> update(@RequestBody RestaurantRequestDTO restaurantRequestDTO) {
-        RestaurantDomain restaurantDomain = restaurantUpdateUseCase.execute(restaurantPresenter.toModel(restaurantRequestDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(restaurantPresenter.toDTO(restaurantDomain));
+    public ResponseEntity<RestaurantResponseDTO> update(@Valid @RequestBody RestaurantRequestUpdateDTO restaurantRequestUpdateDTO) {
+        RestaurantUpdateCoreController restaurantUpdateCoreController = new RestaurantUpdateCoreController(dataRepository, sessionRepository);
+        return ResponseEntity.status(HttpStatus.CREATED).body(restaurantUpdateCoreController.update(restaurantRequestUpdateDTO));
     }
-
-
 }

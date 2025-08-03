@@ -4,7 +4,7 @@ import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.domain.usecase.user.UserGetByIdUseCase;
 import com.postech.fiap.fase1.core.dto.auth.LoginRequestDTO;
 import com.postech.fiap.fase1.core.dto.auth.UserTokenBodyDTO;
-import com.postech.fiap.fase1.core.gateway.user.UserGateway;
+import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
 import com.postech.fiap.fase1.core.presenter.UserTokenDTOPresenter;
 import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
 import com.postech.fiap.fase1.infrastructure.utils.JWTUtils;
@@ -27,9 +27,9 @@ public class AuthLoginUseCase {
     private final PasswordEncoder passwordEncoder;
     private final JWTUtils jwtUtils;
 
-    public AuthLoginUseCase(String tokenSecret, UserGateway userGateway) {
+    public AuthLoginUseCase(String tokenSecret, IUserGateway iUserGateway) {
         this.tokenSecret = tokenSecret;
-        this.userGetByIdUseCase = new UserGetByIdUseCase(userGateway);
+        this.userGetByIdUseCase = new UserGetByIdUseCase(iUserGateway);
         passwordEncoder = new BCryptPasswordEncoder();
         jwtUtils = new JWTUtils();
     }

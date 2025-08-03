@@ -1,29 +1,81 @@
 package com.postech.fiap.fase1.core.gateway.user;
 
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
-import jakarta.validation.constraints.NotBlank;
+import com.postech.fiap.fase1.core.dto.user.UserDTO;
+import com.postech.fiap.fase1.core.gateway.DataSource;
+import com.postech.fiap.fase1.core.presenter.UserPresenter;
+import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
-public interface UserGateway {
+public class UserGateway implements IUserGateway {
 
-    boolean hasUserWithSameEmail(Long idUser, String email);
+    private static final String USER_NOT_FOUND = "User not found";
+    private final DataSource dataSource;
+    private final UserPresenter userPresenter;
 
-    boolean hasUserWithSameLogin(Long idUser, String email);
+    private UserGateway(DataSource dataSource, UserPresenter userPresenter) {
+        this.dataSource = dataSource;
+        this.userPresenter = userPresenter;
+    }
 
-    UserDomain getUserById(Long idUser);
+    public static UserGateway build(DataSource dataSource) {
+        return new UserGateway(dataSource, new UserPresenter());
+    }
 
-    Page<UserDomain> getAllUserPaged(Pageable pageable);
+    public UserDTO getOneUser(Long idUser) {
+        return dataSource.getUserById(idUser)
+                .orElseThrow(() -> new ApplicationException(USER_NOT_FOUND));
+    }
 
-    UserDomain createUser(UserDomain userDomain);
+    public boolean hasUserWithSameEmail(Long idUser, String email) {
+        return dataSource.hasUserWithSameEmail(idUser, email);
+    }
 
-    UserDomain updateUser(UserDomain userDomain);
+    public boolean hasUserWithSameLogin(Long idUser, String login) {
+        return dataSource.hasUserWithSameLogin(idUser, login);
+    }
 
-    UserDomain updateUserPassoword(UserDomain userDomain);
+    @Override
+    public UserDomain getUserById(Long idUser) {
+        return userPresenter.toDomain(getOneUser(idUser));
+    }
 
-    void deleteUser(UserDomain userDomain);
+    @Override
+    public Page<UserDomain> getAllUserPaged(Pageable pageable) {
+        return dataSource.getAllUserPaged(pageable).
+                map(userPresenter::toDomain);
+    }
 
-    Optional<UserDomain> getUserByLogin(@NotBlank String login);
+    @Override
+    public UserDomain createUser(UserDomain userDomain) {
+        return userPresenter.toDomain(dataSource.createUser(userPresenter.toDTO(userDomain)));
+    }
+
+    @Override
+    public UserDomain updateUser(UserDomain userDomain) {
+        UserDTO userOld = getOneUser(userDomain.getId());
+        userOld = userPresenter.updateToDTO(userDomain, userOld);
+        return userPresenter.toDomain(dataSource.updateUser(userOld));
+    }
+
+    @Override
+    public UserDomain updateUserPassoword(UserDomain userDomain) {
+        UserDTO userOld = getOneUser(userDomain.getId());
+        userOld.setPassword(userDomain.getPassword());
+        return userPresenter.toDomain(dataSource.updateUserPassoword(userOld));
+    }
+
+    @Override
+    public void deleteUser(UserDomain userDomain) {
+        dataSource.deleteUserById(userDomain.getId());
+    }
+
+    @Override
+    public Optional<UserDomain> getUserByLogin(String login) {
+        return dataSource.getUserByLogin(login)
+                .map(userPresenter::toDomain);
+    }
 }

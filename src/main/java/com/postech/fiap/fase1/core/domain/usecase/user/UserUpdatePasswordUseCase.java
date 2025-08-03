@@ -2,7 +2,7 @@ package com.postech.fiap.fase1.core.domain.usecase.user;
 
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
-import com.postech.fiap.fase1.core.gateway.user.UserGateway;
+import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
 import com.postech.fiap.fase1.core.validation.user.UserUpdatePasswordValidation;
 import com.postech.fiap.fase1.core.validation.user.implementation.UserAdminAllowedValidator;
 import com.postech.fiap.fase1.core.validation.user.implementation.UserAllowedValidator;
@@ -16,19 +16,19 @@ public class UserUpdatePasswordUseCase {
 
     private final List<UserUpdatePasswordValidation> userUpdatePasswordValidations;
     private final PasswordEncoder passwordEncoder;
-    private final UserGateway userGateway;
+    private final IUserGateway iUserGateway;
 
-    public UserUpdatePasswordUseCase(UserGateway userGateway, SessionGateway sessionGateway) {
-        this.userGateway = userGateway;
+    public UserUpdatePasswordUseCase(IUserGateway iUserGateway, SessionGateway sessionGateway) {
+        this.iUserGateway = iUserGateway;
         this.passwordEncoder = new BCryptPasswordEncoder();
-        this.userUpdatePasswordValidations = List.of(new UserAdminAllowedValidator(sessionGateway), new UserAllowedValidator(sessionGateway), new UserPasswordValidator());
+        this.userUpdatePasswordValidations = List.of(UserAdminAllowedValidator.build(sessionGateway), new UserAllowedValidator(sessionGateway), new UserPasswordValidator());
     }
 
     public UserDomain execute(UserDomain userDomain) {
-        userGateway.getUserById(userDomain.getId());
+        iUserGateway.getUserById(userDomain.getId());
         validate(userDomain);
         userDomain.setPassword(passwordEncoder.encode(userDomain.getPassword()));
-        return userGateway.updateUserPassoword(userDomain);
+        return iUserGateway.updateUserPassoword(userDomain);
     }
 
     private void validate(UserDomain userDomain) {

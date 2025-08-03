@@ -1,22 +1,10 @@
 package com.postech.fiap.fase1.core.presenter;
 
-import com.postech.fiap.fase1.core.dto.user.*;
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
-import com.postech.fiap.fase1.infrastructure.data.entity.User;
-import lombok.RequiredArgsConstructor;
+import com.postech.fiap.fase1.core.dto.user.*;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
 
-import static java.util.Objects.isNull;
-
-@Component
-@RequiredArgsConstructor
 public class UserPresenter {
-
-    private final AddressPresenter addressPresenter;
-    public UserPresenter() {
-        this.addressPresenter = new AddressPresenter();
-    }
 
 
     public UserDomain requestToDomain(UserRequestDTO userRequestDTO) {
@@ -72,6 +60,7 @@ public class UserPresenter {
                 //.addresses(isNull(userDomain.getAddresses()) ? null : addressPresenter.toDTO(userDomain.getAddresses()))
                 .build();
     }
+
     public Page<UserResponseDTO> toResponseDTO(Page<UserDomain> userDomains) {
         return userDomains.map(this::toResponseDTO);
     }

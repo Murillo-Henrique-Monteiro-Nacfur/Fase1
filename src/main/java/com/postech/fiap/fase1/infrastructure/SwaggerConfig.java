@@ -17,15 +17,15 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Api de Restaurantes")
-                        .version("1.0.0")                   // Versão da sua API
+                        .version("1.0.0")
                         .description("API desenvolvida como backend do restaurante."))
-                .addSecurityItem(new SecurityRequirement().addList(X_AUTH_TOKEN_HEADER)) // Aplica o esquema de segurança globalmente
+                .addSecurityItem(new SecurityRequirement().addList(X_AUTH_TOKEN_HEADER))
                 .components(new Components()
-                        .addSecuritySchemes(X_AUTH_TOKEN_HEADER, // O nome do esquema de segurança
+                        .addSecuritySchemes(X_AUTH_TOKEN_HEADER,
                                 new SecurityScheme()
-                                        .type(SecurityScheme.Type.APIKEY) // Tipo de segurança: API Key
-                                        .in(SecurityScheme.In.HEADER)    // Onde a chave será enviada: no cabeçalho
-                                        .name(X_AUTH_TOKEN_HEADER)       // O nome exato do cabeçalho HTTP: X-Auth-Token
+                                        .type(SecurityScheme.Type.APIKEY)
+                                        .in(SecurityScheme.In.HEADER)
+                                        .name(X_AUTH_TOKEN_HEADER)
                                         .description("Por favor, insira o token JWT completo no cabeçalho '" + X_AUTH_TOKEN_HEADER + "'.")));
     }
 

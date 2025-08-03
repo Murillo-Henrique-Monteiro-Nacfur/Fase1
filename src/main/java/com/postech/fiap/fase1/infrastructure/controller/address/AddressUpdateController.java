@@ -1,9 +1,10 @@
 package com.postech.fiap.fase1.infrastructure.controller.address;
 
-import com.postech.fiap.fase1.core.presenter.AddressPresenter;
-import com.postech.fiap.fase1.core.dto.address.AddressResponseDTO;
+import com.postech.fiap.fase1.core.controllers.address.AddressUpdateCoreController;
 import com.postech.fiap.fase1.core.dto.address.AddressRequestDTO;
-import com.postech.fiap.fase1.core.domain.usecase.address.AddressUpdateUseCase;
+import com.postech.fiap.fase1.core.dto.address.AddressResponseDTO;
+import com.postech.fiap.fase1.infrastructure.data.DataRepository;
+import com.postech.fiap.fase1.infrastructure.session.SessionRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/address")
 @RequiredArgsConstructor
 public class AddressUpdateController implements AddressControllerInterface {
-    private final AddressUpdateUseCase addressUpdateUseCase;
-    private final AddressPresenter addressPresenter;
+
+    private final DataRepository dataRepository;
+    private final SessionRepository sessionRepository;
 
     @PreAuthorize("hasRole('CLIENT')")
     @PutMapping
     public ResponseEntity<AddressResponseDTO> update(@RequestBody @Valid AddressRequestDTO addressRequestUpdateDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(addressPresenter.toDTO(addressUpdateUseCase.execute(addressPresenter.requestUpdateToInput(addressRequestUpdateDTO))));
+        AddressUpdateCoreController addressUpdateCoreController = new AddressUpdateCoreController(dataRepository, sessionRepository);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressUpdateCoreController.update(addressRequestUpdateDTO));
     }
 
 }

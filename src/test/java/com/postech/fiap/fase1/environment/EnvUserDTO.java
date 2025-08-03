@@ -10,7 +10,7 @@ public class EnvUserDTO {
                 .name("User name")
                 .login("user login")
                 .email("user email")
-                .birthDate("" + LocalDate.now())
+                .birthDate(LocalDate.now())
                 .build();
     }
 }

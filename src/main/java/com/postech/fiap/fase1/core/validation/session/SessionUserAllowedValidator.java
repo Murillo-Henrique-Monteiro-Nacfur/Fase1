@@ -1,16 +1,16 @@
 package com.postech.fiap.fase1.core.validation.session;
 
 import com.postech.fiap.fase1.core.dto.auth.SessionDTO;
-import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
+import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
 import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class SessionUserAllowedValidator implements SessionValidation {
+public class SessionUserAllowedValidator implements ISessionValidation {
     private static final String USER_NOT_AUTHORIZED_TO_PERFORM_THIS_ACTION = "User not authorized to perform this action";
-    private final SessionGateway sessionGateway;
+    private final ISessionGateway sessionGateway;
 
-    public SessionUserAllowedValidator(SessionGateway sessionGateway) {
+    public SessionUserAllowedValidator(ISessionGateway sessionGateway) {
         this.sessionGateway = sessionGateway;
     }
 

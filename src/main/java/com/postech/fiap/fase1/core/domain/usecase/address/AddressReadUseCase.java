@@ -1,29 +1,31 @@
 package com.postech.fiap.fase1.core.domain.usecase.address;
 
-import com.postech.fiap.fase1.core.validation.session.SessionValidation;
 import com.postech.fiap.fase1.core.domain.model.AddressDomain;
-import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
-import com.postech.fiap.fase1.core.gateway.address.AddressGateway;
-import lombok.RequiredArgsConstructor;
+import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
+import com.postech.fiap.fase1.core.validation.session.SessionUserAllowedValidator;
+import com.postech.fiap.fase1.core.validation.session.ISessionValidation;
+import com.postech.fiap.fase1.core.gateway.address.IAddressGateway;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
+
 public class AddressReadUseCase {
 
-    private final AddressGateway addressGateway;
-    //todo private final SessionValidation sessionValidation;
+    private final IAddressGateway iAddressGateway;
+    private final ISessionValidation sessionValidation;
+
+    public AddressReadUseCase(IAddressGateway addressGateway, ISessionGateway sessionGateway) {
+        iAddressGateway = addressGateway;
+        sessionValidation = new SessionUserAllowedValidator(sessionGateway);
+    }
 
     public AddressDomain getById(Long idAddress) {
-        AddressDomain addressDomain = addressGateway.getById(idAddress)
-                .orElseThrow(() -> new ApplicationException("Address not found"));
-        //todo sessionValidation.validate(addressDomain.getAddressable().getIdUserOwner());
+        AddressDomain addressDomain = iAddressGateway.getOneByid(idAddress);
+        sessionValidation.validate(addressDomain.getAddressable().getIdUserOwner());
         return addressDomain;
     }
 
     public Page<AddressDomain> getAllPaged(Pageable pageable) {
-        return addressGateway.getAllPaged(pageable);
+        return iAddressGateway.getAllPaged(pageable);
     }
 }

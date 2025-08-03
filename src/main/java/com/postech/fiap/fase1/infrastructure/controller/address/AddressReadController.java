@@ -1,9 +1,9 @@
 package com.postech.fiap.fase1.infrastructure.controller.address;
 
-import com.postech.fiap.fase1.core.presenter.AddressPresenter;
+import com.postech.fiap.fase1.core.controllers.address.AddressReadCoreController;
 import com.postech.fiap.fase1.core.dto.address.AddressResponseDTO;
-import com.postech.fiap.fase1.core.domain.usecase.address.AddressReadUseCase;
-import com.postech.fiap.fase1.core.domain.usecase.address.AddressUserCreateUseCase;
+import com.postech.fiap.fase1.infrastructure.data.DataRepository;
+import com.postech.fiap.fase1.infrastructure.session.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,20 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/address")
 @RequiredArgsConstructor
 public class AddressReadController implements AddressControllerInterface {
-    private final AddressUserCreateUseCase addressUserCreateUseCase;
-    private final AddressReadUseCase addressReadUseCase;
-    private final AddressPresenter addressPresenter;
+
+    private final DataRepository dataRepository;
+    private final SessionRepository sessionRepository;
 
     @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/{id}")
     public ResponseEntity<AddressResponseDTO> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(addressPresenter.toDTO(addressReadUseCase.getById(id)));
+        AddressReadCoreController addressReadCoreController = new AddressReadCoreController(dataRepository, sessionRepository);
+        return ResponseEntity.ok(addressReadCoreController.findById(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<Page<AddressResponseDTO>> findAllPaged(Pageable pageable) {
-        return ResponseEntity.ok(addressPresenter.toDTO(addressReadUseCase.getAllPaged(pageable)));
+        AddressReadCoreController addressReadCoreController = new AddressReadCoreController(dataRepository, sessionRepository);
+        return ResponseEntity.ok(addressReadCoreController.findAllPaged(pageable));
     }
-
 }

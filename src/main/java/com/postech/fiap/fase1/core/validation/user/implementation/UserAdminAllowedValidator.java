@@ -1,20 +1,21 @@
 package com.postech.fiap.fase1.core.validation.user.implementation;
 
-
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
-import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
+import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
+import com.postech.fiap.fase1.core.validation.session.ISessionValidation;
 import com.postech.fiap.fase1.core.validation.session.SessionUserAllowedValidator;
-import com.postech.fiap.fase1.core.validation.session.SessionValidation;
 import com.postech.fiap.fase1.core.validation.user.UserCreateAdminValidation;
 import com.postech.fiap.fase1.core.validation.user.UserUpdatePasswordValidation;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class UserAdminAllowedValidator implements UserUpdatePasswordValidation, UserCreateAdminValidation {
-    private final SessionValidation sessionValidation;
+    private final ISessionValidation sessionValidation;
 
-    public UserAdminAllowedValidator(SessionGateway sessionGateway) {
-        this.sessionValidation = new SessionUserAllowedValidator(sessionGateway);
+    private UserAdminAllowedValidator(SessionUserAllowedValidator sessionUserAllowedValidator) {
+        this.sessionValidation = sessionUserAllowedValidator;
+    }
+
+    public static UserAdminAllowedValidator build(ISessionGateway sessionGateway) {
+        return new UserAdminAllowedValidator(new SessionUserAllowedValidator(sessionGateway));
     }
 
     public void validate(UserDomain userDomain) {

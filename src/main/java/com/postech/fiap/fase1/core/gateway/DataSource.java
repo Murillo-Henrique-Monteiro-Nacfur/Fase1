@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.core.gateway;
 
-import com.postech.fiap.fase1.core.domain.model.AddressDomain;
-import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
+import com.postech.fiap.fase1.core.dto.address.AddressDTO;
+import com.postech.fiap.fase1.core.dto.restaurant.RestaurantDTO;
 import com.postech.fiap.fase1.core.dto.user.UserDTO;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.domain.Page;
@@ -11,26 +11,27 @@ import java.util.Optional;
 
 public interface DataSource {
     //Address
-    AddressDomain createAddress(AddressDomain addressDomain);
+    AddressDTO createUserAddress(AddressDTO addressDomain);
 
-    AddressDomain updateAddress(AddressDomain addressDomain);
+    AddressDTO createRestaurantAddress(AddressDTO addressDomain);
+    AddressDTO updateAddress(AddressDTO addressDomain);
 
-    Optional<AddressDomain> getAddressById(Long idAddress);
+    Optional<AddressDTO> getAddressById(Long idAddress);
 
-    Page<AddressDomain> getAllAddressPaged(Pageable pageable);
+    Page<AddressDTO> getAllAddressPaged(Pageable pageable);
 
     void deleteAddressById(Long idAddress);
 
     //Restaurant
-    RestaurantDomain createRestaurant(RestaurantDomain restaurantDomain);
+    RestaurantDTO createRestaurant(RestaurantDTO restaurantDomain);
 
-    RestaurantDomain updateRestaurant(RestaurantDomain restaurantDomain);
+    RestaurantDTO updateRestaurant(RestaurantDTO restaurantDomain);
 
     boolean hasRestaurantWithCNPJ(Long idRestaurent, String cnpj);
 
-    Optional<RestaurantDomain> getRestaurantById(Long idRestaurent);
+    Optional<RestaurantDTO> getRestaurantById(Long idRestaurent);
 
-    Page<RestaurantDomain> getAllRestaurantPaged(Pageable pageable);
+    Page<RestaurantDTO> getAllRestaurantPaged(Pageable pageable);
 
     void deleteRestaurantById(Long idRestaurant);
 

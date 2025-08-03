@@ -8,7 +8,7 @@ import com.postech.fiap.fase1.core.dto.user.UserResponseDTO;
 import com.postech.fiap.fase1.core.gateway.DataSource;
 import com.postech.fiap.fase1.core.gateway.SessionSource;
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
-import com.postech.fiap.fase1.core.gateway.user.UserJpaGateway;
+import com.postech.fiap.fase1.core.gateway.user.UserGateway;
 import com.postech.fiap.fase1.core.presenter.UserPresenter;
 import com.postech.fiap.fase1.infrastructure.controller.user.UserControllerInterface;
 import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
@@ -22,8 +22,8 @@ public class UserUpdateCoreController implements UserControllerInterface {
     private final UserPresenter userPresenter;
 
     public UserUpdateCoreController(DataSource dataSource, SessionSource sessionSource) {
-        var userJpaGateway = new UserJpaGateway(dataSource);
-        var sessionGateway = new SessionGateway(sessionSource);
+        var userJpaGateway = UserGateway.build(dataSource);
+        var sessionGateway = SessionGateway.build(sessionSource);
         this.userUpdateDetailsUseCase = new UserUpdateDetailsUseCase(userJpaGateway, sessionGateway);
         this.userUpdatePasswordUseCase = new UserUpdatePasswordUseCase(userJpaGateway, sessionGateway);
         this.userPresenter = new UserPresenter();

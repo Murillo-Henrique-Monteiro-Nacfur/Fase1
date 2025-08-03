@@ -1,10 +1,14 @@
 package com.postech.fiap.fase1.infrastructure.data;
 
-import com.postech.fiap.fase1.core.domain.model.AddressDomain;
-import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
+import com.postech.fiap.fase1.core.dto.address.AddressDTO;
+import com.postech.fiap.fase1.core.dto.restaurant.RestaurantDTO;
 import com.postech.fiap.fase1.core.dto.user.UserDTO;
 import com.postech.fiap.fase1.core.gateway.DataSource;
+import com.postech.fiap.fase1.infrastructure.data.entity.Address;
+import com.postech.fiap.fase1.infrastructure.data.entity.Restaurant;
 import com.postech.fiap.fase1.infrastructure.data.entity.User;
+import com.postech.fiap.fase1.infrastructure.data.mapper.AddressMapper;
+import com.postech.fiap.fase1.infrastructure.data.mapper.RestaurantMapper;
 import com.postech.fiap.fase1.infrastructure.data.mapper.UserMapper;
 import com.postech.fiap.fase1.infrastructure.data.repository.AddressRepository;
 import com.postech.fiap.fase1.infrastructure.data.repository.RestaurantRepository;
@@ -26,8 +30,10 @@ public class DataRepository implements DataSource {
     private final AddressRepository addressRepository;
     private final RestaurantRepository restaurantRepository;
     private final UserMapper userMapper;
+    private final AddressMapper addressMapper;
+    private final RestaurantMapper restaurantMapper;
 
-    private User findById(Long id) {
+    private User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new ApplicationException("USER_NOT_FOUND"));
     }
@@ -67,10 +73,12 @@ public class DataRepository implements DataSource {
         return userMapper.toDTO(userRepository.save(user));
     }
 
+
+
     @Override
     @Transactional
     public UserDTO updateUser(UserDTO userDomain) {
-        User user = findById(userDomain.getId());
+        User user = findUserById(userDomain.getId());
         user = userMapper.updateToEntity(userDomain, user);
         return userMapper.toDTO(userRepository.save(user));
     }
@@ -91,58 +99,94 @@ public class DataRepository implements DataSource {
                 .or(Optional::empty);
     }
 
+    //address
     @Override
-    public AddressDomain createAddress(AddressDomain addressDomain) {
-        return null;
+    public AddressDTO createUserAddress(AddressDTO addressDTO) {
+        final Address address = addressMapper.toEntityUser(addressDTO);
+        return addressMapper.toDTO(addressRepository.save(address));
+    }
+    @Override
+    public AddressDTO createRestaurantAddress(AddressDTO addressDTO) {
+        final Address address = addressMapper.toEntityRestaurant(addressDTO);
+        return addressMapper.toDTO(addressRepository.save(address));
     }
 
     @Override
-    public AddressDomain updateAddress(AddressDomain addressDomain) {
-        return null;
+    public AddressDTO updateAddress(AddressDTO addressDTO) {
+        var oldAddress = findAddressById(addressDTO.getId());
+        final Address address = addressMapper.updateToEntity(oldAddress, addressDTO);
+        return addressMapper.toDTO(addressRepository.save(address));
+    }
+    private Address findAddressById(Long id) {
+        return addressRepository.findById(id).orElseThrow(
+                () -> new ApplicationException("ADDRESS_NOT_FOUND"));
     }
 
     @Override
-    public Optional<AddressDomain> getAddressById(Long idAddress) {
-        return Optional.empty();
+    @Transactional(readOnly = true)
+    public Optional<AddressDTO> getAddressById(Long idAddress) {
+        return addressRepository
+                .findById(idAddress)
+                .map(addressMapper::toDTO)
+                .or(Optional::empty);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<AddressDTO> getAllAddressPaged(Pageable pageable) {
+        return addressRepository.findAll(pageable).
+                map(addressMapper::toDTO);
     }
 
     @Override
-    public Page<AddressDomain> getAllAddressPaged(Pageable pageable) {
-        return null;
+    public void deleteAddressById(Long idRestaurant) {
+        addressRepository.deleteById(idRestaurant);
+    }
+
+    //restaurant
+    @Override
+    public RestaurantDTO createRestaurant(RestaurantDTO restaurant) {
+        return restaurantMapper.toDTO(restaurantRepository.save(restaurantMapper.toEntity(restaurant)));
+    }
+
+
+    @Override
+    public RestaurantDTO updateRestaurant(RestaurantDTO restaurantDTO) {
+        Restaurant restaurant = getOneById(restaurantDTO.getId());
+        restaurant = restaurantMapper.updateToEntity(restaurantDTO, restaurant);
+        return restaurantMapper.toDTO(restaurantRepository.save(restaurant));
     }
 
     @Override
-    public void deleteAddressById(Long idAddress) {
-
+    @Transactional(readOnly = true)
+    public boolean hasRestaurantWithCNPJ(Long idRestaurant, String cnpj) {
+        return restaurantRepository.hasRestaurantWithCNPJ(idRestaurant, cnpj);
     }
 
     @Override
-    public RestaurantDomain createRestaurant(RestaurantDomain restaurantDomain) {
-        return null;
+    @Transactional(readOnly = true)
+    public Optional<RestaurantDTO> getRestaurantById(Long idRestaurent) {
+        return restaurantRepository
+                .findById(idRestaurent)
+                .map(restaurantMapper::toDTO)
+                .or(Optional::empty);
+    }
+
+    public Restaurant getOneById(Long id) {
+        return restaurantRepository.findById(id).orElseThrow(
+                () -> new ApplicationException("Restaurant Not found"));
     }
 
     @Override
-    public RestaurantDomain updateRestaurant(RestaurantDomain restaurantDomain) {
-        return null;
-    }
-
-    @Override
-    public boolean hasRestaurantWithCNPJ(Long idRestaurent, String cnpj) {
-        return false;
-    }
-
-    @Override
-    public Optional<RestaurantDomain> getRestaurantById(Long idRestaurent) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Page<RestaurantDomain> getAllRestaurantPaged(Pageable pageable) {
-        return null;
+    @Transactional(readOnly = true)
+    public Page<RestaurantDTO> getAllRestaurantPaged(Pageable pageable) {
+        return restaurantRepository.findAll(pageable).
+                map(restaurantMapper::toDTO);
     }
 
     @Override
     public void deleteRestaurantById(Long idRestaurant) {
-
+        restaurantRepository.deleteById(idRestaurant);
     }
 }

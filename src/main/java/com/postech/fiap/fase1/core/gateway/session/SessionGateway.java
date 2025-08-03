@@ -8,8 +8,11 @@ public class SessionGateway implements ISessionGateway {
 
     private final SessionSource sessionSource;
 
-    public SessionGateway(SessionSource sessionSource) {
+    private SessionGateway(SessionSource sessionSource) {
         this.sessionSource = sessionSource;
+    }
+    public static SessionGateway build(SessionSource sessionSource) {
+        return new SessionGateway(sessionSource);
     }
 
     @Override

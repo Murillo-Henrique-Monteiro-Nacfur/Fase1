@@ -8,7 +8,6 @@ import lombok.Setter;
 @Builder
 @Getter
 @AllArgsConstructor
-
 public class AddressDomain {
     private static final String USER = "User";
     private static final String RESTAURANT = "Restaurant";
@@ -28,11 +27,11 @@ public class AddressDomain {
     private String addressableType;
 
 
-    public boolean isUserAddress(){
+    public boolean isUserAddress() {
         return USER.equals(addressableType);
     }
 
-    public boolean isRestaurantAddress(){
+    public boolean isRestaurantAddress() {
         return RESTAURANT.equals(addressableType);
     }
 }
