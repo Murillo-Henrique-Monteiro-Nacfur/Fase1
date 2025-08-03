@@ -5,10 +5,10 @@ import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.gateway.restaurant.IRestaurantGateway;
 import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
 import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
-import com.postech.fiap.fase1.core.validation.restaurant.RestaurantCreateValidation;
-import com.postech.fiap.fase1.core.validation.restaurant.implementation.RestaurantCNPJUsedValidation;
-import com.postech.fiap.fase1.core.validation.restaurant.implementation.RestaurantOpenCloseTimeValidation;
-import com.postech.fiap.fase1.core.validation.restaurant.implementation.RestaurantUserAllowedValidation;
+import com.postech.fiap.fase1.core.domain.validation.restaurant.RestaurantCreateValidation;
+import com.postech.fiap.fase1.core.domain.validation.restaurant.implementation.RestaurantCNPJUsedValidation;
+import com.postech.fiap.fase1.core.domain.validation.restaurant.implementation.RestaurantOpenCloseTimeValidation;
+import com.postech.fiap.fase1.core.domain.validation.restaurant.implementation.RestaurantUserAllowedValidation;
 
 import java.util.List;
 

@@ -2,10 +2,10 @@ package com.postech.fiap.fase1.core.domain.usecase.session;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.postech.fiap.fase1.core.dto.auth.UserTokenBodyDTO;
-import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
-import com.postech.fiap.fase1.infrastructure.session.ThreadLocalStorage;
-import com.postech.fiap.fase1.infrastructure.utils.JWTUtils;
-import com.postech.fiap.fase1.infrastructure.utils.JsonUtils;
+import com.postech.fiap.fase1.webapi.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.webapi.infrastructure.session.ThreadLocalStorage;
+import com.postech.fiap.fase1.webapi.utils.JWTUtils;
+import com.postech.fiap.fase1.webapi.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

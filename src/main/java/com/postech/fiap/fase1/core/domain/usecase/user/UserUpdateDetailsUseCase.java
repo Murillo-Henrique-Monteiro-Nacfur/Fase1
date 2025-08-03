@@ -3,10 +3,10 @@ package com.postech.fiap.fase1.core.domain.usecase.user;
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
 import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
-import com.postech.fiap.fase1.core.validation.user.UserUpdateValidation;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserAllowedValidator;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserEmailAlreadyUsedValidator;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserLoginAlreadyUsedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.UserUpdateValidation;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserAllowedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserEmailAlreadyUsedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserLoginAlreadyUsedValidator;
 
 import java.util.List;
 

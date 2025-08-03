@@ -5,7 +5,7 @@ import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
 import com.postech.fiap.fase1.core.gateway.address.IAddressGateway;
 import com.postech.fiap.fase1.core.gateway.restaurant.IRestaurantGateway;
 import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
-import com.postech.fiap.fase1.core.validation.address.implementation.AddressCreateToUserAllowedValidator;
+import com.postech.fiap.fase1.core.domain.validation.address.implementation.AddressCreateToUserAllowedValidator;
 
 public class AddressRestaurantCreateUseCase {
 

@@ -3,7 +3,7 @@ package com.postech.fiap.fase1.core.domain.usecase.user;
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
 import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserAllowedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserAllowedValidator;
 
 public class UserDeleteUseCase {
 

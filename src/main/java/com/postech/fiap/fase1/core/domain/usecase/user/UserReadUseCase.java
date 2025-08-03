@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.core.domain.usecase.user;
 
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserAllowedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserAllowedValidator;
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
 import org.springframework.data.domain.Page;

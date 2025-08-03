@@ -11,7 +11,7 @@ import com.postech.fiap.fase1.core.gateway.restaurant.RestaurantGateway;
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
 import com.postech.fiap.fase1.core.gateway.storage.StorageGateway;
 import com.postech.fiap.fase1.core.presenter.ProductPresenter;
-import com.postech.fiap.fase1.infrastructure.storage.StorageRepository;
+import com.postech.fiap.fase1.webapi.infrastructure.storage.StorageRepository;
 
 public class ProductCreateCoreController {
     private final ProductCreateUseCase productCreateUseCase;

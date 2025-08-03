@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.core.dto.auth;
 
 
-import com.postech.fiap.fase1.infrastructure.data.entity.Role;
+import com.postech.fiap.fase1.webapi.data.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

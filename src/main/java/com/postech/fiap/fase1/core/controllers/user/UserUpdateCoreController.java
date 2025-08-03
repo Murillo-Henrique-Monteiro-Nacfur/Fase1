@@ -10,8 +10,8 @@ import com.postech.fiap.fase1.core.gateway.SessionSource;
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
 import com.postech.fiap.fase1.core.gateway.user.UserGateway;
 import com.postech.fiap.fase1.core.presenter.UserPresenter;
-import com.postech.fiap.fase1.infrastructure.controller.user.UserControllerInterface;
-import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.webapi.controller.user.UserControllerInterface;
+import com.postech.fiap.fase1.webapi.infrastructure.exception.ApplicationException;
 import org.springframework.http.HttpStatus;
 
 public class UserUpdateCoreController implements UserControllerInterface {

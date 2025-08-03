@@ -6,7 +6,7 @@ import com.postech.fiap.fase1.core.dto.restaurant.RestaurantDTO;
 import com.postech.fiap.fase1.core.dto.user.UserDTO;
 import com.postech.fiap.fase1.core.gateway.DataSource;
 import com.postech.fiap.fase1.core.presenter.AddressPresenter;
-import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.webapi.infrastructure.exception.ApplicationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

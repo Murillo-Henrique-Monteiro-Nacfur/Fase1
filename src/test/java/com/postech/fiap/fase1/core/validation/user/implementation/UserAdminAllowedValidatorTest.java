@@ -1,9 +1,10 @@
 package com.postech.fiap.fase1.core.validation.user.implementation;
 
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserAdminAllowedValidator;
 import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
-import com.postech.fiap.fase1.core.validation.session.SessionUserAllowedValidator;
-import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.core.domain.validation.session.SessionUserAllowedValidator;
+import com.postech.fiap.fase1.webapi.infrastructure.exception.ApplicationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
