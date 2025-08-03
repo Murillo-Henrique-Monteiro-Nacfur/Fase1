@@ -16,7 +16,9 @@ public class ProductJpaGateway implements ProductGateway {
         this.productPresenter = productPresenter;
     }
 
-    public static ProductJpaGateway build(DataSource dataSource) {return new ProductJpaGateway(dataSource, new ProductPresenter());}
+    public static ProductJpaGateway build(DataSource dataSource) {
+        return new ProductJpaGateway(dataSource, new ProductPresenter());
+    }
 
     @Override
     public ProductDomain getProductById(Long idProduct) {
@@ -32,6 +34,11 @@ public class ProductJpaGateway implements ProductGateway {
     @Override
     public ProductDomain create(ProductDomain productDomain) {
         return productPresenter.toDomain(dataSource.createProduct(productPresenter.toDTO(productDomain)));
+    }
+
+    @Override
+    public void delete(ProductDomain productDomain) {
+        dataSource.deleteProductById(productDomain.getId());
     }
 
 }

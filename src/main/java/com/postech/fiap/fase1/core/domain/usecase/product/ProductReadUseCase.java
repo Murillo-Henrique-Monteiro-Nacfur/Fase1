@@ -8,11 +8,9 @@ import java.util.List;
 
 public class ProductReadUseCase {
     private final ProductGateway productGateway;
-    private final IRestaurantGateway restaurantGateway;
 
-    public ProductReadUseCase(ProductGateway productGateway, IRestaurantGateway restaurantGateway) {
+    public ProductReadUseCase(ProductGateway productGateway) {
         this.productGateway = productGateway;
-        this.restaurantGateway = restaurantGateway;
 
     }
 
