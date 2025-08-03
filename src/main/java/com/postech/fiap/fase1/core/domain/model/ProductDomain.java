@@ -1,5 +1,6 @@
 package com.postech.fiap.fase1.core.domain.model;
 
+import com.postech.fiap.fase1.core.dto.product.FileDTO;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,4 +18,5 @@ public class ProductDomain {
     private Boolean available;
     private String photoUrl;
     private RestaurantDomain restaurant;
+    private FileDTO file;
 }
