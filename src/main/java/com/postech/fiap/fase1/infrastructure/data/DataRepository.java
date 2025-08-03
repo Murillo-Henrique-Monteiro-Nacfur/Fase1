@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +33,7 @@ public class DataRepository implements DataSource {
 
     private static final String ADDRESS_NOT_FOUND = "Address not found";
     private static final String USER_NOT_FOUND = "User not found";
+    private static final String PRODUCT_NOT_FOUND = "Product not found";
     private static final String RESTAURANT_NOT_FOUND = "Restaurant Not found";
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
@@ -127,11 +129,15 @@ public class DataRepository implements DataSource {
     }
 
     @Override
-    public ProductDTO updateProduct(ProductDTO productDTO) {
-        return null;
-        //TODO WILL
+    public ProductDTO getById(Long idProduct) {
+        return productMapper.toDTO(productRepository.findById(idProduct).orElseThrow(
+                () -> new ApplicationException(PRODUCT_NOT_FOUND)));
     }
 
+    @Override
+    public List<ProductDTO> getProductByIdRestaurant(Long idRestaurant) {
+        return productRepository.findProductByRestaurantId(idRestaurant).stream().map(productMapper::toDTO).toList();
+    }
 
     @Override
     public AddressDTO updateAddress(AddressDTO addressDTO) {

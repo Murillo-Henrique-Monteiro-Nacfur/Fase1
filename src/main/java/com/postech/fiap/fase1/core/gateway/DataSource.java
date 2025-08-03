@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DataSource {
@@ -58,5 +59,7 @@ public interface DataSource {
     //Product
     ProductDTO createProduct(ProductDTO productDTO);
 
-    ProductDTO updateProduct(ProductDTO productDTO);
+    ProductDTO getById(Long idProduct);
+
+    List<ProductDTO> getProductByIdRestaurant(Long idRestaurant);
 }
