@@ -9,8 +9,14 @@ import com.postech.fiap.fase1.infrastructure.data.entity.Restaurant;
 import com.postech.fiap.fase1.infrastructure.data.entity.User;
 import com.postech.fiap.fase1.infrastructure.data.mapper.AddressMapper;
 import com.postech.fiap.fase1.infrastructure.data.mapper.RestaurantMapper;
+import com.postech.fiap.fase1.core.domain.model.AddressDomain;
+import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
+import com.postech.fiap.fase1.core.dto.product.ProductDTO;
+import com.postech.fiap.fase1.infrastructure.data.entity.Product;
+import com.postech.fiap.fase1.infrastructure.data.mapper.ProductMapper;
 import com.postech.fiap.fase1.infrastructure.data.mapper.UserMapper;
 import com.postech.fiap.fase1.infrastructure.data.repository.AddressRepository;
+import com.postech.fiap.fase1.infrastructure.data.repository.ProductRepository;
 import com.postech.fiap.fase1.infrastructure.data.repository.RestaurantRepository;
 import com.postech.fiap.fase1.infrastructure.data.repository.UserRepository;
 import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
@@ -32,9 +38,10 @@ public class DataRepository implements DataSource {
     private final UserMapper userMapper;
     private final AddressMapper addressMapper;
     private final RestaurantMapper restaurantMapper;
+    private final ProductMapper productMapper;
+    private final ProductRepository productRepository;
 
     private User findUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(
                 () -> new ApplicationException("USER_NOT_FOUND"));
     }
 
@@ -105,11 +112,24 @@ public class DataRepository implements DataSource {
         final Address address = addressMapper.toEntityUser(addressDTO);
         return addressMapper.toDTO(addressRepository.save(address));
     }
+
     @Override
     public AddressDTO createRestaurantAddress(AddressDTO addressDTO) {
         final Address address = addressMapper.toEntityRestaurant(addressDTO);
         return addressMapper.toDTO(addressRepository.save(address));
     }
+    @Transactional
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        Product product = productMapper.toEntity(productDTO);
+        return productMapper.toDTO(productRepository.save(product));
+    }
+
+    @Override
+    public ProductDTO updateProduct(ProductDTO productDTO) {
+        return null;
+        //TODO WILL
+    }
+  
 
     @Override
     public AddressDTO updateAddress(AddressDTO addressDTO) {
