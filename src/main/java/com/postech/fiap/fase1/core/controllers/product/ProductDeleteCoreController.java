@@ -10,7 +10,6 @@ import com.postech.fiap.fase1.core.presenter.ProductPresenter;
 
 public class ProductDeleteCoreController {
     private final ProductDeleteUseCase productDeleteUseCase;
-    private final ProductPresenter productPresenter;
 
     public ProductDeleteCoreController(DataSource dataSource, SessionSource sessionSource) {
         var productJpaGateway = ProductJpaGateway.build(dataSource);
@@ -18,7 +17,6 @@ public class ProductDeleteCoreController {
         var restaurantGateway = RestaurantGateway.build(dataSource);
 
         this.productDeleteUseCase = new ProductDeleteUseCase(productJpaGateway, sessionGateway, restaurantGateway);
-        this.productPresenter = new ProductPresenter();
     }
 
     public void delete(Long idProduct) {
