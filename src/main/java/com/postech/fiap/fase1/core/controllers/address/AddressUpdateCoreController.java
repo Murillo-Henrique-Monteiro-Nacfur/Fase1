@@ -23,5 +23,4 @@ public class AddressUpdateCoreController {
     public AddressResponseDTO update(AddressRequestDTO addressRequestUpdateDTO) {
         return addressPresenter.toResponseDTO(addressUpdateUseCase.execute(addressPresenter.requestUpdateToInput(addressRequestUpdateDTO)));
     }
-
 }

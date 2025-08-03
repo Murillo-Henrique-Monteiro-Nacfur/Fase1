@@ -5,7 +5,6 @@ import com.postech.fiap.fase1.core.gateway.DataSource;
 import com.postech.fiap.fase1.core.presenter.ProductPresenter;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProductJpaGateway implements ProductGateway {
     private final DataSource dataSource;
@@ -16,7 +15,9 @@ public class ProductJpaGateway implements ProductGateway {
         this.productPresenter = productPresenter;
     }
 
-    public static ProductJpaGateway build(DataSource dataSource) {return new ProductJpaGateway(dataSource, new ProductPresenter());}
+    public static ProductJpaGateway build(DataSource dataSource) {
+        return new ProductJpaGateway(dataSource, new ProductPresenter());
+    }
 
     @Override
     public ProductDomain getProductById(Long idProduct) {
@@ -25,7 +26,7 @@ public class ProductJpaGateway implements ProductGateway {
 
     @Override
     public List<ProductDomain> getProductByIdRestaurant(Long idRestaurant) {
-        return dataSource.getProductByIdRestaurant(idRestaurant).stream().map(productPresenter::toDomain).collect(Collectors.toList());
+        return dataSource.getProductByIdRestaurant(idRestaurant).stream().map(productPresenter::toDomain).toList();
     }
 
 
