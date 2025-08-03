@@ -1,19 +1,17 @@
 package com.postech.fiap.fase1.infrastructure.data;
 
 import com.postech.fiap.fase1.core.dto.address.AddressDTO;
+import com.postech.fiap.fase1.core.dto.product.ProductDTO;
 import com.postech.fiap.fase1.core.dto.restaurant.RestaurantDTO;
 import com.postech.fiap.fase1.core.dto.user.UserDTO;
 import com.postech.fiap.fase1.core.gateway.DataSource;
 import com.postech.fiap.fase1.infrastructure.data.entity.Address;
+import com.postech.fiap.fase1.infrastructure.data.entity.Product;
 import com.postech.fiap.fase1.infrastructure.data.entity.Restaurant;
 import com.postech.fiap.fase1.infrastructure.data.entity.User;
 import com.postech.fiap.fase1.infrastructure.data.mapper.AddressMapper;
-import com.postech.fiap.fase1.infrastructure.data.mapper.RestaurantMapper;
-import com.postech.fiap.fase1.core.domain.model.AddressDomain;
-import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
-import com.postech.fiap.fase1.core.dto.product.ProductDTO;
-import com.postech.fiap.fase1.infrastructure.data.entity.Product;
 import com.postech.fiap.fase1.infrastructure.data.mapper.ProductMapper;
+import com.postech.fiap.fase1.infrastructure.data.mapper.RestaurantMapper;
 import com.postech.fiap.fase1.infrastructure.data.mapper.UserMapper;
 import com.postech.fiap.fase1.infrastructure.data.repository.AddressRepository;
 import com.postech.fiap.fase1.infrastructure.data.repository.ProductRepository;
@@ -32,6 +30,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DataRepository implements DataSource {
 
+    private static final String ADDRESS_NOT_FOUND = "Address not found";
+    private static final String USER_NOT_FOUND = "User not found";
+    private static final String RESTAURANT_NOT_FOUND = "Restaurant Not found";
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final RestaurantRepository restaurantRepository;
@@ -42,7 +43,8 @@ public class DataRepository implements DataSource {
     private final ProductRepository productRepository;
 
     private User findUserById(Long id) {
-                () -> new ApplicationException("USER_NOT_FOUND"));
+        return userRepository.findById(id).orElseThrow(
+                () -> new ApplicationException(USER_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
@@ -81,7 +83,6 @@ public class DataRepository implements DataSource {
     }
 
 
-
     @Override
     @Transactional
     public UserDTO updateUser(UserDTO userDomain) {
@@ -91,7 +92,7 @@ public class DataRepository implements DataSource {
     }
 
     @Override
-    public UserDTO updateUserPassoword(UserDTO userDTO){
+    public UserDTO updateUserPassoword(UserDTO userDTO) {
         return userMapper.toDTO(userRepository.save(userMapper.toEntity(userDTO)));
     }
 
@@ -118,6 +119,7 @@ public class DataRepository implements DataSource {
         final Address address = addressMapper.toEntityRestaurant(addressDTO);
         return addressMapper.toDTO(addressRepository.save(address));
     }
+
     @Transactional
     public ProductDTO createProduct(ProductDTO productDTO) {
         Product product = productMapper.toEntity(productDTO);
@@ -129,7 +131,7 @@ public class DataRepository implements DataSource {
         return null;
         //TODO WILL
     }
-  
+
 
     @Override
     public AddressDTO updateAddress(AddressDTO addressDTO) {
@@ -137,9 +139,10 @@ public class DataRepository implements DataSource {
         final Address address = addressMapper.updateToEntity(oldAddress, addressDTO);
         return addressMapper.toDTO(addressRepository.save(address));
     }
+
     private Address findAddressById(Long id) {
         return addressRepository.findById(id).orElseThrow(
-                () -> new ApplicationException("ADDRESS_NOT_FOUND"));
+                () -> new ApplicationException(ADDRESS_NOT_FOUND));
     }
 
     @Override
@@ -195,7 +198,7 @@ public class DataRepository implements DataSource {
 
     public Restaurant getOneById(Long id) {
         return restaurantRepository.findById(id).orElseThrow(
-                () -> new ApplicationException("Restaurant Not found"));
+                () -> new ApplicationException(RESTAURANT_NOT_FOUND));
     }
 
     @Override

@@ -14,6 +14,7 @@ import java.util.Optional;
 @Slf4j
 public class RestaurantGateway implements IRestaurantGateway {
 
+    private static final String RESTAURANT_NOT_FOUND = "Restaurant Not found";
     private final RestaurantPresenter restaurantPresenter;
     private final DataSource dataSource;
 
@@ -52,7 +53,7 @@ public class RestaurantGateway implements IRestaurantGateway {
 
     public RestaurantDomain getOneById(Long id) {
         return dataSource.getRestaurantById(id).map(restaurantPresenter::toDomain).orElseThrow(
-                () -> new ApplicationException("Restaurant Not found"));
+                () -> new ApplicationException(RESTAURANT_NOT_FOUND));
     }
 
     @Override
