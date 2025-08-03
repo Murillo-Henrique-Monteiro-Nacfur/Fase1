@@ -106,4 +106,25 @@
             DELETE FROM DATABASECHANGELOG WHERE ID = 'criacao-tabela-de-restaurante';
         </rollback>
     </changeSet>
+
+    <changeSet id="criacao-tabela-de-produto" author="willian.visicati">
+        <sql>
+            CREATE TABLE PUBLIC."PRODUCT" (
+            "ID" BIGSERIAL PRIMARY KEY,
+            "NAME" VARCHAR(255) NOT NULL,
+            "DESCRIPTION" VARCHAR(500) NOT NULL,
+            "PRICE" DECIMAL(10, 2) NOT NULL,
+            "PHOTO_URL" VARCHAR(255),
+            "RESTAURANT_ID" BIGINT NOT NULL,
+            "CREATED_AT" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            "UPDATED_AT" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY ("RESTAURANT_ID") REFERENCES PUBLIC."RESTAURANT"("ID")
+            );
+            </sql>
+        <rollback>
+            DROP TABLE public."PRODUCT";
+            DELETE FROM DATABASECHANGELOG WHERE ID = 'criacao-tabela-de-produto';
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>

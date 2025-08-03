@@ -2,6 +2,7 @@ package com.postech.fiap.fase1.core.gateway;
 
 import com.postech.fiap.fase1.core.domain.model.AddressDomain;
 import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
+import com.postech.fiap.fase1.core.dto.product.ProductDTO;
 import com.postech.fiap.fase1.core.dto.user.UserDTO;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.domain.Page;
@@ -52,4 +53,9 @@ public interface DataSource {
     void deleteUserById(Long idUser);
 
     Optional<UserDTO> getUserByLogin(@NotBlank String login);
+
+    //Product
+    ProductDTO createProduct(ProductDTO productDTO);
+
+    ProductDTO updateProduct(ProductDTO productDTO);
 }

@@ -2,11 +2,15 @@ package com.postech.fiap.fase1.infrastructure.data;
 
 import com.postech.fiap.fase1.core.domain.model.AddressDomain;
 import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
+import com.postech.fiap.fase1.core.dto.product.ProductDTO;
 import com.postech.fiap.fase1.core.dto.user.UserDTO;
 import com.postech.fiap.fase1.core.gateway.DataSource;
+import com.postech.fiap.fase1.infrastructure.data.entity.Product;
 import com.postech.fiap.fase1.infrastructure.data.entity.User;
+import com.postech.fiap.fase1.infrastructure.data.mapper.ProductMapper;
 import com.postech.fiap.fase1.infrastructure.data.mapper.UserMapper;
 import com.postech.fiap.fase1.infrastructure.data.repository.AddressRepository;
+import com.postech.fiap.fase1.infrastructure.data.repository.ProductRepository;
 import com.postech.fiap.fase1.infrastructure.data.repository.RestaurantRepository;
 import com.postech.fiap.fase1.infrastructure.data.repository.UserRepository;
 import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
@@ -26,6 +30,8 @@ public class DataRepository implements DataSource {
     private final AddressRepository addressRepository;
     private final RestaurantRepository restaurantRepository;
     private final UserMapper userMapper;
+    private final ProductMapper productMapper;
+    private final ProductRepository productRepository;
 
     private User findById(Long id) {
         return userRepository.findById(id).orElseThrow(
@@ -89,6 +95,19 @@ public class DataRepository implements DataSource {
     public Optional<UserDTO> getUserByLogin(String login) {
         return userRepository.findByLogin(login).map(userMapper::toDTO)
                 .or(Optional::empty);
+    }
+
+    @Override
+    @Transactional
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        Product product = productMapper.toEntity(productDTO);
+        return productMapper.toDTO(productRepository.save(product));
+    }
+
+    @Override
+    public ProductDTO updateProduct(ProductDTO productDTO) {
+        return null;
+        //TODO WILL
     }
 
     @Override
