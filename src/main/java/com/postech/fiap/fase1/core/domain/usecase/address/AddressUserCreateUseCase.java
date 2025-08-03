@@ -3,8 +3,8 @@ package com.postech.fiap.fase1.core.domain.usecase.address;
 import com.postech.fiap.fase1.core.domain.model.AddressDomain;
 import com.postech.fiap.fase1.core.gateway.address.IAddressGateway;
 import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
-import com.postech.fiap.fase1.core.validation.address.AddressCreateValidation;
-import com.postech.fiap.fase1.core.validation.address.implementation.AddressCreateToUserAllowedValidator;
+import com.postech.fiap.fase1.core.domain.validation.address.AddressCreateValidation;
+import com.postech.fiap.fase1.core.domain.validation.address.implementation.AddressCreateToUserAllowedValidator;
 
 public class AddressUserCreateUseCase {
 

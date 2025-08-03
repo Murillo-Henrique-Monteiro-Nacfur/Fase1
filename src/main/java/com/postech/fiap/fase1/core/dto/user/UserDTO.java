@@ -2,7 +2,7 @@ package com.postech.fiap.fase1.core.dto.user;
 
 import com.postech.fiap.fase1.core.dto.address.AddressDTO;
 import com.postech.fiap.fase1.core.dto.address.AddressableDTO;
-import com.postech.fiap.fase1.infrastructure.data.entity.Role;
+import com.postech.fiap.fase1.webapi.data.entity.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

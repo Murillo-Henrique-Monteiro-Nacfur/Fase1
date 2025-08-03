@@ -3,11 +3,11 @@ package com.postech.fiap.fase1.core.domain.usecase.user;
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
 import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
-import com.postech.fiap.fase1.core.validation.user.UserCreateAdminValidation;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserAdminAllowedValidator;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserEmailAlreadyUsedValidator;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserLoginAlreadyUsedValidator;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserPasswordValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.UserCreateAdminValidation;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserAdminAllowedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserEmailAlreadyUsedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserLoginAlreadyUsedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserPasswordValidator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

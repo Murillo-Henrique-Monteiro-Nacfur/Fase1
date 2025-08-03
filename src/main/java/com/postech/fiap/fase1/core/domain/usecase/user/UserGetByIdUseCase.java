@@ -2,7 +2,7 @@ package com.postech.fiap.fase1.core.domain.usecase.user;
 
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
-import com.postech.fiap.fase1.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.webapi.infrastructure.exception.ApplicationException;
 
 public class UserGetByIdUseCase {
 

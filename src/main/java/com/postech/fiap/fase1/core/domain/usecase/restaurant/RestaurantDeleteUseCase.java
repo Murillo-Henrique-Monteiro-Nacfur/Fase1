@@ -3,8 +3,8 @@ package com.postech.fiap.fase1.core.domain.usecase.restaurant;
 import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
 import com.postech.fiap.fase1.core.gateway.restaurant.IRestaurantGateway;
 import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
-import com.postech.fiap.fase1.core.validation.restaurant.RestaurantDeleteValidation;
-import com.postech.fiap.fase1.core.validation.restaurant.implementation.RestaurantUserAllowedValidation;
+import com.postech.fiap.fase1.core.domain.validation.restaurant.RestaurantDeleteValidation;
+import com.postech.fiap.fase1.core.domain.validation.restaurant.implementation.RestaurantUserAllowedValidation;
 
 
 public class RestaurantDeleteUseCase {

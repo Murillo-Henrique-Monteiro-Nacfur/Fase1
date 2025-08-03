@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.postech.fiap</groupId>
-	<artifactId>fase1</artifactId>
+	<artifactId>tech-challenge</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>fase1</name>
+	<name>tech-challenge</name>
 	<description>TECH CHALLENGE FASE 01</description>
 	<url/>
 	<licenses>

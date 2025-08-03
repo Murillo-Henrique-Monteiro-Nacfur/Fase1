@@ -3,8 +3,8 @@ package com.postech.fiap.fase1.core.domain.usecase.address;
 import com.postech.fiap.fase1.core.domain.model.AddressDomain;
 import com.postech.fiap.fase1.core.gateway.address.IAddressGateway;
 import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
-import com.postech.fiap.fase1.core.validation.session.SessionUserAllowedValidator;
-import com.postech.fiap.fase1.core.validation.session.ISessionValidation;
+import com.postech.fiap.fase1.core.domain.validation.session.SessionUserAllowedValidator;
+import com.postech.fiap.fase1.core.domain.validation.session.ISessionValidation;
 
 public class AddressUpdateUseCase {
 

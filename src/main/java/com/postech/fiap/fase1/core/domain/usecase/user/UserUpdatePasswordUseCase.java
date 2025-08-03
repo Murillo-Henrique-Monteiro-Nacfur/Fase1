@@ -3,10 +3,10 @@ package com.postech.fiap.fase1.core.domain.usecase.user;
 import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
 import com.postech.fiap.fase1.core.gateway.user.IUserGateway;
-import com.postech.fiap.fase1.core.validation.user.UserUpdatePasswordValidation;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserAdminAllowedValidator;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserAllowedValidator;
-import com.postech.fiap.fase1.core.validation.user.implementation.UserPasswordValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.UserUpdatePasswordValidation;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserAdminAllowedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserAllowedValidator;
+import com.postech.fiap.fase1.core.domain.validation.user.implementation.UserPasswordValidator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
