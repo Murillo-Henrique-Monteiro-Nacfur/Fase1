@@ -15,15 +15,12 @@ import java.util.List;
 
 public class ProductReadCoreController {
     private final ProductReadUseCase productReadUseCase;
-    private final ProductPresenter productPresenter;
 
-    public ProductReadCoreController(DataSource dataSource, SessionSource sessionSource) {
+    public ProductReadCoreController(DataSource dataSource) {
         var productJpaGateway = ProductJpaGateway.build(dataSource);
-        var sessionGateway = SessionGateway.build(sessionSource);
         var restaurantGateway = RestaurantGateway.build(dataSource);
 
         this.productReadUseCase = new ProductReadUseCase(productJpaGateway, restaurantGateway);
-        this.productPresenter = new ProductPresenter();
     }
 
     public ProductDomain getById(Long idProduct) {

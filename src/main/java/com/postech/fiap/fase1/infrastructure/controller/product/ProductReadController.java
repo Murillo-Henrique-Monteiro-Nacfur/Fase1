@@ -24,19 +24,18 @@ public class ProductReadController implements ProductControllerInterface {
 
     private final ProductPresenter productPresenter;
     private final DataRepository dataRepository;
-    private final SessionRepository sessionRepository;
 
     @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
-        ProductReadCoreController productReadCoreController = new ProductReadCoreController(dataRepository, sessionRepository);
+        ProductReadCoreController productReadCoreController = new ProductReadCoreController(dataRepository);
         return ResponseEntity.status(HttpStatus.CREATED).body(productPresenter.toDTO(productReadCoreController.getById(id)));
     }
 
     @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/restaurant/{idRestaurant}")
     public ResponseEntity<List<ProductDTO>> findByIdRestaurant(@PathVariable Long idRestaurant) {
-        ProductReadCoreController productReadCoreController = new ProductReadCoreController(dataRepository, sessionRepository);
+        ProductReadCoreController productReadCoreController = new ProductReadCoreController(dataRepository);
         return ResponseEntity.status(HttpStatus.CREATED).body(productReadCoreController.getByIdRestaurant(idRestaurant).stream().map(productPresenter::toDTO).toList());
     }
 }
