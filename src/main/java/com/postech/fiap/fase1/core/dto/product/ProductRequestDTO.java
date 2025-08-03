@@ -30,7 +30,7 @@ public class ProductRequestDTO {
     @Positive(message = "Product price must be positive")
     private final BigDecimal price;
 
-    @Schema(description = "Imagem do produto.")
+    @Schema(description = "Imagem do produto.", example = "https://www.google.com/images")
     private final String linkImage;
 
     @Schema(description = "Id do Restaurante", example = "1")

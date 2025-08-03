@@ -8,10 +8,12 @@ public class ProductJpaGateway implements ProductGateway {
     private final DataSource dataSource;
     private final ProductPresenter productPresenter;
 
-    public ProductJpaGateway(DataSource dataSource) {
+    public ProductJpaGateway(DataSource dataSource, ProductPresenter productPresenter) {
         this.dataSource = dataSource;
-        this.productPresenter = new ProductPresenter();
+        this.productPresenter = productPresenter;
     }
+
+    public static ProductJpaGateway build(DataSource dataSource) {return new ProductJpaGateway(dataSource, new ProductPresenter());}
 
     @Override
     public ProductDomain getOne(Long idUser) {

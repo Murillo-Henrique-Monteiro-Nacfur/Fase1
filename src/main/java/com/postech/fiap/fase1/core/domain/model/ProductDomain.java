@@ -16,5 +16,5 @@ public class ProductDomain {
     private BigDecimal price;
     private Boolean available;
     private String photoUrl;
-    private Long restaurantId;
+    private RestaurantDomain restaurant;
 }

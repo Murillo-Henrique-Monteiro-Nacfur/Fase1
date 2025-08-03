@@ -5,6 +5,7 @@ import com.postech.fiap.fase1.core.dto.product.ProductDTO;
 import com.postech.fiap.fase1.core.dto.product.ProductRequestDTO;
 import com.postech.fiap.fase1.core.presenter.ProductPresenter;
 import com.postech.fiap.fase1.infrastructure.data.DataRepository;
+import com.postech.fiap.fase1.infrastructure.session.SessionRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,11 +23,12 @@ public class ProductCreateController implements ProductControllerInterface {
 
     private final ProductPresenter productPresenter;
     private final DataRepository dataRepository;
+    private final SessionRepository sessionRepository;
 
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping
     public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductRequestDTO productRequestDTO) {
-        ProductCreateCoreController productCreateCoreController = new ProductCreateCoreController(dataRepository);
+        ProductCreateCoreController productCreateCoreController = new ProductCreateCoreController(dataRepository, sessionRepository);
         return ResponseEntity.status(HttpStatus.CREATED).body(productPresenter.toDTO(productCreateCoreController.createProduct(productRequestDTO)));
     }
 }

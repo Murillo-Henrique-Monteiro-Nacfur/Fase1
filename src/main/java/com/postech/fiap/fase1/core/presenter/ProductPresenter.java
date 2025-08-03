@@ -1,6 +1,7 @@
 package com.postech.fiap.fase1.core.presenter;
 
 import com.postech.fiap.fase1.core.domain.model.ProductDomain;
+import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
 import com.postech.fiap.fase1.core.dto.product.ProductDTO;
 import com.postech.fiap.fase1.core.dto.product.ProductRequestDTO;
 import lombok.RequiredArgsConstructor;
@@ -15,17 +16,18 @@ public class ProductPresenter {
                 .description(productRequestDTO.getDescription())
                 .price(productRequestDTO.getPrice())
                 .photoUrl(productRequestDTO.getLinkImage())
-                .restaurantId(productRequestDTO.getIdRestaurant())
+                .restaurant(RestaurantDomain.builder().id(productRequestDTO.getIdRestaurant()).build())
                 .build();
     }
 
     public ProductDTO toDTO(ProductDomain productDomain) {
         return ProductDTO.builder()
+                .id(productDomain.getId())
                 .name(productDomain.getName())
                 .description(productDomain.getDescription())
                 .price(productDomain.getPrice())
                 .photoUrl(productDomain.getPhotoUrl())
-                .restaurantId(productDomain.getRestaurantId())
+                .restaurantId(productDomain.getRestaurant().getId())
                 .build();
     }
 
@@ -36,7 +38,7 @@ public class ProductPresenter {
                 .description(productDTO.getDescription())
                 .price(productDTO.getPrice())
                 .photoUrl(productDTO.getPhotoUrl())
-                .restaurantId(productDTO.getRestaurantId())
+                .restaurant(RestaurantDomain.builder().id(productDTO.getRestaurantId()).build())
                 .build();
 
     }
