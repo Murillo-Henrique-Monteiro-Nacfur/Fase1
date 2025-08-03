@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("""
             SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END
             FROM User u
-            WHERE u.id <> :idUser
+            WHERE (u.id <> :idUser OR :idUser is null)
             AND (u.email = :email)
             """)
     boolean hasUserWithSameEmail(@Param("idUser") Long idUser,@Param("email") String email);
@@ -28,7 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("""
             SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END
             FROM User u
-            WHERE u.id <> :idUser
+            WHERE (u.id <> :idUser OR :idUser is null)
             AND (u.login = :login)
             """)
     boolean hasUserWithSameLogin(@Param("idUser") Long idUser,@Param("login") String login);

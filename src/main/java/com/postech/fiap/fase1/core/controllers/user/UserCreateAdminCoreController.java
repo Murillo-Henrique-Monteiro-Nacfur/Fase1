@@ -17,7 +17,7 @@ public class UserCreateAdminCoreController {
         var userJpaGateway = UserGateway.build(dataSource);
         var sessionGateway = SessionGateway.build(sessionSource);
 
-        this.userCreateAdminUseCase = new UserCreateAdminUseCase(userJpaGateway, sessionGateway);
+        this.userCreateAdminUseCase = UserCreateAdminUseCase.build(userJpaGateway, sessionGateway);
         this.userPresenter = new UserPresenter();
     }
 

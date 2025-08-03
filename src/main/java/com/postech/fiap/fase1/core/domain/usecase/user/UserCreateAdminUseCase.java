@@ -18,12 +18,14 @@ public class UserCreateAdminUseCase {
     private final List<UserCreateAdminValidation> userCreateAdminValidations;
     private final PasswordEncoder passwordEncoder;
 
-    public UserCreateAdminUseCase(IUserGateway iUserGateway, ISessionGateway sessionGateway) {
+    protected UserCreateAdminUseCase(IUserGateway iUserGateway, PasswordEncoder passwordEncoder, List<UserCreateAdminValidation> userCreateAdminValidations) {
         this.iUserGateway = iUserGateway;
-        this.userCreateAdminValidations = List.of(UserAdminAllowedValidator.build(sessionGateway), new UserEmailAlreadyUsedValidator(iUserGateway), new UserLoginAlreadyUsedValidator(iUserGateway), new UserPasswordValidator());
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.userCreateAdminValidations = userCreateAdminValidations;
+        this.passwordEncoder = passwordEncoder;
     }
-
+    public static UserCreateAdminUseCase build(IUserGateway iUserGateway, ISessionGateway sessionGateway) {
+        return new UserCreateAdminUseCase(iUserGateway, new BCryptPasswordEncoder(), List.of(UserAdminAllowedValidator.build(sessionGateway), new UserEmailAlreadyUsedValidator(iUserGateway), new UserLoginAlreadyUsedValidator(iUserGateway), new UserPasswordValidator()));
+    }
     public UserDomain execute(UserDomain userDomain) {
         validate(userDomain);
         userDomain.setAdminRole();

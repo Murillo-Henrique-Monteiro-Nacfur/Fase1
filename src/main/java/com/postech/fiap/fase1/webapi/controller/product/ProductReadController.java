@@ -3,7 +3,6 @@ package com.postech.fiap.fase1.webapi.controller.product;
 import com.postech.fiap.fase1.core.controllers.product.ProductReadCoreController;
 import com.postech.fiap.fase1.core.dto.product.ProductDTO;
 import com.postech.fiap.fase1.core.presenter.ProductPresenter;
-import com.postech.fiap.fase1.infrastructure.data.DataRepository;
 import com.postech.fiap.fase1.webapi.data.DataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

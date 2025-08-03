@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 
 public class UserPresenter {
 
-
     public UserDomain requestToDomain(UserRequestDTO userRequestDTO) {
         return UserDomain.builder()
                 .name(userRequestDTO.getName())

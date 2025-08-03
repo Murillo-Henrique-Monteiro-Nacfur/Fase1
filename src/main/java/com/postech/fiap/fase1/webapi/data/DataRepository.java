@@ -57,8 +57,6 @@ public class DataRepository implements DataSource {
     @Transactional(readOnly = true)
     public boolean hasUserWithSameLogin(Long idUser, String login) {
         return userRepository.hasUserWithSameLogin(idUser, login);
-
-
     }
 
     @Override

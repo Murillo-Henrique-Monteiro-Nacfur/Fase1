@@ -1,15 +1,14 @@
 package com.postech.fiap.fase1.core.domain.usecase.product;
 
 import com.postech.fiap.fase1.core.domain.model.ProductDomain;
-import com.postech.fiap.fase1.core.gateway.product.ProductGateway;
-import com.postech.fiap.fase1.core.gateway.restaurant.IRestaurantGateway;
+import com.postech.fiap.fase1.core.gateway.product.IProductGateway;
 
 import java.util.List;
 
 public class ProductReadUseCase {
-    private final ProductGateway productGateway;
+    private final IProductGateway productGateway;
 
-    public ProductReadUseCase(ProductGateway productGateway) {
+    public ProductReadUseCase(IProductGateway productGateway) {
         this.productGateway = productGateway;
 
     }

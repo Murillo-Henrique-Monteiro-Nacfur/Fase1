@@ -1,4 +1,4 @@
-package com.postech.fiap.fase1.core.validation.product;
+package com.postech.fiap.fase1.core.domain.validation.product;
 
 import com.postech.fiap.fase1.core.domain.model.ProductDomain;
 

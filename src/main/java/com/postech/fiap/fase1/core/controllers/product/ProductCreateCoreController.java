@@ -6,7 +6,7 @@ import com.postech.fiap.fase1.core.dto.product.ProductRequestDTO;
 import com.postech.fiap.fase1.core.dto.product.ProductResponseDTO;
 import com.postech.fiap.fase1.core.gateway.DataSource;
 import com.postech.fiap.fase1.core.gateway.SessionSource;
-import com.postech.fiap.fase1.core.gateway.product.ProductJpaGateway;
+import com.postech.fiap.fase1.core.gateway.product.ProductGateway;
 import com.postech.fiap.fase1.core.gateway.restaurant.RestaurantGateway;
 import com.postech.fiap.fase1.core.gateway.session.SessionGateway;
 import com.postech.fiap.fase1.core.gateway.storage.StorageGateway;
@@ -17,7 +17,7 @@ public class ProductCreateCoreController {
     private final ProductCreateUseCase productCreateUseCase;
     private final ProductPresenter productPresenter;
     public ProductCreateCoreController(DataSource dataSource, SessionSource sessionSource, StorageRepository storageRepository) {
-        var productJpaGateway = ProductJpaGateway.build(dataSource);
+        var productJpaGateway = ProductGateway.build(dataSource);
         var sessionGateway = SessionGateway.build(sessionSource);
         var restaurantGateway = RestaurantGateway.build(dataSource);
         var storageGateway = StorageGateway.build(storageRepository);
