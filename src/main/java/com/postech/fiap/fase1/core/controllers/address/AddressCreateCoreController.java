@@ -27,6 +27,12 @@ public class AddressCreateCoreController {
         this.addressPresenter = new AddressPresenter();
     }
 
+    public AddressCreateCoreController(AddressUserCreateUseCase addressUserCreateUseCase, AddressRestaurantCreateUseCase addressRestaurantCreateUseCase, AddressPresenter addressPresenter) {
+        this.addressUserCreateUseCase = addressUserCreateUseCase;
+        this.addressRestaurantCreateUseCase = addressRestaurantCreateUseCase;
+        this.addressPresenter = addressPresenter;
+    }
+
     public AddressResponseDTO createUserAddress(AddressRequestDTO addressRequestDTO, Long idUser) {
         return addressPresenter.toResponseDTO(addressUserCreateUseCase.execute(addressPresenter.requestToAddressUserDomain(addressRequestDTO, idUser)));
     }

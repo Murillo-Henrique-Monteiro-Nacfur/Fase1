@@ -20,6 +20,11 @@ public class AddressUpdateCoreController {
         this.addressPresenter = new AddressPresenter();
     }
 
+    public AddressUpdateCoreController(AddressUpdateUseCase addressUpdateUseCase, AddressPresenter addressPresenter) {
+        this.addressUpdateUseCase = addressUpdateUseCase;
+        this.addressPresenter = addressPresenter;
+    }
+
     public AddressResponseDTO update(AddressRequestDTO addressRequestUpdateDTO) {
         return addressPresenter.toResponseDTO(addressUpdateUseCase.execute(addressPresenter.requestUpdateToInput(addressRequestUpdateDTO)));
     }

@@ -22,6 +22,9 @@ public class AddressRestaurantCreateUseCase {
     public AddressDomain execute(AddressDomain addressDomain) {
         addressDomain.setId(null);
         RestaurantDomain restaurantDomain = restaurantGateway.getOneById(addressDomain.getAddressable().getId());
+        if (restaurantDomain == null) {
+            throw new com.postech.fiap.fase1.webapi.infrastructure.exception.ApplicationException("Restaurante não encontrado");
+        }
         addressDomain.setAddressable(restaurantDomain);
         addressCreateToUserAllowedValidator.validate(addressDomain);
         return addressGateway.createRestaurantAddress(addressDomain);

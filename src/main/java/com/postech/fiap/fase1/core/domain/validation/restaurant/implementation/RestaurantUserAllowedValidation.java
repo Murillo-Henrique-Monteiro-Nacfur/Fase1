@@ -19,7 +19,7 @@ public class RestaurantUserAllowedValidation implements RestaurantCreateValidati
     @Override
     public void validate(RestaurantDomain restaurantDomain) {
         SessionDTO sessionDTO = sessionGateway.getSessionDTO();
-        if (sessionDTO.isNotAdmin() || !sessionDTO.getUserId().equals(restaurantDomain.getUser().getId())) {
+        if (sessionDTO.isNotAdmin() && !sessionDTO.getUserId().equals(restaurantDomain.getUser().getId())) {
             throw new ApplicationException("Operation not allowed");
         }
     }

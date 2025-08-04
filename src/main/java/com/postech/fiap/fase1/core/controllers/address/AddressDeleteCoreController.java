@@ -16,6 +16,10 @@ public class AddressDeleteCoreController {
         addressDeleteUseCase = new AddressDeleteUseCase(addressGateway, sessionGateway);
     }
 
+    public AddressDeleteCoreController(AddressDeleteUseCase addressDeleteUseCase) {
+        this.addressDeleteUseCase = addressDeleteUseCase;
+    }
+
     public void delete(Long id) {
         addressDeleteUseCase.execute(id);
     }

@@ -21,6 +21,11 @@ public class AddressReadCoreController {
         this.addressPresenter = new AddressPresenter();
     }
 
+    public AddressReadCoreController(AddressReadUseCase addressReadUseCase, AddressPresenter addressPresenter) {
+        this.addressReadUseCase = addressReadUseCase;
+        this.addressPresenter = addressPresenter;
+    }
+
     public AddressResponseDTO findById(Long id) {
         return addressPresenter.toResponseDTO(addressReadUseCase.getById(id));
     }

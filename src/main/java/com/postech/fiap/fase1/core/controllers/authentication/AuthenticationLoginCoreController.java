@@ -14,6 +14,11 @@ public class AuthenticationLoginCoreController {
         this.authLoginUseCase = new AuthLoginUseCase(tokenSecret, userJpaGateway);
     }
 
+    // Constructor for testing purposes
+    public AuthenticationLoginCoreController(AuthLoginUseCase authLoginUseCase) {
+        this.authLoginUseCase = authLoginUseCase;
+    }
+
     public LoginResponseDTO login(LoginRequestDTO request) {
         return LoginResponseDTO.builder().token(authLoginUseCase.execute(request)).build();
     }

@@ -30,8 +30,15 @@ public class AuthLoginUseCase {
     public AuthLoginUseCase(String tokenSecret, IUserGateway iUserGateway) {
         this.tokenSecret = tokenSecret;
         this.userGetByIdUseCase = new UserGetByIdUseCase(iUserGateway);
-        passwordEncoder = new BCryptPasswordEncoder();
-        jwtUtils = new JWTUtils();
+        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.jwtUtils = new JWTUtils();
+    }
+
+    public AuthLoginUseCase(String tokenSecret, UserGetByIdUseCase userGetByIdUseCase, PasswordEncoder passwordEncoder, JWTUtils jwtUtils) {
+        this.tokenSecret = tokenSecret;
+        this.userGetByIdUseCase = userGetByIdUseCase;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
     }
 
     private String getToken(UserDomain user) {
