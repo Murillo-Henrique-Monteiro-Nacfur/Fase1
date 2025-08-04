@@ -44,7 +44,6 @@ public class UserPresenter {
                 .role(userDomain.getRole())
                 .birthDate(userDomain.getBirthDate())
                 .password(userDomain.getPassword())
-                //.addresses(isNull(userDomain.getAddresses()) ? null : addressPresenter.toDTO(userDomain.getAddresses()))
                 .build();
     }
 
@@ -56,7 +55,6 @@ public class UserPresenter {
                 .login(userDomain.getLogin())
                 .role(userDomain.getRole())
                 .birthDate(userDomain.getBirthDate().toString())
-                //.addresses(isNull(userDomain.getAddresses()) ? null : addressPresenter.toDTO(userDomain.getAddresses()))
                 .build();
     }
 
@@ -77,7 +75,6 @@ public class UserPresenter {
                 .password(userDTO.getPassword())
                 .birthDate(userDTO.getBirthDate())
                 .role(userDTO.getRole())
-                //.addresses(isNull(userDTO.getAddresses()) ? null : addressMapper.toDomain(userDTO.getAddresses())) //todo
                 .build();
     }
 
