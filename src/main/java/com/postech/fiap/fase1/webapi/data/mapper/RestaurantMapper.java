@@ -3,6 +3,7 @@ package com.postech.fiap.fase1.webapi.data.mapper;
 import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
 import com.postech.fiap.fase1.core.dto.restaurant.RestaurantDTO;
 import com.postech.fiap.fase1.webapi.data.entity.Restaurant;
+import com.postech.fiap.fase1.webapi.data.entity.User;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,7 @@ public class RestaurantMapper {
     }
 
     public Restaurant toEntity(RestaurantDTO restaurantDomain) {
-        return Restaurant.builder()
+        return isNull(restaurantDomain) ? null : Restaurant.builder()
                 .id(restaurantDomain.getId())
                 .name(restaurantDomain.getName())
                 .cuisineType(restaurantDomain.getCuisineType())
@@ -26,8 +27,12 @@ public class RestaurantMapper {
                 .cnpj(restaurantDomain.getCnpj())
                 .openTime(restaurantDomain.getOpenTime())
                 .closeTime(restaurantDomain.getCloseTime())
-                .user(isNull(restaurantDomain.getUser()) ? null : userMapper.toEntity(restaurantDomain.getUser()))
+                .user(getUser(restaurantDomain))
                 .build();
+    }
+
+    private User getUser(RestaurantDTO restaurantDomain) {
+        return isNull(restaurantDomain.getUser()) ? null : userMapper.toEntity(restaurantDomain.getUser());
     }
 
     public RestaurantDomain toDomain(Restaurant restaurant) {

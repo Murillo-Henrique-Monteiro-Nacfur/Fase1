@@ -1,6 +1,5 @@
 package com.postech.fiap.fase1.webapi.infrastructure.exception.response;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
