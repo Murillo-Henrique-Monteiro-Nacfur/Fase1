@@ -1,8 +1,7 @@
 package com.postech.fiap.fase1.webapi.controller.product;
 
 import com.postech.fiap.fase1.core.controllers.product.ProductReadCoreController;
-import com.postech.fiap.fase1.core.dto.product.ProductDTO;
-import com.postech.fiap.fase1.core.presenter.ProductPresenter;
+import com.postech.fiap.fase1.core.dto.product.ProductResponseDTO;
 import com.postech.fiap.fase1.webapi.data.DataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,20 +19,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductReadController implements ProductControllerInterface {
 
-    private final ProductPresenter productPresenter;
     private final DataRepository dataRepository;
 
     @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id) {
         ProductReadCoreController productReadCoreController = new ProductReadCoreController(dataRepository);
-        return ResponseEntity.status(HttpStatus.OK).body(productPresenter.toDTO(productReadCoreController.getById(id)));
+        return ResponseEntity.status(HttpStatus.OK).body(productReadCoreController.getById(id));
     }
 
     @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/restaurant/{idRestaurant}")
-    public ResponseEntity<List<ProductDTO>> findByIdRestaurant(@PathVariable Long idRestaurant) {
+    public ResponseEntity<List<ProductResponseDTO>> findByIdRestaurant(@PathVariable Long idRestaurant) {
         ProductReadCoreController productReadCoreController = new ProductReadCoreController(dataRepository);
-        return ResponseEntity.status(HttpStatus.OK).body(productReadCoreController.getByIdRestaurant(idRestaurant).stream().map(productPresenter::toDTO).toList());
+        return ResponseEntity.status(HttpStatus.OK).body(productReadCoreController.getByIdRestaurant(idRestaurant));
     }
 }

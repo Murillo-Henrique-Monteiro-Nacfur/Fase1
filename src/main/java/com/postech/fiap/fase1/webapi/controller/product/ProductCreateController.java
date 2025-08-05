@@ -33,6 +33,6 @@ public class ProductCreateController implements ProductControllerInterface {
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<ProductResponseDTO> createProduct(@RequestPart("file") MultipartFile file, @Valid @RequestPart("product") ProductRequestDTO product) {
         ProductCreateCoreController productCreateCoreController = new ProductCreateCoreController(dataRepository, sessionRepository, storageRepository);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productCreateCoreController.createProduct(product, inputOutputFilesUtils.getArrayBytes(file)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productCreateCoreController.createProduct(product, inputOutputFilesUtils.getFileDTO(file)));
     }
 }

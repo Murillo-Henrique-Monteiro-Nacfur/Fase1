@@ -2,8 +2,8 @@ package com.postech.fiap.fase1.webapi.controller.user;
 
 
 import com.postech.fiap.fase1.core.controllers.user.UserCreateCoreController;
-import com.postech.fiap.fase1.core.dto.user.UserResponseDTO;
 import com.postech.fiap.fase1.core.dto.user.UserRequestDTO;
+import com.postech.fiap.fase1.core.dto.user.UserResponseDTO;
 import com.postech.fiap.fase1.webapi.data.DataRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.core.controllers.product;
 
-import com.postech.fiap.fase1.core.domain.model.ProductDomain;
 import com.postech.fiap.fase1.core.dto.product.ProductDTO;
+import com.postech.fiap.fase1.core.dto.product.ProductResponseDTO;
 import com.postech.fiap.fase1.core.gateway.DataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class ProductReadCoreControllerTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         productReadCoreController = new ProductReadCoreController(dataSource);
     }
 
@@ -47,7 +47,7 @@ class ProductReadCoreControllerTest {
         when(dataSource.getById(anyLong())).thenReturn(productDTO);
 
         Long id = 1L;
-        ProductDomain result = productReadCoreController.getById(id);
+        ProductResponseDTO result = productReadCoreController.getById(id);
         assertNotNull(result);
         assertEquals(1L, result.getId());
         assertEquals("Test Product", result.getName());
@@ -59,7 +59,7 @@ class ProductReadCoreControllerTest {
         when(dataSource.getProductByIdRestaurant(anyLong())).thenReturn(Collections.singletonList(productDTO));
 
         Long idRestaurant = 100L;
-        List<ProductDomain> result = productReadCoreController.getByIdRestaurant(idRestaurant);
+        List<ProductResponseDTO> result = productReadCoreController.getByIdRestaurant(idRestaurant);
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(1L, result.getFirst().getId());

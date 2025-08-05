@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserUpdateController implements UserControllerInterface {
-    private static final String USER_IS_NOT_THE_SAME_AS_THE_ONE_IN_THE_REQUEST = "User is not the same as the one in the request";
-
     private final DataRepository dataRepository;
     private final SessionRepository sessionRepository;
 

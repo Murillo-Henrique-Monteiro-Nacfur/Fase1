@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class InputOutputFilesUtils {
 
-    public FileDTO getArrayBytes(MultipartFile file){
+    public FileDTO getFileDTO(MultipartFile file){
         try {
             return FileDTO.builder().fileName(file.getOriginalFilename()).file(file.getBytes()).build();
         } catch (Exception e) {
