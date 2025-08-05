@@ -1,6 +1,6 @@
 package com.postech.fiap.fase1.webapi.infrastructure.security;
 
-import com.postech.fiap.fase1.core.domain.usecase.session.AuthLoadAccessUseCase;
+import com.postech.fiap.fase1.webapi.infrastructure.session.AuthLoadAccessService;
 import com.postech.fiap.fase1.core.dto.auth.SessionDTO;
 import com.postech.fiap.fase1.webapi.data.entity.Role;
 import com.postech.fiap.fase1.webapi.infrastructure.session.ThreadLocalStorage;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 class AuthenticationFilterTest {
 
     @Mock
-    private AuthLoadAccessUseCase authLoadAccessUseCase;
+    private AuthLoadAccessService authLoadAccessService;
 
     @InjectMocks
     private AuthenticationFilter authenticationFilter;
@@ -69,7 +69,7 @@ class AuthenticationFilterTest {
         Role userRole = Role.ADMIN;
 
         when(request.getHeader("X-Auth-Token")).thenReturn(validToken);
-        when(authLoadAccessUseCase.execute(validToken)).thenReturn(true);
+        when(authLoadAccessService.execute(validToken)).thenReturn(true);
         SessionDTO sessionDTO = SessionDTO.builder()
                 .userLogin(userLogin)
                 .userRole(userRole.name())
@@ -90,7 +90,7 @@ class AuthenticationFilterTest {
     void doFilter_whenTokenIsInvalid_shouldNotSetAuthenticationInContext() throws ServletException, IOException {
         String invalidToken = "invalid-token";
         when(request.getHeader("X-Auth-Token")).thenReturn(invalidToken);
-        when(authLoadAccessUseCase.execute(invalidToken)).thenReturn(false);
+        when(authLoadAccessService.execute(invalidToken)).thenReturn(false);
 
         SecurityContextHolder.setContext(securityContext);
 
@@ -108,7 +108,7 @@ class AuthenticationFilterTest {
         SecurityContextHolder.setContext(securityContext);
 
         authenticationFilter.doFilter(request, response, filterChain);
-        verify(authLoadAccessUseCase, never()).execute(anyString());
+        verify(authLoadAccessService, never()).execute(anyString());
         verify(securityContext, never()).setAuthentication(any(Authentication.class));
         verify(filterChain).doFilter(request, response);
     }

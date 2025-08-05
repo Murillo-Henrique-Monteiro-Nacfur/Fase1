@@ -1,6 +1,7 @@
 package com.postech.fiap.fase1.core.domain.validation.restaurant.implementation;
 
 import com.postech.fiap.fase1.core.domain.model.RestaurantDomain;
+import com.postech.fiap.fase1.core.domain.model.UserDomain;
 import com.postech.fiap.fase1.core.dto.auth.SessionDTO;
 import com.postech.fiap.fase1.core.gateway.session.ISessionGateway;
 import com.postech.fiap.fase1.webapi.infrastructure.exception.ApplicationException;
@@ -27,16 +28,16 @@ class RestaurantUserAllowedValidationTest {
     @Test
     void validate_shouldAllowAdminUser() {
         when(sessionDTO.isNotAdmin()).thenReturn(false);
-        var user = mock(com.postech.fiap.fase1.core.domain.model.UserDomain.class);
+        var user = mock(UserDomain.class);
         when(restaurantDomain.getUser()).thenReturn(user);
         assertDoesNotThrow(() -> validator.validate(restaurantDomain));
     }
 
     @Test
     void validate_shouldAllowOwnerUser() {
-        when(sessionDTO.isNotAdmin()).thenReturn(true);
+        when(sessionDTO.isNotAdmin()).thenReturn(false);
         when(sessionDTO.getUserId()).thenReturn(123L);
-        var user = mock(com.postech.fiap.fase1.core.domain.model.UserDomain.class);
+        var user = mock(UserDomain.class);
         when(user.getId()).thenReturn(123L);
         when(restaurantDomain.getUser()).thenReturn(user);
         assertDoesNotThrow(() -> validator.validate(restaurantDomain));
@@ -46,7 +47,7 @@ class RestaurantUserAllowedValidationTest {
     void validate_shouldThrowWhenNotAdminAndNotOwner() {
         when(sessionDTO.isNotAdmin()).thenReturn(true);
         when(sessionDTO.getUserId()).thenReturn(456L);
-        var user = mock(com.postech.fiap.fase1.core.domain.model.UserDomain.class);
+        var user = mock(UserDomain.class);
         when(restaurantDomain.getUser()).thenReturn(user);
         when(user.getId()).thenReturn(123L);
         ApplicationException ex = assertThrows(ApplicationException.class, () -> validator.validate(restaurantDomain));

@@ -29,7 +29,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"closeTime\": \"23:00:00\",\n  \"cnpj\": \"string\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"name\": \"Bar do Zé\",\n  \"openTime\": \"08:00:00\",\n  \"id\": 101\n}",
+									"raw": "{\n  \"closeTime\": \"23:00:00\",\n  \"cnpj\": \"12345678912345\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"name\": \"Bar do Zé\",\n  \"openTime\": \"08:00:00\",\n  \"id\": 101\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -66,7 +66,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"closeTime\": \"23:00:00\",\n  \"cnpj\": \"string\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"name\": \"Bar do Zé\",\n  \"openTime\": \"08:00:00\",\n  \"id\": 101\n}",
+											"raw": "{\n  \"closeTime\": \"23:00:00\",\n  \"cnpj\": \"12345678912345\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"name\": \"Bar do Zé\",\n  \"openTime\": \"08:00:00\",\n  \"id\": 101\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -95,7 +95,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"id\": 101,\n  \"name\": \"Bar do Zé\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"cnpj\": \"string\",\n  \"openTime\": \"08:00:00\",\n  \"closeTime\": \"23:00:00\"\n}"
+									"body": "{\n  \"id\": 101,\n  \"name\": \"Bar do Zé\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"cnpj\": \"12345678912345\",\n  \"openTime\": \"08:00:00\",\n  \"closeTime\": \"23:00:00\"\n}"
 								}
 							]
 						},
@@ -115,7 +115,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"closeTime\": \"23:00:00\",\n  \"cnpj\": \"string\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"name\": \"Bar do Zé\",\n  \"openTime\": \"08:00:00\",\n  \"userId\": 1\n}",
+									"raw": "{\n  \"closeTime\": \"23:00:00\",\n  \"cnpj\": \"12345678912345\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"name\": \"Bar do Zé\",\n  \"openTime\": \"08:00:00\",\n  \"userId\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -152,7 +152,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"closeTime\": \"23:00:00\",\n  \"cnpj\": \"string\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"name\": \"Bar do Zé\",\n  \"openTime\": \"08:00:00\",\n  \"userId\": 8594,\n  \"id\": 101\n}",
+											"raw": "{\n  \"closeTime\": \"23:00:00\",\n  \"cnpj\": \"12345678912345\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"name\": \"Bar do Zé\",\n  \"openTime\": \"08:00:00\",\n  \"userId\": 8594,\n  \"id\": 101\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -181,7 +181,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"id\": 101,\n  \"name\": \"Bar do Zé\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"cnpj\": \"string\",\n  \"openTime\": \"08:00:00\",\n  \"closeTime\": \"23:00:00\"\n}"
+									"body": "{\n  \"id\": 101,\n  \"name\": \"Bar do Zé\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"cnpj\": \"12345678912345\",\n  \"openTime\": \"08:00:00\",\n  \"closeTime\": \"23:00:00\"\n}"
 								}
 							]
 						},
@@ -262,7 +262,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"id\": 101,\n  \"name\": \"Bar do Zé\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"cnpj\": \"string\",\n  \"openTime\": \"08:00:00\",\n  \"closeTime\": \"23:00:00\"\n}"
+									"body": "{\n  \"id\": 101,\n  \"name\": \"Bar do Zé\",\n  \"description\": \"Restaurante especializado em comida caseira.\",\n  \"cuisineType\": \"Comida Caseira\",\n  \"cnpj\": \"12345678912345\",\n  \"openTime\": \"08:00:00\",\n  \"closeTime\": \"23:00:00\"\n}"
 								}
 							]
 						},
@@ -1876,7 +1876,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"login\": \"admin\",\n  \"password\": \"adminPassword\"\n}",
+							"raw": "{\n  \"login\": \"admin\",\n  \"password\": \"admin\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

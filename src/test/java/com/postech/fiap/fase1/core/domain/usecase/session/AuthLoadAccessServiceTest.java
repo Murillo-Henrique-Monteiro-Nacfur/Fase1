@@ -3,6 +3,7 @@ package com.postech.fiap.fase1.core.domain.usecase.session;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.postech.fiap.fase1.core.dto.auth.UserTokenBodyDTO;
 import com.postech.fiap.fase1.webapi.infrastructure.exception.ApplicationException;
+import com.postech.fiap.fase1.webapi.infrastructure.session.AuthLoadAccessService;
 import com.postech.fiap.fase1.webapi.utils.JWTUtils;
 import com.postech.fiap.fase1.webapi.utils.JsonUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,22 +24,22 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class AuthLoadAccessUseCaseTest {
+class AuthLoadAccessServiceTest {
 
     @Mock
     private JWTUtils jwtUtils;
     @Mock
     private DecodedJWT decodedJWT;
     @InjectMocks
-    private AuthLoadAccessUseCase authLoadAccessUseCase;
+    private AuthLoadAccessService authLoadAccessService;
 
     @BeforeEach
     void setUp() {
-        authLoadAccessUseCase = new AuthLoadAccessUseCase(jwtUtils);
+        authLoadAccessService = new AuthLoadAccessService(jwtUtils);
         try {
-            java.lang.reflect.Field field = AuthLoadAccessUseCase.class.getDeclaredField("tokenSecret");
+            java.lang.reflect.Field field = AuthLoadAccessService.class.getDeclaredField("tokenSecret");
             field.setAccessible(true);
-            field.set(authLoadAccessUseCase, "secret");
+            field.set(authLoadAccessService, "secret");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +58,7 @@ class AuthLoadAccessUseCaseTest {
         when(claim.asString()).thenReturn("{\"id\":1}");
         Mockito.mockStatic(JsonUtils.class).when(() -> JsonUtils.jsonToObject("{\"id\":1}", UserTokenBodyDTO.class)).thenReturn(userTokenBodyDTO);
 
-        boolean result = authLoadAccessUseCase.execute(token);
+        boolean result = authLoadAccessService.execute(token);
         assertThat(result).isTrue();
     }
 
@@ -67,7 +68,7 @@ class AuthLoadAccessUseCaseTest {
         String token = "invalid.token";
         when(jwtUtils.verifyAndDecodeJWT(token, "secret")).thenThrow(new ApplicationException("Invalid Token", HttpStatus.BAD_REQUEST));
 
-        boolean result = authLoadAccessUseCase.execute(token);
+        boolean result = authLoadAccessService.execute(token);
         assertThat(result).isFalse();
     }
 }

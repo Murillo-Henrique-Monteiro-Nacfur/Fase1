@@ -18,10 +18,6 @@ COPY --from=build /workspace/app/target/*.jar app.jar
 
 EXPOSE 8080
 
-ENV DATABASE_URL=
-ENV DATABASE_USER=
-ENV DATABASE_PASSWORD=
-
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dlog4j2.formatMsgNoLookups=true", "-XX:MinRAMPercentage=60", "-XX:MaxRAMPercentage=90", "-server", "-XX:+OptimizeStringConcat", "-XX:+UseStringDeduplication", "-jar", "app.jar"]
 
 

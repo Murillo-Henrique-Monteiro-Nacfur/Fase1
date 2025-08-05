@@ -1,21 +1,20 @@
-package com.postech.fiap.fase1.core.domain.usecase.session;
+package com.postech.fiap.fase1.webapi.infrastructure.session;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.postech.fiap.fase1.core.dto.auth.UserTokenBodyDTO;
 import com.postech.fiap.fase1.webapi.infrastructure.exception.ApplicationException;
-import com.postech.fiap.fase1.webapi.infrastructure.session.ThreadLocalStorage;
 import com.postech.fiap.fase1.webapi.utils.JWTUtils;
 import com.postech.fiap.fase1.webapi.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-@RequiredArgsConstructor
+@Component
 @Slf4j
-public class AuthLoadAccessUseCase {
+@RequiredArgsConstructor
+public class AuthLoadAccessService {
 
     private static final String KEY_BODY = "body";
 

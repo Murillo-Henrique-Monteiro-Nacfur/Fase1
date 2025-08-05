@@ -1,7 +1,7 @@
 package com.postech.fiap.fase1.webapi.infrastructure.security;
 
 import com.postech.fiap.fase1.core.dto.auth.SessionDTO;
-import com.postech.fiap.fase1.core.domain.usecase.session.AuthLoadAccessUseCase;
+import com.postech.fiap.fase1.webapi.infrastructure.session.AuthLoadAccessService;
 import com.postech.fiap.fase1.webapi.infrastructure.session.ThreadLocalStorage;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Lazy;
@@ -19,18 +19,18 @@ import java.util.List;
 public class AuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
     private static final String PRINCIPAL_REQUEST_HEADER = "X-Auth-Token";
-    private final AuthLoadAccessUseCase authLoadAccessUseCase;
+    private final AuthLoadAccessService authLoadAccessService;
 
     @Lazy
-    public AuthenticationFilter(AuthLoadAccessUseCase authLoadAccessUseCase) {
-        this.authLoadAccessUseCase = authLoadAccessUseCase;
+    public AuthenticationFilter(AuthLoadAccessService authLoadAccessService) {
+        this.authLoadAccessService = authLoadAccessService;
         setAuthenticationManager(createAuthenticationManager());
     }
 
     private AuthenticationManager createAuthenticationManager() {
         return (authentication -> {
             String token = (String) authentication.getPrincipal();
-            if (token == null || token.isEmpty() || !authLoadAccessUseCase.execute(token)) {
+            if (token == null || token.isEmpty() || !authLoadAccessService.execute(token)) {
                 return new UsernamePasswordAuthenticationToken(null, null);
             }
             SessionDTO sessionDTO = ThreadLocalStorage.getSession();
