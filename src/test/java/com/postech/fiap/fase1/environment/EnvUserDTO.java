@@ -1,6 +1,6 @@
 package com.postech.fiap.fase1.environment;
 
-import com.postech.fiap.fase1.domain.dto.UserDTO;
+import com.postech.fiap.fase1.core.dto.user.UserDTO;
 
 import java.time.LocalDate;
 
@@ -10,7 +10,7 @@ public class EnvUserDTO {
                 .name("User name")
                 .login("user login")
                 .email("user email")
-                .birthDate("" + LocalDate.now())
+                .birthDate(LocalDate.now())
                 .build();
     }
 }
